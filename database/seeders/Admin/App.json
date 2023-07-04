@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "appCode": "ADMIN",
+        "appName": "Admin",
+        "appDescription": "Core Admin",
+        "appIcon": "default",
+        "appStatus": "Active",
+        "statusMessage": "Welcome",
+        "createdBy": 1,
+        "updatedBy": null,
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": 2,
+        "appCode": "SLI",
+        "appName": "Safexpress Express",
+        "appDescription": "Logistics Company",
+        "appIcon": "default",
+        "appStatus": "Active",
+        "statusMessage": "Welcome",
+        "createdBy": 1,
+        "updatedBy": null,
+        "created_at": null,
+        "updated_at": null
+    }
+]
