@@ -36,13 +36,13 @@
             </ul><!-- End Portfolio Filters -->
 
             <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="300">
-                @foreach ($gallery as $items)
+                @foreach ($thumbnail as $items)
  <div class="col-lg-4 col-md-6 portfolio-item filter-{{$items->foldername}}">
-                <img src="{{asset('storage/cover_image')}}/{{$items->image}}" class="img-fluid" alt="{{$items->filename}}">
+                <img src="{{asset('thumbnail')}}/{{$items->image}}" class="img-fluid" alt="{{$items->filename}}">
                 <div class="portfolio-info">
                   <h4>{{$items->filename}}</h4>
                   <p>{{$items->caption}}</p>
-                  <a href="{{asset('storage/cover_image')}}/{{$items->image}}" title="{{$items->filename}}" data-gallery="portfolio-gallery-{{$items->foldername}}" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="{{asset('uploads')}}/{{$items->image}}" title="{{$items->filename}}" data-gallery="portfolio-gallery-{{$items->foldername}}" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
               </div><!-- End Portfolio Item -->

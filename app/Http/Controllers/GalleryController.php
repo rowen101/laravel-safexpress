@@ -6,7 +6,7 @@ use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\Debugbar\Facades\Debugbar;
-
+use Intervention\Image\Facades\Image;
 class GalleryController extends Controller
 {
     /**
@@ -53,22 +53,7 @@ class GalleryController extends Controller
             //'image' =>'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        //Handle File Upload
-        // if($request->hasFile('image')){
-        //     //Get Filename with Extension
-        //     $filenamewithExt = $request->file('image')->getClientOriginalName();
-        //     //Get just Filename
-        //     $filename = pathinfo($filenamewithExt, PATHINFO_FILENAME);
-        //     //Get file ext
-        //     $extension = $request->file('image')->getClientOriginalExtension();
-        //     //Filename store
-        //     $filenameToStore = $filename.'_'.time().'.'.$extension;
-        //     //Upload Image
-        //     $path = $request->file('image')->storeAs('public/cover_image',$filenameToStore);
 
-        // } else {
-        //     $filenameToStore = 'noimage.jpg';
-        // }
         //create post
         $post = new Gallery();
         $post->foldername = $request->input('foldername');
@@ -79,7 +64,7 @@ class GalleryController extends Controller
         $post->is_active = $request->input('is_active');
         $post->save();
 
-        return redirect('/admin/gallery')->with('success','Gallery Created');
+        return redirect('/admin/gallery')->with(['success','Gallery Created']);
 
         } catch (\Exception $e){
             return redirect('/admin/gallery/create')->with('error', $e->getMessage());
@@ -90,7 +75,7 @@ class GalleryController extends Controller
     {
         //DB::table('galleries')->select('id','foldername')->where('id',$id)->get();
         $data = Gallery::find($id);
-        return view('admin.gallery.image')->with('data',$data);
+        return view('dropzone')->with(['data' =>$data]);
     }
     public function addimage(Request $request)
     {
@@ -100,27 +85,23 @@ class GalleryController extends Controller
        $this->validate($request, [
 
            'filename' => 'required',
-           'caption' =>'required',
+           //'caption' =>'required',
            'image' =>'required|image|mimes:jpeg,png,jpg,gif|max:2048'
        ]);
 
       // Handle File Upload
+      $image = $request->file('image');
+      $input['image'] = time().'.'.$image->getClientOriginalExtension();
 
-       if($request->hasFile('image')){
-           //Get Filename with Extension
-           $filenamewithExt = $request->file('image')->getClientOriginalName();
-           //Get just Filename
-           $filename = pathinfo($filenamewithExt, PATHINFO_FILENAME);
-           //Get file ext
-           $extension = $request->file('image')->getClientOriginalExtension();
-           //Filename store
-           $filenameToStore = $filename.'_'.time().'.'.$extension;
-           //Upload Image
-           $path = $request->file('image')->storeAs('public/cover_image',$filenameToStore);
+      $destinationPath = public_path('/thumbnail');
+      $imgFile = Image::make($image->getRealPath());
+      $imgFile->resize(1024, 768, function ($constraint) {
+          $constraint->aspectRatio();
+      })->save($destinationPath.'/'.$input['image']);
+      $destinationPath = public_path('/uploads');
+      $image->move($destinationPath, $input['image']);
 
-       } else {
-           $filenameToStore = 'noimage.jpg';
-       }
+
        //create post
        $post = new Gallery;
        $post->foldername = $request->input('foldername');
@@ -129,11 +110,11 @@ class GalleryController extends Controller
        $post->parent_id = $request->input('parent_id');
        // $post->sort = $request->input('sort');
        $post->created_at =auth()->user()->id;
-       $post->image = $filenameToStore;
-       $post->is_active = $request->input('is_active');
+       $post->image = $input['image'];
+      // $post->is_active = $request->input('is_active');
        $post->save();
 
-       return redirect('/admin/gallery')->with('success','Gallery Created');
+       return redirect('/admin/gallery')->with('success','Gallery Created',$input['image']);
 
        } catch (\Exception $e){
           // return redirect('/admin/gallery/create')->with('error', $e->getMessage());
@@ -183,47 +164,5 @@ class GalleryController extends Controller
 
         ]);
     }
-    public function subimageupload(Request $request, $id)
-    {
-        try{
 
-            //dd($request->all());
-       $this->validate($request, [
-           'filename' => 'required',
-           'sort_order' => 'required',
-           //'cover_image' =>'required'
-           'image' =>'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-       ]);
-
-       //Handle File Upload
-       if($request->hasFile('cover_image')){
-           //Get Filename with Extension
-           $filenamewithExt = $request->file('cover_image')->getClientOriginalName();
-           //Get just Filename
-           $filename = pathinfo($filenamewithExt, PATHINFO_FILENAME);
-           //Get file ext
-           $extension = $request->file('cover_image')->getClientOriginalExtension();
-           //Filename store
-           $filenameToStore = $filename.'_'.time().'.'.$extension;
-           //Upload Image
-           $path = $request->file('cover_image')->storeAs('public/cover_image',$filenameToStore);
-
-       } else {
-           $filenameToStore = 'noimage.jpg';
-       }
-       //create post
-       $post =  Gallery::find($id);
-       $post->filaname = $request->input('filename');
-       $post->sort_order = $request->input('sort_order');
-       // $post->user_id =auth()->user()->id;
-       $post->image = $filenameToStore;
-       $post->is_active = $request->input('is_active');
-       $post->save();
-
-       return redirect('/admin/gallery/create')->with('success','Gallery Created');
-
-       } catch (\Exception $e){
-           return redirect('/admin/gallery/create')->with('error', $e->getMessage());
-       }
-    }
 }

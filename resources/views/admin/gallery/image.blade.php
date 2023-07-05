@@ -31,7 +31,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <!-- left column -->
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <!-- general form elements -->
                             <div class="card">
                                 <input type="hidden" name="parent_id" value="{{$data->id}}"/>
@@ -39,82 +39,39 @@
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-12">
 
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">File Name</label>
-                                                <input type="text" class="form-control"  name="filename"
-                                                    placeholder="File Name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Caption</label>
-                                                <input type="text" class="form-control"  name="caption"
-                                                    placeholder="Caption">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="hidden" name="is_active" value="0">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" name="is_active" id="is_active" value="1"
 
-                                                        class="custom-control-input" id="is_active" aria-describedby="terms-error"
-                                                        aria-invalid="true" />
+                                            <br />
+                                            <h3 align="center" style="color: #4dc0b5"> Drop your image here</h3>
+                                            <br />
 
-                                                    <label class="custom-control-label" name="is_active" value="1" for="is_active">Active</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <form id="dropzoneForm" class="dropzone" action="{{ route('dropzone.upload') }}">
+                                                        @csrf
+                                                    </form>
+                                                    <div align="center">
+                                                        <button type="button" class="btn btn-success" id="submit-all">Upload</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="input-group">
-
-                                                <input type="file" name="image">
-                                              </div>
-                                            {{-- <div class="form-group">
-                                                <label for="exampleInputFile">Upload image</label>
-                                                <div class="input-group">
-
-                                                  <input type="file" name="image">
+                                            <br />
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">Uploaded Image</h3>
                                                 </div>
-                                              </div> --}}
-                                               {{-- <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="cover_image" id="exampleInputFile">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                                  </div> --}}
-                                              {{-- <div class="form-group">
-                                                <label for="exampleInputPassword1">Cover Image</label>
-                                                <input type="text" class="form-control"  name="cover_image"
-                                                    placeholder="Cover Image">
-                                            </div> --}}
-                                            {{-- <div class="form-group">
-                                                <label for="exampleInputPassword1">ID</label>
-                                                <input type="text" class="form-control"  name="parent_id"
-                                                    placeholder="parent_id">
-                                            </div> --}}
+                                                <div class="panel-body" id="uploaded_image">
 
-                                        </div>
-                                        {{-- <div class="col-md-6"> --}}
-                                            {{-- <div class="form-group">
-                                                <label for="exampleInputPassword1">File name</label>
-                                                <input type="text" class="form-control"  name="filename"
-                                                    placeholder="filename">
-                                            </div> --}}
-                                            {{-- <div class="form-group">
-                                                <label for="exampleInputPassword1">image</label>
-                                                <input type="text" class="form-control"  name="image"
-                                                    placeholder="image">
-                                            </div> --}}
-
-                                            {{-- <div class="form-group">
-                                                <label for="exampleInputPassword1">Sort</label>
-                                                <input type="number" class="form-control" name="sort"
-                                                    placeholder="Sort">
+                                                </div>
                                             </div>
 
 
 
-                                        </div> --}}
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;Create</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;Save</button>
                                   </div>
                             </div>
                             <!-- /.card -->

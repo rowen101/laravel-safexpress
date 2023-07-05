@@ -37,10 +37,14 @@ class PagesController extends Controller
         $gallery = DB::table('galleries')
         ->select('id','foldername', 'is_active','image','filename','caption')
         ->groupBy('foldername')
-        ->where('filename','<>','')
+        ->get();
+
+        $thumbnail = DB::table('galleries')
+        ->select('id','foldername', 'is_active','image','filename','caption')
+        ->where('image','<>','')
         ->get();
         $title = "Teams";
-        return view('pages.teams')->with(['title'=> $title ,'gallery'=> $gallery]);
+        return view('pages.teams')->with(['title'=> $title ,'gallery'=> $gallery,'thumbnail'=>$thumbnail]);
     }
 
     public function branch()

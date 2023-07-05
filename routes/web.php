@@ -44,8 +44,16 @@ Route::resource('/admin/apps',ApplicationController::class);
 Route::resource('/admin/menu',MenuController::class);
 Route::resource('/admin/setting',SettingController::class);
 Route::resource('/admin/gallery',GalleryController::class);
-Route::get('/admin/gallery/{id}/image', [App\Http\Controllers\GalleryController::class, 'viewimage'])->name('admin.gallery.image');
+//Route::get('/admin/gallery/{id}/image', [App\Http\Controllers\GalleryController::class, 'viewimage'])->name('admin.gallery.image');
 Route::post('/admin/gallery/image/{id}', [App\Http\Controllers\GalleryController::class, 'addimage']);
 
 Route::get('/file-resize', [App\Http\Controllers\ResizeController::class, 'index']);
 Route::post('/resize-file', [App\Http\Controllers\ResizeController::class, 'resizeImage'])->name('resizeImage');
+
+Route::get('/admin/gallery/{id}/image', [App\Http\Controllers\GalleryController::class, 'viewimage']);
+
+Route::post('dropzone/upload', [App\Http\Controllers\DropzoneController::class,'upload'])->name('dropzone.upload');
+
+Route::get('dropzone/fetch', [App\Http\Controllers\DropzoneController::class,'fetch'])->name('dropzone.fetch');
+
+Route::get('dropzone/delete', [App\Http\Controllers\DropzoneController::class,'delete'])->name('dropzone.delete');
