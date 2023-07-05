@@ -10,14 +10,21 @@ if [ ! -f ".env" ]; then
 else
     echo "env file exists."
 fi
+role=${CONTAINER_ROLE:-app}
 
-php artisan migrate
-php artisan optimize clear
-php artisan view:clear
-php artisan route:clear
+#if [ "$role" = "app"]; then
+    php artisan migrate
+    php artisan optimize clear
+    php artisan view:clear
+    php artisan route:clear
+    php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
 
-php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
-exec docker-php-entrypoint "$@"
-
+# elsif [ "$role" = "queue" ]; then
+#     echo "Running the queue... "
+#     php /var/www/artisan queue:work --verbose --tries=3 --timeout=180
+# elseif [ "$role" = "websocket" ]; then
+#     echo "Running the queue..."
+#fi
 # php-fpm -D
 # nginx -g "daemon off;"
+exec docker-php-entrypoint "$@"

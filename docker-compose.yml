@@ -1,7 +1,7 @@
 version: "3.8"
 services:
     api:
-        container_name: api
+        container_name: Safexpress
         build:
             context: .
             target: php
@@ -13,28 +13,28 @@ services:
         volumes:
             - ./:/var/www
         ports:
-            - 9000:8080
-        depends_on:
-            - database
-            - redis
-    database:
-        container_name: database
-        image: mysql:8.0
-        ports:
-            -   3306:3306
-        environment:
-            - MYSQL_DATABASE=default
-            - MYSQL_USER=laravel
-            - MYSQL_PASSWORD=secret
-            - MYSQL_ROOT_PASSWORD=secret
-        volumes:
-            - db-data:/var/lib/mysql
-    redis:
-        container_name:  redis
-        image: redis:alpine
-        command: redis-server --appendonly yes --requirepass  "secret"
-        ports:
-            - 6380:6379
+            - 8000:8000
+    #     depends_on:
+    #         - database
+    #         - redis
+    # database:
+    #     container_name: database
+    #     image: mysql:8.0
+    #     ports:
+    #         -   3306:3306
+    #     environment:
+    #         - MYSQL_DATABASE=${DB_DATABASE}
+    #         - MYSQL_USER=${DB_USERNAME}
+    #         - MYSQL_PASSWORD=${DB_PASSWORD}
+    #         - MYSQL_ROOT_PASSWORD=${DB_DATABASE}
+    #     volumes:
+    #         - db-data:/var/lib/mysql
+    # redis:
+    #     container_name:  redis
+    #     image: redis:alpine
+    #     command: redis-server --appendonly yes --requirepass  "secret"
+    #     ports:
+    #         - 6380:6379
     # node:
     #     build:
     #         context: .

@@ -46,8 +46,19 @@ composer require diglactic/laravel-breadcrumbs
 
 composer require intervention/image
 
-## run docker 
-docker  build -f Dockerfile .
+## build docker 
+docker-compose up --build 
+
+## run docker or stop
+docker-compose up
+docker-compose down
+
+## view logs container name
+docker logs containername
+
+## docker in windows 10 access file
+winpty docker exec -it containername //bin//sh
+docker exec -it Safexpress /bin/sh
 
 To access your Laravel application : http://localhost:8000
 To access the PhpMyAdmin console: http://localhost:8081
