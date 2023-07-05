@@ -38,10 +38,17 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 - **[Lendio](https://lendio.com)**
 
 
-## Breadcrumbs 3rd party 
+## Breadcrumbs
 
 composer require diglactic/laravel-breadcrumbs
 
 ## Intervention image
 
 composer require intervention/image
+
+## run docker 
+docker  build -f Dockerfile .
+
+To access your Laravel application : http://localhost:8000
+To access the PhpMyAdmin console: http://localhost:8081
+The MySQL Database is using the port: 3306

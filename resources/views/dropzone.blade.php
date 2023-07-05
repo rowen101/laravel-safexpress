@@ -6,12 +6,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
 </head>
 <body>
 <div class="container-fluid">
+
     <br />
     <h3 align="center" style="color: #4dc0b5">{{ $data->foldername }}</h3>
     <br />
+    <a href="{{ url('admin/gallery') }}">
+        <button class="btn btn-primary"><i class="fas fa-arrow-left"></i>&nbsp;back</button>
+    </a>
 
     <div class="panel panel-default">
         <div class="panel-body">

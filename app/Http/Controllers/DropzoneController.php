@@ -17,39 +17,39 @@ class DropzoneController extends Controller
     }
     function upload(Request $request)
     {
-        try{
-      // Handle File Upload
-      $image = $request->file('file');
-      $input['file'] = time().'.'.$image->getClientOriginalExtension();
+        try {
+            // Handle File Upload
+            $image = $request->file('file');
+            $input['file'] = time() . '.' . $image->getClientOriginalExtension();
 
-      $destinationPath = public_path('/thumbnail');
-      $imgFile = Image::make($image->getRealPath());
-      $imgFile->resize(1024, 768, function ($constraint) {
-          $constraint->aspectRatio();
-      })->save($destinationPath.'/'.$input['file']);
-      $destinationPath = public_path('/uploads');
-      $image->move($destinationPath, $input['file']);
+            $destinationPath = public_path('/thumbnail');
+            $imgFile = Image::make($image->getRealPath());
+            $imgFile->resize(1024, 768, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $input['file']);
+            $destinationPath = public_path('/uploads');
+            $image->move($destinationPath, $input['file']);
 
-       //create post
-       $post = new Gallery;
-       $post->foldername = $request->input('foldername');
-       $post->filename = $request->input('filename');
-       $post->caption = $request->input('caption');
-       $post->parent_id = $request->input('parent_id');
-       // $post->sort = $request->input('sort');
-       $post->created_at =auth()->user()->id;
-       $post->image = $input['file'];
-      // $post->is_active = $request->input('is_active');
-       $post->save();
+            //create post
+            $post = new Gallery;
+            $post->foldername = $request->input('foldername');
+            $post->filename = $request->input('filename');
+            $post->caption = $request->input('caption');
+            $post->parent_id = $request->input('parent_id');
+            // $post->sort = $request->input('sort');
+            $post->created_at = auth()->user()->id;
+            $post->image = $input['file'];
+            // $post->is_active = $request->input('is_active');
+            $post->save();
 
 
-    return response()->json(['success'=>$input['file'],
-    'message' => 'Images Saved Successfully..']);
-       } catch (\Exception $e){
-          return response()->json(['error', $e->getMessage()]);
-
-       }
-
+            return response()->json([
+                'success' => $input['file'],
+                'message' => 'Images Saved Successfully..'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error', $e->getMessage()]);
+        }
     }
 
     function fetch()
@@ -73,13 +73,18 @@ class DropzoneController extends Controller
 
     function delete(Request $request)
     {
+
         if ($request->get('name')) {
             $name = $request->name;
-            Storage::delete('thumbnail/'.$name);
-            Storage::delete('uploads/'.$name);
+            $image_thumbnail_path = public_path('thumbnail/' . $name);
+            $image_upload_path = public_path('uploads/' . $name);
+            if (file_exists($image_thumbnail_path) || file_exists($image_upload_path)) {
+                unlink($image_thumbnail_path);
+                unlink($image_upload_path);
+            }
             $user = Gallery::where('image', $name)->firstorfail()->delete();
-
         }
-
     }
+
+   
 }
