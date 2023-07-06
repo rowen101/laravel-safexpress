@@ -163,7 +163,7 @@ class UserController extends Controller
 
                 $data->save();
 
-                return redirect('/admin.user.index')->with('success','User Created');
+                return redirect('/admin/user/index')->with('success','User Created');
             } catch(\Exception $e)
             {
                   return redirect('/admin/user/edit')->with('error', $e->getMessage());
@@ -178,10 +178,10 @@ class UserController extends Controller
        $data = User::find($id);
 
        if(auth()->user()->id !== $data->id){
-        return redirect('/admin.user.index')->with('error','Unauthorized Page');
+        return redirect('/admin/user/index')->with('error','Unauthorized Page');
        }
 
        $data->delete();
-       return redirect('admin.user.index')->with('success','User Remove');
+       return redirect('admin/user/index')->with('success','User Remove');
     }
 }
