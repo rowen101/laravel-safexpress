@@ -60,8 +60,8 @@
                                                     class="{{ $item->is_active = 1 ? 'fas fa-check-circle ' : 'fas fa fa-circle' }}"></i>
                                             </td>
 
-                                            <td><button type="button" class="btn btn-sm bg-gradient-secondary"><a href="/admin/menu/{{$item->id}}/edit"><i
-                                                        class="fas fa-edit"></i></a></button>&nbsp;
+                                            <td><a href="/admin/menu/{{$item->id}}/edit"><button type="button" class="btn btn-sm bg-gradient-secondary"><i
+                                                        class="fas fa-edit"></i></button></a>&nbsp;
                                                 <button type="button" class="btn btn-sm bg-gradient-danger"><i
                                                         class="fas fa-trash"></i></button>
                                             </td>

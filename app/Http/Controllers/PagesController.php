@@ -35,12 +35,13 @@ class PagesController extends Controller
     public function teams()
     {
         $gallery = DB::table('galleries')
-        ->select('id','foldername', 'is_active','image','filename','caption')
+        ->select('id','gurec','foldername', 'is_active','image','filename','caption')
         ->groupBy('foldername')
         ->get();
 
+
         $thumbnail = DB::table('galleries')
-        ->select('id','foldername', 'is_active','image','filename','caption')
+        ->select('id','gurec','foldername', 'is_active','parent_id','image','filename','caption')
         ->where('image','<>','')
         ->get();
         $title = "Teams";
@@ -52,5 +53,6 @@ class PagesController extends Controller
         $title = "Branch";
         return view('pages.branch')->with('title', $title);;
     }
+
 
 }

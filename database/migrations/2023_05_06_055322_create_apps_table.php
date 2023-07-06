@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('app_name', 150); // name of the application
             $table->text('description'); //Describe the product
             $table->string('app_icon', 150)->nullable(); //application icon
-            $table->boolean('status')->default(true); //ACTIVE,INACTIVE,MAINTENANCE
+            $table->boolean('is_active')->default(true)->nullable(); //ACTIVE,INACTIVE,MAINTENANCE
             $table->string('status_message',150)->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
@@ -33,12 +33,12 @@ return new class extends Migration
             $table->foreign('app_id')->references('id')->on('app');
             $table->string('menu_code', 20)->default('NONE')->index();
             $table->string('menu_title', 100)->index();
-            $table->string('description', 255);
+            $table->string('description', 255)->nullable();
             $table->integer('parent_id')->default(0);
             $table->string('menu_icon')->nullable();
             $table->string('menu_route', 50)->deafault('default')->index()->nullable(); // url
-            $table->integer('sort_order')->default(100);
-            $table->boolean('is_active')->default(true);
+            $table->integer('sort_order')->default(100)->nullable();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->nullable();
             $table->timestamps();
@@ -64,7 +64,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('role_code', 150);
             $table->string('description', 150)->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(true)->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->nullable();
             $table->timestamps();
@@ -90,16 +90,45 @@ return new class extends Migration
             $table->integer('incorrect_logins')->nullable();
             $table->string('photo', 255)->nullable();
             $table->string('language', 5)->default('EN'); //core_vdd_language
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(true)->nullable();
             $table->string('google_id')->nullable();
-            $table->integer('created_by')->default(0);
+            $table->integer('created_by')->default(0)->nullable();
             $table->integer('updated_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
 
+        Schema::create('galleries', function (Blueprint $table) {
+            $table->id();
+            $table->string('gurec')->nullable();
+            $table->string('foldername')->nullable();
+            $table->string('filename', 100)->index()->nullable();
+            $table->string('image')->nullable();
+            $table->string('caption', 225)->nullable();
+            $table->integer('parent_id')->default(0)->nullable();
+            $table->integer('sort')->default(100)->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->nullable();
+            $table->timestamps();
+        });
 
+        Schema::create('branches', function (Blueprint $table) {
+            $table->id();
+            $table->string('site');
+            $table->string('branch', 100)->index()->nullable();
+            $table->integer('parent_id')->default(0)->nullable();
+            $table->string('sitehead')->nullable();
+            $table->string('location')->nullable();
+            $table->text('maps')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->nullable();
+            $table->timestamps();
+        });
         Artisan::call('db:seed');
     }
 
@@ -113,5 +142,6 @@ return new class extends Migration
         Schema::dropIfExists('role');
         Schema::dropIfExists('users');
         Schema::dropIfExists('permission');
+        Schema::dropIfExists('galleries');
     }
 };

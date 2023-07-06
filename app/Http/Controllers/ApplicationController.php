@@ -45,7 +45,7 @@ class ApplicationController extends Controller
         $apps->app_code = $request->input('app_code');
         $apps->app_name = $request->input('app_name');
         $apps->description = $request->input('description');
-        $apps->status = $request->has('status') ? true : false;
+        $apps->is_active = $request->has('is_active') ? true : false;
         $apps->created_by =auth()->user()->id;
         $apps->save();
 
@@ -85,7 +85,7 @@ class ApplicationController extends Controller
         $apps->app_code = $request->input('app_code');
         $apps->app_name = $request->input('app_name');
         $apps->description = $request->input('description');
-        $apps->status = $request->input('status');
+        $apps->is_active = $request->input('is_active');
         $apps->created_by =auth()->user()->id;
         $apps->save();
 

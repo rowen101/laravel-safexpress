@@ -45,11 +45,11 @@
                                             <td><i
                                                     class="{{ $item->is_active = 1 ? 'fas fa-check-circle ' : 'fas fa fa-circle' }}"></i>
                                             </td>
-                                            <td><button type="button" class="btn btn-sm bg-gradient-secondary"><a href="/admin/gallery/{{$item->id}}/edit"><i
-                                                        class="fas fa-edit"></i></a></button>&nbsp;
+                                            <td><a href="/admin/gallery/{{$item->id}}/edit"><button type="button" class="btn btn-sm bg-gradient-secondary"><i
+                                                        class="fas fa-edit"></i></button></a>&nbsp;
                                                 <button type="button" class="btn btn-sm bg-gradient-danger"><i
                                                         class="fas fa-trash"></i></button>&nbsp;
-                                                        <button type="button" class="btn btn-sm bg-gradient-success"><a href="/admin/gallery/{{$item->id}}/image"><i class="fas fa-file-image"></i> </a></button>
+                                                        <a href="/admin/gallery/{{$item->id}}/image"><button type="button" class="btn btn-sm bg-gradient-success"><i class="fas fa-file-image"></i> </button></a>
                                             </td>
                                         </tr>
                                     @endforeach

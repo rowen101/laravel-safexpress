@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 class GalleryController extends Controller
 {
     /**
@@ -44,7 +45,8 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         try{
-
+        // Generate a 5-character code starting with "SL"
+        $code = 'SL' . Str::random(3);
              //dd($request->all());
         $this->validate($request, [
             'foldername' => 'required',
@@ -56,6 +58,7 @@ class GalleryController extends Controller
 
         //create post
         $post = new Gallery();
+        $post->gurec = $code;
         $post->foldername = $request->input('foldername');
         // $post->filename = $request->input('filename');
         // $post->sort = $request->input('sort');

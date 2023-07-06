@@ -39,12 +39,13 @@
                                         <div class="col-md-6">
 
                                             <div class="form-group">
-                                                <label for="exampleInputPassword1">Menu Code</label>
-                                                <input type="text" class="form-control" disabled name="menu_code"  value="{{$data->menu_code}}"
+                                                <label for="exampleInputPassword1" >Menu Code</label>
+                                                <input type="text" class="form-control" disabled name=""  value="{{$data->menu_code}}"
                                                     placeholder="Menu Code">
+                                                    <input type="hidden" name="menu_code" value="{{$data->menu_code}}">
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Application</label>
+                                            <div class="form-group required">
+                                                <label for="exampleInputEmail1" class="control-label">Application</label>
                                                 <select class="custom-select rounded-0" name="app_id" id="app_id">
                                                     <option value="option_select" disabled>application</option>
                                                     @foreach ($app as $item)
@@ -53,20 +54,20 @@
 
                                                   </select>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Menu Title</label>
+                                            <div class="form-group required">
+                                                <label for="exampleInputPassword1" class="control-label">Menu Title</label>
                                                 <input type="text" class="form-control" name="menu_title" value="{{$data->menu_title}}"
                                                     placeholder="Menu Title">
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Description</label>
+                                            <div class="form-group required">
+                                                <label for="exampleInputPassword1" class="control-label">Description</label>
                                                 <input type="text" class="form-control" name="description" value="{{$data->description}}"
                                                     placeholder="Menu Code">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Parent Menu</label>
+                                            <div class="form-group required">
+                                                <label for="exampleInputPassword1" class="control-label">Parent Menu</label>
                                                 <select class="custom-select rounded-0" name="parent_id" id="parent_id" >
                                                 <option value="option_select" disabled>Menu</option>
                                                 <option value="0" >&#xf0aa;</option>
@@ -76,18 +77,18 @@
                                                 </select>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Menu Icon</label>
+                                            <div class="form-group required">
+                                                <label for="exampleInputPassword1" class="control-label">Menu Icon</label>
                                                 <input type="text" class="form-control" name="menu_icon" value="{{$data->menu_icon}}"
                                                     placeholder="Menu Icon">
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Menu Route</label>
+                                            <div class="form-group required">
+                                                <label for="exampleInputPassword1" class="control-label">Menu Route</label>
                                                 <input type="text" class="form-control" name="menu_route" value="{{$data->menu_route}}"
                                                     placeholder="Menu Route">
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Sort</label>
+                                            <div class="form-group required">
+                                                <label for="exampleInputPassword1" class="control-label">Sort</label>
                                                 <input type="number" class="form-control" name="sort_order" value="{{$data->sort_order}}"
                                                     placeholder="Sort">
                                             </div>

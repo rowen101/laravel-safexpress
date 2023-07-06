@@ -55,11 +55,11 @@
                     </td>
                     <td>{{$item->description}}</td>
                     <td> {{$item->status_message}}</td>
-                    <td><i class="{{$item->status   ? 'fas fa-check-circle ' : 'fas fa fa-circle'}}"></i></td>
+                    <td><i class="{{$item->is_active   ? 'fas fa-check-circle ' : 'fas fa fa-circle'}}"></i></td>
                     {{-- <td><button type="button" class="btn btn-sm bg-gradient-secondary"><a href="/admin/apps/{{$item->id}}/edit"><i class="fas fa-edit"></i></a></button>&nbsp; --}}
                         <td>
-                            <button type="button" class="btn btn-sm bg-gradient-secondary edit"><a href="/admin/apps/{{$item->id}}/edit"><i class="fas fa-edit"></i></a></button>&nbsp;
-                        <button type="button" class="btn btn-sm bg-gradient-danger"><a href="{{url('admin/apps',[$item->id])}}"><i class="fas fa-trash"></i></a></button>
+                            <a href="/admin/apps/{{$item->id}}/edit"><button type="button" class="btn btn-sm bg-gradient-secondary edit"><i class="fas fa-edit"></i></button></a>&nbsp;
+                            <a href="{{url('admin/apps',[$item->id])}}"> <button type="button" class="btn btn-sm bg-gradient-danger"><i class="fas fa-trash"></i></button></a>
                     </td>
                   </tr>
                   @endforeach

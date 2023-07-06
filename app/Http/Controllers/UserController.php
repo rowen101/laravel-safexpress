@@ -79,31 +79,37 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
-
-        $this->validate($request,[
-            'name'=> 'required',
-            'email'=> 'required',
-            'password'=> 'required',
-            'first_name'=> 'required',
-            'last_name'=> 'required',
-            'is_active'=> 'required'
-
-        ]);
+            try
+            {
+                $this->validate($request,[
+                    'name'=> 'required',
+                    'email'=> 'required',
+                    'password'=> 'required',
+                    'first_name'=> 'required',
+                    'last_name'=> 'required',
 
 
-        $data = new User;
-        $data->name = $request->input('name');
-        $data->email = $request->input('email');
-        $data->password = bcrypt($request->input('password'));
-        $data->first_name = $request->input('first_name');
-        $data->last_name = $request->input('last_name');
-        $data->role_id = $request->input('role_id');
-        $data->is_active = $request->input('is_active');
-       // $data->created_by = auth()->user()->id;
+                ]);
 
-        $data->save();
 
-        return redirect('/admin.user.index')->with('success','User Created');
+                $data = new User;
+                $data->name = $request->input('name');
+                $data->email = $request->input('email');
+                $data->password = bcrypt($request->input('password'));
+                $data->first_name = $request->input('first_name');
+                $data->last_name = $request->input('last_name');
+                $data->role_id = $request->input('role_id');
+                $data->is_active = $request->has('is_active') ? true : false;
+               $data->created_by = auth()->user()->id;
+
+                $data->save();
+
+                return redirect('/admin/user')->with('success','User Created');
+            } catch(\Exception $e)
+            {
+                  return redirect('/admin/user/create')->with('error', $e->getMessage());
+            }
+
     }
 
     /**
@@ -128,29 +134,40 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
 
         dd($request->all());
-        $this->validate($request,[
-            'name'=> 'required',
-            'email'=> 'required',
-            'password'=> 'required',
+        try
+            {
+                $this->validate($request,[
+                    'name'=> 'required',
+                    'email'=> 'required',
+                    'password'=> 'required',
+                    'first_name'=> 'required',
+                    'last_name'=> 'required',
 
-        ]);
+
+                ]);
 
 
-        $data =  User::find($id);
-        $data->name = $request->input('name');
-        $data->email = $request->input('email');
-        $data->user_type = $request->inpu('user_type');
-        $data->first_name = $request->inpu('first_name');
-        $data->last_name = $request->inpu('last_name');
-        $data->is_active = $request->inpu('is_active');
-        $data->created_by = auth()->user()->id;
-        $data->save();
+                $data =  User::find($id);
+                $data->name = $request->input('name');
+                $data->email = $request->input('email');
+                $data->password = bcrypt($request->input('password'));
+                $data->first_name = $request->input('first_name');
+                $data->last_name = $request->input('last_name');
+                $data->role_id = $request->input('role_id');
+                $data->is_active = $request->has('is_active') ? true : false;
+               $data->created_by = auth()->user()->id;
 
-        return redirect('/admin.user.index')->with('success','User Created');
+                $data->save();
+
+                return redirect('/admin.user.index')->with('success','User Created');
+            } catch(\Exception $e)
+            {
+                  return redirect('/admin/user/edit')->with('error', $e->getMessage());
+            }
     }
 
     /**

@@ -7,7 +7,7 @@
 
         <h2>{{$title}}</h2>
         <ol>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li>{{$title}}</li>
         </ol>
 

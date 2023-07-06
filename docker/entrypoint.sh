@@ -26,5 +26,5 @@ role=${CONTAINER_ROLE:-app}
 #     echo "Running the queue..."
 #fi
 # php-fpm -D
-# nginx -g "daemon off;"
+nginx -g "daemon off;"
 exec docker-php-entrypoint "$@"

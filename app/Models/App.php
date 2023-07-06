@@ -23,7 +23,7 @@ class App extends Model
         'app_name',
         'description',
         'app_icon',
-        'status',
+        'is_active',
         'status_message',
         'created_by',
         'updated_by'

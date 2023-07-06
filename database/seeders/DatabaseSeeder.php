@@ -7,6 +7,7 @@ use Database\Seeders\Admin\AppSeeder;
 use Database\Seeders\Admin\MenuSeeder;
 use Database\Seeders\Admin\RoleSeeder;
 use Database\Seeders\Admin\UserSeeder;
+use Database\Seeders\Admin\GallerySeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-
+            GallerySeeder::class
 
         ]);
     }

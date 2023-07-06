@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>Safexpress</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('/public/favicon.png')}}"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Google Font: Source Sans Pro -->
@@ -24,7 +24,8 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            {{ config('app.name', 'Laravel') }}
+            {{-- {{ config('app.name', 'Laravel') }} --}}
+            Safexpress
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -100,7 +101,8 @@
 
                 </p>
                 <p class="mb-0">
-                    <a href="/register" class="text-center">Register a new User</a>
+                    {{-- <a href="/register" class="text-center">Register a new User</a> --}}
+                    <a href="#" class="text-center">Request user</a>
                 </p>
             </div>
             <!-- /.login-card-body -->

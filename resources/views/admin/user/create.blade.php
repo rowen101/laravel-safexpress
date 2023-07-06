@@ -35,22 +35,22 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">User Name</label>
+                                        <div class="form-group required">
+                                            <label for="exampleInputEmail1" class="control-label">User Name</label>
                                             <input type="text"  class="form-control" name="name" id="exampleInputEmail1" placeholder="User Name" aria-describedby="exampleInputEmail1-error" aria-invalid="true">
                                           </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">First Name</label>
+                                        <div class="form-group required">
+                                            <label for="exampleInputPassword1" class="control-label">First Name</label>
                                             <input type="text"  class="form-control" name="first_name"    placeholder="First Name" aria-describedby="exampleInputPassword1-error" aria-invalid="true">
                                           </div>
-                                          <div class="form-group">
-                                            <label for="exampleInputPassword1">Last Name</label>
+                                          <div class="form-group required">
+                                            <label for="exampleInputPassword1" class="control-label">Last Name</label>
                                             <input type="text" class="form-control" name="last_name"    placeholder="Last Name" aria-describedby="exampleInputPassword1-error" aria-invalid="true">
                                           </div>
 
 
-                                          <div class="form-group">
-                                            <label for="exampleInputEmail1">Role</label>
+                                          <div class="form-group required">
+                                            <label for="exampleInputEmail1" class="control-label">Role</label>
                                             <select class="custom-select rounded-0" name="role_id" id="role_id">
                                                 <option value="option_select" disabled>Role</option>
                                                 @foreach ($role as $item)
@@ -62,12 +62,12 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Email</label>
+                                        <div class="form-group required">
+                                            <label for="exampleInputPassword1" class="control-label">Email</label>
                                             <input type="text"class="form-control" name="email"    placeholder="Email" aria-describedby="exampleInputPassword1-error" aria-invalid="true">
                                           </div>
-                                          <div class="form-group">
-                                            <label for="exampleInputPassword1">Password</label>
+                                          <div class="form-group required">
+                                            <label for="exampleInputPassword1" class="control-label">Password</label>
                                             <input type="password"  class="form-control" name="password"    placeholder="Password" aria-describedby="exampleInputPassword1-error" aria-invalid="true">
                                           </div>
 
