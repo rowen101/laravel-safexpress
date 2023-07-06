@@ -63,6 +63,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group required">
+                                            <label for="exampleInputPassword1" class="control-label">User Type</label>
+                                            <input type="text"class="form-control" name="user_type"    placeholder="User type" aria-describedby="exampleInputPassword1-error" aria-invalid="true">
+                                          </div>
+                                        <div class="form-group required">
                                             <label for="exampleInputPassword1" class="control-label">Email</label>
                                             <input type="text"class="form-control" name="email"    placeholder="Email" aria-describedby="exampleInputPassword1-error" aria-invalid="true">
                                           </div>

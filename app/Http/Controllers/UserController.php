@@ -157,13 +157,14 @@ class UserController extends Controller
                 $data->password = bcrypt($request->input('password'));
                 $data->first_name = $request->input('first_name');
                 $data->last_name = $request->input('last_name');
+                $data->user_type = $request->input('user_type');
                 $data->role_id = $request->input('role_id');
                 $data->is_active = $request->has('is_active') ? true : false;
                $data->created_by = auth()->user()->id;
 
                 $data->save();
 
-                return redirect('/admin/user/index')->with('success','User Created');
+                return redirect('/admin/user')->with('success','User Created');
             } catch(\Exception $e)
             {
                   return redirect('/admin/user/edit')->with('error', $e->getMessage());

@@ -24,6 +24,11 @@ Breadcrumbs::for('createuser', function (BreadcrumbTrail $trail) {
     $trail->parent('user');
     $trail->push('Create', url('admin/user/create'));
 });
+// Home > User > [update]
+Breadcrumbs::for('edituser', function (BreadcrumbTrail $trail) {
+    $trail->parent('user');
+    $trail->push('Edit User', url('admin/user/edit'));
+});
 ////////////////////////////////////////////
 
 
@@ -38,6 +43,11 @@ Breadcrumbs::for('createapps', function (BreadcrumbTrail $trail) {
     $trail->parent('apps');
     $trail->push('Create', url('admin/app/create'));
 });
+// Home > App > [update]
+Breadcrumbs::for('editapps', function (BreadcrumbTrail $trail) {
+    $trail->parent('apps');
+    $trail->push('Edit App', url('admin/app/edit'));
+});
 ////////////////////////////////////////////////
 
 
@@ -51,6 +61,11 @@ Breadcrumbs::for('menu', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('createmenu', function (BreadcrumbTrail $trail) {
     $trail->parent('menu');
     $trail->push('Create', url('admin/menu/create'));
+});
+// Home > Menu > [update]
+Breadcrumbs::for('editmenu', function (BreadcrumbTrail $trail) {
+    $trail->parent('menu');
+    $trail->push('Edit Menu', url('admin/menu/edit'));
 });
 ///////////////////////////////
 // Home > Gallery

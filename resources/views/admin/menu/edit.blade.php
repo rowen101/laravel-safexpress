@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
 
-                        {{ Breadcrumbs::render('createmenu') }}
+                        {{ Breadcrumbs::render('editmenu') }}
 
                     </ol>
                 </div>
