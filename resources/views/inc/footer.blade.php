@@ -32,7 +32,7 @@
         <h4>Our Services</h4>
         <ul>
           <li><i class="bi bi-dash"></i> <a href="#">Web Design</a></li>
-          
+
         </ul>
       </div>
 
@@ -75,4 +75,4 @@
 
 <!-- Template Main JS File -->
 <script src="{{ asset('js/main.js')}}"></script>
-@vite('resources/js/app.js')
+{{-- @vite('resources/js/app.js') --}}
