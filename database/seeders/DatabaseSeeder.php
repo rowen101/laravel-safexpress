@@ -2,29 +2,21 @@
 
 namespace Database\Seeders;
 
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\Admin\AppSeeder;
-use Database\Seeders\Admin\MenuSeeder;
-use Database\Seeders\Admin\RoleSeeder;
-use Database\Seeders\Admin\UserSeeder;
-use Database\Seeders\Admin\GallerySeeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
      */
     public function run(): void
     {
-        $this->call([
+        // \App\Models\User::factory(10)->create();
 
-            AppSeeder::class,
-            MenuSeeder::class,
-            RoleSeeder::class,
-            UserSeeder::class,
-            GallerySeeder::class
-
-        ]);
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
     }
 }
