@@ -39,7 +39,7 @@
   <link href="{{ asset('css/main.css')}}" rel="stylesheet">
 
   <script src="{{ asset('js/AutoLightbox.js')}}"></script>
-  {{-- @vite(['resources/css/app.css']) --}}
+  @vite(['resources/css/app.css'])
 </head>
 <body>
 
