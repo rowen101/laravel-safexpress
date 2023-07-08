@@ -16,7 +16,7 @@ services:
     networks:
       - safexpress
 
-  db:
+  mysql:
     image: mysql:8.0
     container_name: safexpress-db
     restart: unless-stopped
@@ -41,9 +41,35 @@ services:
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d
+    #   - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    # depends_on:
+    #   - php
+    #   - mysql
     networks:
       - safexpress
 
+#   php:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: php
+#     volumes:
+#       - .:/var/www/html
+#     ports:
+#       - "9000:9000"
+#     networks:
+#       - safexpress
+
+#   composer:
+#     image: composer:latest
+#     container_name: composer
+#     volumes:
+#       - .:/var/www/html
+#     working_dir: /var/www/html
+#     depends_on:
+#       - php
+#     networks:
+#       - safexpress
 
 networks:
   safexpress:
