@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '13d884c3818274e142bef3388768f5b80941f0b4',
+        'reference' => 'ae341cdec9ac9577ed475d7b8e5cfd87f6f7c113',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,6 +40,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'diglactic/laravel-breadcrumbs' => array(
+            'pretty_version' => 'v8.1.1',
+            'version' => '8.1.1.0',
+            'reference' => 'f72a78eb3e26aea507d7888a65f15e5790864e21',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../diglactic/laravel-breadcrumbs',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'doctrine/inflector' => array(
             'pretty_version' => '2.0.8',
             'version' => '2.0.8.0',
@@ -73,6 +82,15 @@
             'reference' => '3a85486b709bc384dae8eb78fb2eec649bdb64ff',
             'type' => 'library',
             'install_path' => __DIR__ . '/../egulias/email-validator',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'facade/ignition-contracts' => array(
+            'pretty_version' => '1.0.2',
+            'version' => '1.0.2.0',
+            'reference' => '3c921a1cdba35b68a7f0ccffc6dffc1995b18267',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../facade/ignition-contracts',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -355,6 +373,15 @@
                 0 => 'v10.14.1',
             ),
         ),
+        'intervention/image' => array(
+            'pretty_version' => '2.7.2',
+            'version' => '2.7.2.0',
+            'reference' => '04be355f8d6734c826045d02a1079ad658322dad',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../intervention/image',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -373,7 +400,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '13d884c3818274e142bef3388768f5b80941f0b4',
+            'reference' => 'ae341cdec9ac9577ed475d7b8e5cfd87f6f7c113',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -724,8 +751,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(

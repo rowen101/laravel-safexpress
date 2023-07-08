@@ -1,19 +1,65 @@
-# Travellist - Laravel Demo App
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-This is a Laravel demo application created for our Laravel at Scale series. 
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-The branch `tutorial-02` covers containerizing the application to run it with Docker containers.
+## About Laravel
 
-Once you have Docker and Docker Compose installed, you can get this environment up and running with:
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-```
-docker-compose build app
-docker-compose up -d
-```
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-## Tutorials in this Series:
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-- [How to Install and Configure Laravel with LEMP on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-laravel-with-lemp-on-ubuntu-18-04)
-- [Containerizing a Laravel 6 Application for Development with Docker Compose on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/containerizing-a-laravel-6-application-for-development-with-docker-compose-on-ubuntu-18-04)
+### Premium Partners
+
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[OP.GG](https://op.gg)**
+- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+- **[Lendio](https://lendio.com)**
 
 
+## Breadcrumbs
+
+composer require diglactic/laravel-breadcrumbs
+
+## Intervention image
+
+composer require intervention/image
+
+## build docker 
+docker-compose build app 
+
+## run docker or stop
+docker-compose up -d 
+docker-compose down
+
+## view logs container name
+docker logs containername
+
+## docker in windows 10 access file
+winpty docker exec -it containername //bin//sh
+docker exec -it Safexpress /bin/sh
+
+To access your Laravel application : http://localhost:8000
+To access the PhpMyAdmin console: http://localhost:8081
+The MySQL Database is using the port: 3306
