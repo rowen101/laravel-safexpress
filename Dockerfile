@@ -1,31 +1,36 @@
 # Used for prod build.
-FROM php:8.1  as php
+FROM php:8.1
 
-RUN apt-get update -y
-RUN apt-get install -y unzip libpq-dev libcurl4-gnutls-dev
-RUN docker-php-ext-install pdo pdo_mysql bcmath
 
-RUN pecl install -o -f redis \
-    && rm -rf /tmp/pear \
-    && docker-php-ext-enable redis
+# Arguments defined in docker-compose.yml
+ARG user
+ARG uid
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create system user to run Composer and Artisan Commands
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
+
+# Set working directory
 WORKDIR /var/www
-COPY . .
 
-COPY --from=composer:2.5.5 /usr/bin/composer /usr/bin/composer
-
-ENV PORT=8000
-ENTRYPOINT [ "docker/entrypoint.sh" ]
-
-#==============================================#
-
-# node
-# FROM node:14-alpine as node
-
-# WORKDIR /var/www
-# COPY . .
-
-# RUN npm install --global cross-ENV
-# RUN npm install
-
-# VOLUME /var/www/node_modules
+USER $user
