@@ -1,5 +1,4 @@
-# Used for prod build.
-FROM php:8.1-fpm as php
+FROM php:7.4-fpm
 
 # Arguments defined in docker-compose.yml
 ARG user

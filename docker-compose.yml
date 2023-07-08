@@ -17,7 +17,7 @@ services:
       - safexpress
 
   db:
-    image: mysql:8.0
+    image: mysql:5.7
     container_name: safexpress-db
     restart: unless-stopped
     environment:
