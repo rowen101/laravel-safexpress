@@ -50,7 +50,8 @@ composer require intervention/image
 docker-compose up --build 
 
 ## run docker or stop
-docker-compose up
+docker-compose build app
+docker-compose up -d
 docker-compose down
 
 ## view logs container name
@@ -59,6 +60,9 @@ docker logs containername
 ## docker in windows 10 access file
 winpty docker exec -it containername //bin//sh
 docker exec -it Safexpress /bin/sh
+
+
+
 
 To access your Laravel application : http://localhost:8000
 To access the PhpMyAdmin console: http://localhost:8081
