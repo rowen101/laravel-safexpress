@@ -60,16 +60,16 @@ services:
 #     networks:
 #       - safexpress
 
-#   composer:
-#     image: composer:latest
-#     container_name: composer
-#     volumes:
-#       - .:/var/www/html
-#     working_dir: /var/www/html
-#     depends_on:
-#       - php
-#     networks:
-#       - safexpress
+  composer:
+    image: composer:latest
+    container_name: composer
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    depends_on:
+      - app
+    networks:
+      - safexpress
 
 networks:
   safexpress:
