@@ -47,10 +47,10 @@ composer require diglactic/laravel-breadcrumbs
 composer require intervention/image
 
 ## build docker 
-docker-compose build app 
+docker-compose up --build 
 
 ## run docker or stop
-docker-compose up -d 
+docker-compose up
 docker-compose down
 
 ## view logs container name

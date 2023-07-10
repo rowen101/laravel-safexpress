@@ -1,4 +1,6 @@
-FROM php:8.1-fpm
+# Used for prod build.
+FROM php:8.1
+
 
 # Arguments defined in docker-compose.yml
 ARG user
@@ -32,5 +34,3 @@ RUN mkdir -p /home/$user/.composer && \
 WORKDIR /var/www
 
 USER $user
-
-
