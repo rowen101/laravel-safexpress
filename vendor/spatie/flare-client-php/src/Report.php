@@ -2,7 +2,6 @@
 
 namespace Spatie\FlareClient;
 
-use ErrorException;
 use Spatie\Backtrace\Arguments\ArgumentReducers;
 use Spatie\Backtrace\Arguments\Reducers\ArgumentReducer;
 use Spatie\Backtrace\Backtrace;
@@ -316,40 +315,8 @@ class Report
     {
         return array_map(
             fn (SpatieFrame $frame) => Frame::fromSpatieFrame($frame)->toArray(),
-            $this->cleanupStackTraceForError($this->stacktrace->frames()),
+            $this->stacktrace->frames(),
         );
-    }
-
-    /**
-     * @param array<SpatieFrame> $frames
-     *
-     * @return array<SpatieFrame>
-     */
-    protected function cleanupStackTraceForError(array $frames): array
-    {
-        if ($this->throwable === null || get_class($this->throwable) !== ErrorException::class) {
-            return $frames;
-        }
-
-        $firstErrorFrameIndex = null;
-
-        $restructuredFrames = array_values(array_slice($frames, 1)); // remove the first frame where error was created
-
-        foreach ($restructuredFrames as $index => $frame) {
-            if ($frame->file === $this->throwable->getFile()) {
-                $firstErrorFrameIndex = $index;
-
-                break;
-            }
-        }
-
-        if ($firstErrorFrameIndex === null) {
-            return $frames;
-        }
-
-        $restructuredFrames[$firstErrorFrameIndex]->arguments = null; // Remove error arguments
-
-        return array_values(array_slice($restructuredFrames, $firstErrorFrameIndex));
     }
 
     /**
