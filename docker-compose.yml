@@ -1,20 +1,20 @@
 version: "3.7"
 services:
-#   app:
-#     build:
-#       args:
-#         user: sammy
-#         uid: 1000
-#       context: ./
-#       dockerfile: Dockerfile
-#     image: safexpress
-#     container_name: safexpress-app
-#     restart: unless-stopped
-#     working_dir: /var/www/
-#     volumes:
-#       - ./:/var/www
-#     networks:
-#       - safexpress
+  app:
+    build:
+      args:
+        user: rowen
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: safexpress
+    container_name: safexpress-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - safexpress
 
   nginx:
     image: nginx:alpine
@@ -48,17 +48,17 @@ services:
     networks:
       - safexpress
 
-  php:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: php
-    volumes:
-      - .:/var/www
-    ports:
-      - "9000:9000"
-    networks:
-      - safexpress
+#   php:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: php
+#     volumes:
+#       - .:/var/www
+#     ports:
+#       - "9000:9000"
+#     networks:
+#       - safexpress
 
   composer:
     image: composer:latest
