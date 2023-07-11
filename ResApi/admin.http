@@ -1,0 +1,14 @@
+GET http://127.0.0.1:8000/api/core/menu HTTP/1.1
+content-type: application/json
+Authorization: Bearer 1|Ip8ecHLibDyD1JSbDKdluxUNaMlFgqXhLeawAoUK
+
+
+###
+POST http://127.0.0.1:8000/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "admin@admin.com",
+    "password": "admin123",
+    "confirmed_password":"admin123"
+}
