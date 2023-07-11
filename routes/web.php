@@ -27,12 +27,12 @@ Auth::routes();
 
 
 
-Route::get('/', [App\Http\Controllers\PagesController::class, 'index']);
-Route::get('/about', [App\Http\Controllers\PagesController::class, 'about']);
-Route::get('/services', [App\Http\Controllers\PagesController::class, 'services']);
-Route::get('/teams', [App\Http\Controllers\PagesController::class, 'teams']);
-Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact']);
-Route::get('/branch', [App\Http\Controllers\PagesController::class, 'branch']);
+Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('pages.index');
+Route::get('/about', [App\Http\Controllers\PagesController::class, 'about'])->name('pages.about');
+Route::get('/services', [App\Http\Controllers\PagesController::class, 'services'])->name('pages.services');
+Route::get('/teams', [App\Http\Controllers\PagesController::class, 'teams'])->name('pages.teams');
+Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])->name('pages.contact');
+Route::get('/branch', [App\Http\Controllers\PagesController::class, 'branch'])->name('pages.branch');
 
 
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
