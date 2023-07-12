@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\DB;
 class MenuController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -89,7 +98,7 @@ class MenuController extends Controller
         // ->select("menus.*", "app.app_name","app.id")
         // ->where('menu.id',$id)
         // ->orderBy('menus.created_at','DESC')->get();
-        $title ="Create Menu";
+        $title ="Edit Menu";
         return view('admin.menu.edit')->with(['data'=>$data,'title'=>$title,'app'=>$app,'mparent'=>$mparent]);
 
     }

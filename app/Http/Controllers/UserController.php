@@ -59,9 +59,9 @@ class UserController extends Controller
      */
     public function index()
     {
-
+        $title = 'User List';
         $data = User::orderBy('created_at','desc')->get();
-        return view('admin.user.index')->with(['data' => $data]);
+        return view('admin.user.index')->with(['data' => $data, 'title'=> $title]);
     }
 
     /**
@@ -69,8 +69,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        $title = 'Create User';
         $role = DB::table('role')->select('id','role_code')->where('is_active','1')->get();
-        return view('admin.user.create')->with(['role'=>$role]);
+        return view('admin.user.create')->with(['role'=>$role , 'user'=> $title]);
     }
 
     /**
@@ -117,8 +118,9 @@ class UserController extends Controller
      */
     public function show( $id)
     {
+        $title = "Show User";
        $data = User::find($id);
-       return view('admin.user.show')->with('data',$data);
+       return view('admin.user.show')->with(['data',$data, 'title' => $title]);
     }
 
     /**
@@ -126,9 +128,10 @@ class UserController extends Controller
      */
     public function edit( $id)
     {
+        $title = "Edit User";
        $data = User::find($id);
        $role = DB::table('role')->select('id','role_code')->where('is_active','1')->get();
-       return view('admin.user.edit')->with(['data' =>$data,'role'=>$role]);
+       return view('admin.user.edit')->with(['data' =>$data,'role'=>$role, 'title' => $title]);
     }
 
     /**

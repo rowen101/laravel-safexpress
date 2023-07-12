@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\blog;
 use Illuminate\Http\Request;
 
-class SettingController extends Controller
+class PostController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -20,8 +21,10 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $title ="setting";
-        return view('admin.setting.index')->with('title', $title);
+        $title = "Post";
+        $count = blog::count();
+        $posts = blog::all();
+        return view ('admin.post.index')->with(['title' => $title ,'posts'=> $posts, 'count' => $count]);
     }
 
     /**
@@ -29,7 +32,9 @@ class SettingController extends Controller
      */
     public function create()
     {
-        //
+        $count = blog::count();
+        $title = "Create Post";
+        return view ('admin.post.create')->with(['title'=> $title, 'count' => $count]);
     }
 
     /**

@@ -19,30 +19,24 @@
     <div class="container position-relative" data-aos="fade-up">
 
       <div class="row gy-4 d-flex justify-content-end">
-        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="250">
+        <div class="col-lg-12" data-aos="fade-up" data-aos-delay="250">
 
             <form action="forms/contact.php" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="form-group col-md-6 ">
-                    <select class="form-control" name="role_id" id="role_id">
-                        <option value="option_select" disabled>Role</option>
-                        <option value="1" >JSU</option>
-                      </select>
+                    <div class="custom-select">
+                        <select name="role_id" id="role_id">
+                          <option value="option_select" disabled>Role</option>
+                          <option value="1" >JSU</option>
+                        </select>
+
+                      </div>
                 </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                </div>
+
               </div>
 
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
+
+
             </form>
 
           </div><!-- End Contact Form -->

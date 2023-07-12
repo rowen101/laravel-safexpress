@@ -34,7 +34,7 @@
     <!-- Scripts -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
-
+@stack('head')
     <style>
         select {
             font-family: fontAwesome
@@ -119,7 +119,7 @@
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
-                <a href="index3.html" class="brand-link">
+                <a href="{{url ('/admin')}}" class="brand-link">
                     <img src="{{asset('img/safe1.png')}}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
                     <span class="brand-text font-weight-light">Admin</span>
                 </a>
@@ -283,7 +283,7 @@
     @endif
   </script>
 
-
+@stack('buttom')
     </div>
 </body>
 

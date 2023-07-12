@@ -84,3 +84,22 @@ Breadcrumbs::for('imagegallery', function (BreadcrumbTrail $trail) {
     $trail->parent('gallery');
     $trail->push('Image', url('admin/gallery/create'));
 });
+////////////////////////////////////////////////
+
+
+// Home > Post
+Breadcrumbs::for('post', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Post', url('admin/post'));
+});
+
+// Home > Post > [Create]
+Breadcrumbs::for('createpost', function (BreadcrumbTrail $trail) {
+    $trail->parent('post');
+    $trail->push('Create', url('admin/post/create'));
+});
+// Home > Post > [update]
+Breadcrumbs::for('editpost', function (BreadcrumbTrail $trail) {
+    $trail->parent('post');
+    $trail->push('Edit Post', url('admin/post/edit'));
+});

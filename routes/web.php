@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Console\Application;
@@ -33,7 +34,7 @@ Route::get('/services', [App\Http\Controllers\PagesController::class, 'services'
 Route::get('/teams', [App\Http\Controllers\PagesController::class, 'teams'])->name('pages.teams');
 Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])->name('pages.contact');
 Route::get('/branch', [App\Http\Controllers\PagesController::class, 'branch'])->name('pages.branch');
-
+Route::get('/blog', [App\Http\Controllers\PagesController::class, 'blog'])->name('pages.blog');
 
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/activity', [App\Http\Controllers\AdminController::class, 'activity'])->name('admin.activity');
@@ -44,6 +45,8 @@ Route::resource('/admin/apps',ApplicationController::class);
 Route::resource('/admin/menu',MenuController::class);
 Route::resource('/admin/setting',SettingController::class);
 Route::resource('/admin/gallery',GalleryController::class);
+Route::resource('/admin/post',PostController::class);
+
 //Route::get('/admin/gallery/{id}/image', [App\Http\Controllers\GalleryController::class, 'viewimage'])->name('admin.gallery.image');
 Route::post('/admin/gallery/image/{id}', [App\Http\Controllers\GalleryController::class, 'addimage']);
 

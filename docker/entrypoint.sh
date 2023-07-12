@@ -17,6 +17,7 @@ role=${CONTAINER_ROLE:-app}
     php artisan optimize clear
     php artisan view:clear
     php artisan route:clear
+    php artisan optimize:clear
     php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
 
 # elsif [ "$role" = "queue" ]; then

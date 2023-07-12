@@ -54,5 +54,11 @@ class PagesController extends Controller
         return view('pages.branch')->with('title', $title);;
     }
 
+    public function blog()
+    {
+        $title = "Blog Details";
+        return view('pages.blog')->with(['title' => $title]);
+    }
+
 
 }

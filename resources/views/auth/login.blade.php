@@ -23,12 +23,12 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            {{-- {{ config('app.name', 'Laravel') }} --}}
-            Safexpress
-        </div>
+
         <!-- /.login-logo -->
-        <div class="card">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="{{url('admin')}}" class="h1 text-primary"><b>Safe</b>Express</a>
+              </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
@@ -91,7 +91,9 @@
                     </a>
                 </div> --}}
                 <!-- /.social-auth-links -->
-                <p class="mb-1">
+                <div class="row">
+
+                    <p>
                     @if (Route::has('password.request'))
                         <a class="btn btn-link" href="{{ route('password.request') }}">
                             {{ __('Forgot Your Password?') }}
@@ -100,10 +102,12 @@
 
 
                 </p>
-                <p class="mb-0">
+                <p>
                     {{-- <a href="/register" class="text-center">Register a new User</a> --}}
                     <a href="#" class="text-center">Request user</a>
                 </p>
+                </div>
+
             </div>
             <!-- /.login-card-body -->
         </div>
