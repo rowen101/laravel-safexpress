@@ -103,3 +103,11 @@ Breadcrumbs::for('editpost', function (BreadcrumbTrail $trail) {
     $trail->parent('post');
     $trail->push('Edit Post', url('admin/post/edit'));
 });
+////////////////////////////////////////////////
+
+
+// Home > Post
+Breadcrumbs::for('categorie', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Cateogorie', url('admin/categorie'));
+});

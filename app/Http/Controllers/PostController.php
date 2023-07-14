@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\blog;
+use App\Models\Category;
+use App\Models\Posts;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -22,9 +23,10 @@ class PostController extends Controller
     public function index()
     {
         $title = "Post";
-        $count = blog::count();
-        $posts = blog::all();
-        return view ('admin.post.index')->with(['title' => $title ,'posts'=> $posts, 'count' => $count]);
+        $count = Posts::count();
+
+      $posts = Posts::all();
+        return view ('admin.post.index')->with(['title' => $title ,'posts'=> $posts,'count' => $count]);
     }
 
     /**
@@ -32,9 +34,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        $count = blog::count();
+        $count = Posts::count();
         $title = "Create Post";
-        return view ('admin.post.create')->with(['title'=> $title, 'count' => $count]);
+        $categorie = Category::all();
+        return view ('admin.post.create')->with(['title'=> $title, 'count' => $count, 'categorie' => $categorie]);
     }
 
     /**
@@ -42,7 +45,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+
+        ]);
+
+        //create post
+        $apps = new Posts();
+        $apps->title = $request->input('title');
+        $apps->body = $request->input('body');
+        $apps->category_id = 1;
+        $apps->created_by =auth()->user()->id;
+        $apps->save();
+
+        return redirect('admin/post')->with('success','Post Created Successfully!');
     }
 
     /**

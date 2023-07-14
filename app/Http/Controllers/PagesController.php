@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Posts;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,7 +58,8 @@ class PagesController extends Controller
     public function blog()
     {
         $title = "Blog Details";
-        return view('pages.blog')->with(['title' => $title]);
+        $content = Posts::all();
+        return view('pages.blog')->with(['title' => $title, 'content' => $content]);
     }
 
 

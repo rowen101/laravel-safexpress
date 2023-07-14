@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PostController;
@@ -46,7 +47,7 @@ Route::resource('/admin/menu',MenuController::class);
 Route::resource('/admin/setting',SettingController::class);
 Route::resource('/admin/gallery',GalleryController::class);
 Route::resource('/admin/post',PostController::class);
-
+Route::resource('/admin/categorie', CategorieController::class);
 //Route::get('/admin/gallery/{id}/image', [App\Http\Controllers\GalleryController::class, 'viewimage'])->name('admin.gallery.image');
 Route::post('/admin/gallery/image/{id}', [App\Http\Controllers\GalleryController::class, 'addimage']);
 

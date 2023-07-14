@@ -97,29 +97,45 @@
           <!-- /.col -->
           <div class="col-md-9">
             <div class="card card-primary card-outline">
+                <form method="POST" action="{{ url('admin/post') }}" enctype="multipart/form-data">
+                    {{ csrf_field() }}
               <div class="card-header">
                 <h3 class="card-title">Post</h3>
+                <div class="card-tools">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;Create Post</button>
+                      </div>
 
-
+                  </div>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
               <div class="card-body">
 
                 <div class="form-group">
-                  <input class="form-control" placeholder="Your Post">
+                  <input class="form-control" name="title" placeholder="Your Post">
                 </div>
                 <div class="form-group">
-                    <textarea id="compose-textarea" class="form-control" style="height: 300px; display: none;">
+                    <label for="exampleInputEmail1">Categorie</label>
+                    <select class="custom-select rounded-0"  name="app_id" id="app_id">
+                        <option value="option_select" disabled>Categorie</option>
+                        @foreach ($categorie as $item)
+                             <option value="{{ $item->id}}">{{ $item->name}}</option>
+                        @endforeach
+
+                      </select>
+                </div>
+                <div class="form-group">
+                    <textarea id="compose-textarea" name="body" class="form-control" style="height: 300px; display: none;">
                     </textarea>
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                   <div class="btn btn-default btn-file">
                     <i class="fas fa-paperclip"></i> Attachment
                     <input type="file" name="attachment">
                   </div>
                   <p class="help-block">Max. 32MB</p>
-                </div>
+                </div> --}}
               </div>
               <!-- /.card-body -->
               <div class="card-footer p-0">
@@ -158,6 +174,7 @@
                   <!-- /.float-right -->
                 </div>
               </div>
+                </form>
             </div>
             <!-- /.card -->
           </div>
