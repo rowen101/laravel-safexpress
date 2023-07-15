@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('email');
+            $table->string('website')->nullable();
             $table->text('content');
             $table->unsignedBigInteger('post_id');
+            $table->boolean('is_active')->default(true)->nullable();
             $table->foreign('post_id')->references('id')->on('blogs')->onDelete('cascade');
             $table->timestamps();
         });

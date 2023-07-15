@@ -56,7 +56,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
-    @vite(['resources/css/app.css'])
+    {{-- @vite(['resources/css/app.css']) --}}
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -286,7 +286,7 @@
   </script>
 
 @stack('buttom')
-@vite('resources/js/app.js')
+{{-- @vite('resources/js/app.js') --}}
     </div>
 </body>
 

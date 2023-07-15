@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 
@@ -24,9 +25,10 @@ class PostController extends Controller
     {
         $title = "Post";
         $count = Posts::count();
-
+        $ccount = Comment::count();
       $posts = Posts::all();
-        return view ('admin.post.index')->with(['title' => $title ,'posts'=> $posts,'count' => $count]);
+        return view ('admin.post.index')->with(['title' => $title
+        ,'posts'=> $posts,'count' => $count, 'ccount'=>$ccount]);
     }
 
     /**
@@ -68,7 +70,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $posts = Posts::find($id);
+        return view('admin.post.show')->with(['posts'=> $posts]);
     }
 
     /**
@@ -76,15 +79,33 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+         $categorie = Category::all();
+        $count = Posts::count();
+        $title = "Edit Post";
+        $post = Posts::find($id);
+        return view('admin.post.edit')->with(['post'=> $post, 'title'=> $title, 'count'=> $count,'categorie' => $categorie]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+
+        ]);
+
+        //create post
+        $apps =  Posts::find($id);
+        $apps->title = $request->input('title');
+        $apps->body = $request->input('body');
+        $apps->category_id = 1;
+        $apps->created_by =auth()->user()->id;
+        $apps->save();
+
+        return redirect('admin/post')->with('success','Post Created Successfully!');
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Menu;
 use App\Models\Posts;
 use App\Models\Gallery;
@@ -58,8 +60,23 @@ class PagesController extends Controller
     public function blog()
     {
         $title = "Blog Details";
-        $content = Posts::all();
-        return view('pages.blog')->with(['title' => $title, 'content' => $content]);
+
+        $content = DB::table("posts")
+        ->join("categories", "categories.id", "=","posts.category_id")
+        ->select("posts.*", "categories.name")
+        ->orderBy('posts.created_at','DESC')->get();
+
+
+        $category = DB::table('categories')
+        ->join('posts','posts.category_id','=', 'categories.id')
+        ->select('categories.*')
+        ->get('categories.name');
+
+        $comment = Comment::all();
+
+
+        return view('pages.blog')->with(['title' => $title, 'content' => $content,
+        'category' => $category,'comment' => $comment]);
     }
 
 

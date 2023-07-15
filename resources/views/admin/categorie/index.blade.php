@@ -76,7 +76,7 @@
           </button>
         </div>
         <div class="modal-body">
-<form id="productForm" name="productForm" class="form-horizontal">
+    <form id="productForm" name="productForm" class="form-horizontal">
           <div class="form-group">
             <input type="hidden" id="id" name="id"> <!-- Hidden field to store the user ID for update -->
             <input type="text" class="form-control" id="name" name="name" placeholder="Categorie">

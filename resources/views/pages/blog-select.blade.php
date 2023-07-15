@@ -43,7 +43,7 @@
                             </div><!-- End meta top -->
 
                             <div class="content">
-                               {{$item->body}}
+                                {{$item->body}}
 
                             </div><!-- End post content -->
 
@@ -56,9 +56,80 @@
                     @endif
 
 
+                    {{-- <div class="post-author d-flex align-items-center">
+            <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
+            <div>
+              <h4>Jane Smith</h4>
+              <div class="social-links">
+                <a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
+                <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
+              </div>
+              <p>
+                Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
+              </p>
+            </div>
+          </div> --}}
+                    <!-- End post author -->
+
+                    <div class="comments">
+
+                        <h4 class="comments-count">8 Comments</h4>
+
+                        @if (count($comment) > 0)
+                            @foreach ($comment as $item)
+                            <div class="comment">
+                                <div class="d-flex">
+                                    <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
+                                    <div>
+                                        <h5><a href="">{{$item->name}}</a> <a href="#" class="reply"><i
+                                                    class="bi bi-reply-fill"></i> Reply</a></h5>
+                                        <time datetime="2020-01-01">{{$item->created_at}}</time>
+                                        <p>
+                                           {{$item->content}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div><!-- End comment #1 -->
+                            @endforeach
+                        @else
+<center>no comment</center>
+                        @endif
 
 
+                        <div class="reply-form">
 
+                            <h4>Leave a Reply</h4>
+                            <p>Your email address will not be published. Required fields are marked * </p>
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <input name="name" type="text" class="form-control"
+                                            placeholder="Your Name*">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <input name="email" type="text" class="form-control"
+                                            placeholder="Your Email*">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <input name="website" type="text" class="form-control"
+                                            placeholder="Your Website">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <textarea name="comment" class="form-control" placeholder="Your Comment*"></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Post Comment</button>
+
+                            </form>
+
+                        </div>
+
+                    </div><!-- End blog comments -->
 
                 </div>
 
