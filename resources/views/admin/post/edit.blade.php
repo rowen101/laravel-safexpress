@@ -80,7 +80,7 @@
                 <h3 class="card-title">Post</h3>
                 <div class="card-tools">
                       <div class="input-group-append">
-                        <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbsp;Edit Post</button>&nbsp; <a href="" id="trash" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbsp;Edit Post</button>&nbsp; <a href="/admin/post/{{$post->id}}" id="trash" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
                       </div>
 
                   </div>
@@ -171,7 +171,7 @@
     $('#compose-textarea').summernote()
   })
 
-  
+
 </script>
 @endpush
 @endsection

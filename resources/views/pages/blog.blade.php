@@ -43,7 +43,7 @@
                             </div><!-- End meta top -->
 
                             <div class="content">
-                               {{$item->body}}
+                               {!!$item->body!!}
 
                             </div><!-- End post content -->
 
