@@ -33,7 +33,7 @@
 
                 <div class="card-tools">
                       <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary" href="javascript:void(0)" id="createNewProduct"><i class="fas fa-plus"></i></button>
+                        <button type="submit" class="btn btn-success" href="javascript:void(0)" id="createNewCategory"><i class="fas fa-plus"></i></button>
                       </div>
 
                   </div>
@@ -84,7 +84,7 @@
 </form>
 <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="saveBtn"><i class="fas fa-save"></i>&nbsp;Save</button>
+          <button type="button" class="btn btn-primary" id="saveBtn" value="create-categorie"><i class="fas fa-save"></i>&nbsp;Save</button>
         </div>
         </div>
 
@@ -118,9 +118,10 @@
    var table = $('.data-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ url('admin/categorie') }}",
+        ajax: "{{ route('categorie.index') }}",
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
@@ -131,11 +132,11 @@
       Click to Button
       --------------------------------------------
       --------------------------------------------*/
-      $('#createNewProduct').click(function () {
-          $('#saveBtn').val("create-product");
+      $('#createNewCategory').click(function () {
+          $('#saveBtn').val("create-categorie");
           $('#id').val('');
           $('#productForm').trigger("reset");
-          $('#modelHeading').html("Create New Product");
+          $('#modelHeading').html("Create New Categorie");
           $('#ajaxModel').modal('show');
       });
 
@@ -144,10 +145,10 @@
       Click to Edit Button
       --------------------------------------------
       --------------------------------------------*/
-      $('body').on('click', '.editProduct', function () {
+      $('body').on('click', '.editCategorie', function () {
         var id = $(this).data('id');
         $.get("{{ url('admin/categorie') }}" +'/' + id +'/edit', function (data) {
-            $('#modelHeading').html("Edit Product");
+            $('#modelHeading').html("Edit Categorie");
             $('#saveBtn').val("edit-user");
             $('#ajaxModel').modal('show');
             $('#id').val(data.id);
@@ -157,7 +158,7 @@
 
       /*------------------------------------------
       --------------------------------------------
-      Create Product Code
+      Create Categorie Code
       --------------------------------------------
       --------------------------------------------*/
       $('#saveBtn').click(function (e) {
@@ -166,7 +167,7 @@
 
           $.ajax({
             data: $('#productForm').serialize(),
-            url: "{{ url('admin/categorie') }}",
+            url: "{{ route('categorie.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
@@ -185,10 +186,10 @@
 
       /*------------------------------------------
       --------------------------------------------
-      Delete Product Code
+      Delete Categorie Code
       --------------------------------------------
       --------------------------------------------*/
-      $('body').on('click', '.deleteProduct', function () {
+      $('body').on('click', '.deleteCategorie', function () {
 
           var id = $(this).data("id");
           confirm("Are You sure want to delete !");

@@ -80,23 +80,27 @@ class PagesController extends Controller
         'category' => $category,'comment' => $comment]);
     }
     public function blogid(string $id){
-        $category = DB::table('categories')
-        ->join('posts','posts.category_id','=', 'categories.id')
-        ->select('categories.*')
-        ->get();
+    //     $category = DB::table('categories')
+    //     ->join('posts','posts.category_id','=', 'categories.id')
+    //     ->select('categories.*')
+    //     ->get();
 
-        $commentCount = DB::table('comments')
-                ->where('post_id', $id)
-                ->count();
+    //     $commentCount = DB::table('comments')
+    //             ->where('post_id', $id)
+    //             ->count();
 
-        $comment = DB::table('comments')->where('post_id','=',$id)->get();
+    //     $comment = DB::table('comments')->where('post_id','=',$id)->get();
 
-      $posts = DB::table('posts')
-        ->join('users','users.id', '=','posts.created_by')
-        ->select('posts.*')
-        ->where('posts.id',$id)
-        ->get();
-        return view('pages.blog-details')->with(['posts'=>$posts,'category'=>$category,'comment'=>$comment,'commentCount'=>$commentCount]);
+    //   $posts = DB::table('posts')
+    //     ->join('users','users.id', '=','posts.created_by')
+    //     ->select('posts.*')
+    //     ->where('posts.id',$id)
+    //     ->get();
+    //     return view('pages.blog-details')->with(['posts'=>$posts,'category'=>$category,'comment'=>$comment,'commentCount'=>$commentCount]);
+
+    $posts =Posts::with('category')->latest()->get();
+        // dd($posts);
+        return view('pages.blog-details', compact('posts'));
     }
 
 

@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
     <!-- Scripts -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 @stack('head')
     <style>
@@ -218,17 +219,18 @@
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="{{ asset('assets/dist/js/pages/dashboard.js') }}"></script>
 
-        <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        {{-- <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script> --}}
         <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+        {{-- <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script> --}}
         <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script>
+        <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/toastr.min.js')}}"></script>
+        {{-- <script>
             $(function() {
                 $("#example1").DataTable({
                     "responsive": true,
@@ -246,7 +248,7 @@
                     "responsive": true,
                 });
             });
-        </script>
+        </script> --}}
 <script>
     @if(Session::has('success'))
     toastr.options =

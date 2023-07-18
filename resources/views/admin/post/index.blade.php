@@ -53,7 +53,7 @@
                     <div class="col-md-3">
                         <a href="{{ url('admin/post/create') }}" class="btn btn-primary btn-block mb-3">Compose Post</a>
 
-                        @include('admin.post.partial.postfolder');
+                        @include('admin.post.partial.postfolder')
 
                     </div>
                     <!-- /.col -->

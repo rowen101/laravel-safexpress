@@ -29,7 +29,7 @@
           <div class="col-md-3">
             <a href="{{url('admin/post')}}" class="btn btn-primary btn-block mb-3"> <i class="fa fa-arrow-left"></i> Back to Post</a>
 
-            @include('admin.post.partial.postfolder');
+            @include('admin.post.partial.postfolder')
 
           </div>
           <!-- /.col -->

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\DataTables\CategoryDataTable;
+use Yajra\DataTables\Facades\DataTables;
 class CategorieController extends Controller
 {
     /**
@@ -23,26 +23,26 @@ class CategorieController extends Controller
     {
 
         $title ="Categorie";
-        $data = Category::latest()->get();
-       // if ($request->ajax()) {
 
-         //   $data = Category::latest()->get();
+       if ($request->ajax()) {
 
-            // return Datatables::of($data)
-            //         ->addIndexColumn()
-            //         ->addColumn('action', function($row){
+        $data = Category::select('*');
 
-            //                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>';
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
 
-            //                $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct">Delete</a>';
+                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editCategorie">Edit</a>';
 
-            //                 return $btn;
-            //         })
-            //         ->rawColumns(['action'])
-            //         ->make(true);
-        //}
+                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteCategorie">Delete</a>';
 
-        return view('admin.categorie.index')->with(['title' => $title, 'data' => $data]);
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+
+        return view('admin.categorie.index')->with(['title' => $title]);
     }
 
     /**

@@ -21,17 +21,17 @@
             <div class="row g-5">
 
                 <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-
-                         <article class="blog-details">
-@foreach ($posts as $item)
-
+                    @foreach ($posts as $post)
+                        <article class="blog-details">
 
 
-    <div class="post-img">
-                                <img src="{{asset('/img/blog/blog-1.jpg')}}" alt="" class="img-fluid">
+
+
+                            <div class="post-img">
+                                <img src="{{ asset('/img/blog/blog-1.jpg') }}" alt="" class="img-fluid">
                             </div>
 
-                            <h2 class="title">{{$item->title}}</h2>
+                            <h2 class="title">{{ $post->title }}</h2>
 
                             <div class="meta-top">
                                 <ul>
@@ -39,21 +39,23 @@
                                             href="blog-details.html">john</a></li>
                                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
                                             href="blog-details.html"><time datetime="2020-01-01">Jan 1, 2022</time></a></li>
-                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a
-                                            href="blog-details.html">{{$commentCount}} Comments</a></li>
+                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>{{-- <a
+                                             href="blog-details.html">{{$commentCount}} Comments</a>--}}</li>
+                                             <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                                                href="blog-details.html">{{$post->category->name}}</a></li>
                                 </ul>
                             </div><!-- End meta top -->
 
                             <div class="content">
-                                {!!$item->body!!}
+                                {!! $post->body !!}
 
                             </div><!-- End post content -->
-                            @endforeach
+
                         </article><!-- End blog post -->
 
 
 
-                    {{-- <div class="post-author d-flex align-items-center">
+                        {{-- <div class="post-author d-flex align-items-center">
             <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
             <div>
               <h4>Jane Smith</h4>
@@ -67,67 +69,65 @@
               </p>
             </div>
           </div> --}}
-                    <!-- End post author -->
+                        <!-- End post author -->
 
-                    <div class="comments">
+                        <div class="comments">
 
-                        <h4 class="comments-count">{{$commentCount}} Comments</h4>
+                            {{-- <h4 class="comments-count">{{$commentCount}} Comments</h4> --}}
 
-                        @if (count($comment) > 0)
-                            @foreach ($comment as $item)
+
+                            @foreach ($post->comments as $comment)
                             <div class="comment">
                                 <div class="d-flex">
-                                    {{-- <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div> --}}
+                                    <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
                                     <div>
-                                        <h5><a href="">{{$item->name}}</a> <a href="#" class="reply"><i
+                                        <h5><a href="">{{$comment->name}}</a> <a href="#" class="reply"><i
                                                     class="bi bi-reply-fill"></i> Reply</a></h5>
-                                        <time datetime="2020-01-01">{{$item->created_at}}</time>
+                                        <time datetime="2020-01-01">{{$comment->created_at}}</time>
                                         <p>
-                                           {{$item->content}}
+                                           {{$comment->content}}
                                         </p>
                                     </div>
                                 </div>
                             </div><!-- End comment #1 -->
                             @endforeach
-                        @else
-                            <center>no comment</center>
-                        @endif
 
 
-                        <div class="reply-form">
 
-                            <h4>Leave a Reply</h4>
-                            <p>Your email address will not be published. Required fields are marked * </p>
-                            <form action="">
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <input name="name" type="text" class="form-control"
-                                            placeholder="Your Name*">
+                            <div class="reply-form">
+
+                                <h4>Leave a Reply</h4>
+                                <p>Your email address will not be published. Required fields are marked * </p>
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <input name="name" type="text" class="form-control"
+                                                placeholder="Your Name*">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <input name="email" type="text" class="form-control"
+                                                placeholder="Your Email*">
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 form-group">
-                                        <input name="email" type="text" class="form-control"
-                                            placeholder="Your Email*">
+                                    <div class="row">
+                                        <div class="col form-group">
+                                            <input name="website" type="text" class="form-control"
+                                                placeholder="Your Website">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <input name="website" type="text" class="form-control"
-                                            placeholder="Your Website">
+                                    <div class="row">
+                                        <div class="col form-group">
+                                            <textarea name="comment" class="form-control" placeholder="Your Comment*"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <textarea name="comment" class="form-control" placeholder="Your Comment*"></textarea>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Post Comment</button>
+                                    <button type="submit" class="btn btn-primary">Post Comment</button>
 
-                            </form>
+                                </form>
 
-                        </div>
+                            </div>
 
-                    </div><!-- End blog comments -->
-
+                        </div><!-- End blog comments -->
+                    @endforeach
                 </div>
 
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
@@ -142,20 +142,19 @@
                             </form>
                         </div><!-- End sidebar search formn-->
 
-                        <div class="sidebar-item categories">
+                        {{-- <div class="sidebar-item categories">
                             <h3 class="sidebar-title">Categories</h3>
                             <ul class="mt-3">
                                 @if (count($category) > 0)
-                        @foreach ($category as $item)
-                        <li><a href="#">{{$item->name}} <span>(25)</span></a></li>
-
-                        @endforeach
-                        @else
-                                <center>no category</center>
-                        @endif
+                                    @foreach ($category as $item)
+                                        <li><a href="#">{{ $item->name }} <span>(25)</span></a></li>
+                                    @endforeach
+                                @else
+                                    <center>no category</center>
+                                @endif
 
                             </ul>
-                        </div><!-- End sidebar categories-->
+                        </div><!-- End sidebar categories--> --}}
 
                         {{-- <div class="sidebar-item recent-posts">
                             <h3 class="sidebar-title">Recent Posts</h3>
