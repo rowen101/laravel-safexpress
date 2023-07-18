@@ -129,6 +129,35 @@ return new class extends Migration
             $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('posts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('body');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            $table->integer('created_by')->default(0);
+            $table->boolean('is_active')->default(true)->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('comments', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('email');
+            $table->string('website')->nullable();
+            $table->text('content');
+            $table->unsignedBigInteger('post_id');
+            $table->boolean('is_active')->default(true)->nullable();
+            $table->foreign('post_id')->references('id')->on('blogs')->onDelete('cascade');
+            $table->timestamps();
+        });
         Artisan::call('db:seed');
     }
 
@@ -143,5 +172,8 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('permission');
         Schema::dropIfExists('galleries');
+        Schema::dropIfExists('categories');
+        Schema::dropIfExists('posts');
+        Schema::dropIfExists('comments');
     }
 };
