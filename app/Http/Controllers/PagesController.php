@@ -59,11 +59,12 @@ class PagesController extends Controller
 
     public function blog()
     {
-        $title = "Blog Details";
+        $title = "Blog";
 
         $content = DB::table("posts")
         ->join("categories", "categories.id", "=","posts.category_id")
         ->select("posts.*", "categories.name")
+        ->where('is_active',true)
         ->orderBy('posts.created_at','DESC')->get();
 
 
@@ -95,7 +96,7 @@ class PagesController extends Controller
         ->select('posts.*')
         ->where('posts.id',$id)
         ->get();
-        return view('pages.blog-select')->with(['posts'=>$posts,'category'=>$category,'comment'=>$comment,'commentCount'=>$commentCount]);
+        return view('pages.blog-details')->with(['posts'=>$posts,'category'=>$category,'comment'=>$comment,'commentCount'=>$commentCount]);
     }
 
 

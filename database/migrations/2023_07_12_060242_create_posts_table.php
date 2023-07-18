@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->integer('created_by')->default(0);
+            $table->boolean('is_active')->default(true)->nullable();
             $table->timestamps();
         });
     }
