@@ -36,7 +36,7 @@ Route::get('/teams', [App\Http\Controllers\PagesController::class, 'teams'])->na
 Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])->name('pages.contact');
 Route::get('/branch', [App\Http\Controllers\PagesController::class, 'branch'])->name('pages.branch');
 Route::get('/blog', [App\Http\Controllers\PagesController::class, 'blog'])->name('pages.blog');
-
+Route::get('/blog/{id}', [App\Http\Controllers\PagesController::class, 'blogid'])->name('pages.blog.blog-select');
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/activity', [App\Http\Controllers\AdminController::class, 'activity'])->name('admin.activity');
 Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');

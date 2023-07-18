@@ -20,45 +20,40 @@
         <div class="container" data-aos="fade-up">
             <div class="row g-5">
 
-                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-                    @if (count($content) > 0)
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200" >
+                    <div class="row gy-5 posts-list">
+                        @if (count($content) > 0)
                         @foreach ($content as $item)
-                        <article class="blog-details">
-
-                            <div class="post-img">
-                                <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
-                            </div>
-
-                            <h2 class="title">{{$item->title}}</h2>
-
-                            <div class="meta-top">
-                                <ul>
-                                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                            href="blog-details.html">John Doe</a></li>
-                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-                                            href="blog-details.html"><time datetime="2020-01-01">Jan 1, 2022</time></a></li>
-                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a
-                                            href="blog-details.html">12 Comments</a></li>
-                                </ul>
-                            </div><!-- End meta top -->
-
-                            <div class="content">
-                               {!!$item->body!!}
-
-                            </div><!-- End post content -->
-
-
-
-                        </article><!-- End blog post -->
+                        <div class="col-lg-6">
+                            <article class="d-flex flex-column">
+                                <div class="post-img">
+                                    <img src="{{asset ('/img/blog/blog-1.jpg')}}" alt="" class="img-fluid">
+                                </div>
+                                <h2 class="title">
+                                <a href="blog/{{$item->id}}">{{$item->title}}</a>
+                                </h2>
+                                <div class="meta-top">
+                                    <ul>
+                                      <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John Doe</a></li>
+                                      <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2022-01-01">Jan 1, 2022</time></a></li>
+                                      <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">12 Comments</a></li>
+                                    </ul>
+                                  </div>
+                                  <div class="content">
+                                    <p>
+                                        {!!$item->body!!}
+                                    </p>
+                                  </div>
+                                  <div class="read-more mt-auto align-self-end">
+                                    <a href="blog-details.html">Read More <i class="bi bi-arrow-right"></i></a>
+                                  </div>
+                            </article>
+                        </div>
                         @endforeach
-                    @else
+                        @else
                         <center><p>no post</p></center>
                     @endif
-
-
-
-
-
+                    </div>
 
                 </div>
 

@@ -78,6 +78,25 @@ class PagesController extends Controller
         return view('pages.blog')->with(['title' => $title, 'content' => $content,
         'category' => $category,'comment' => $comment]);
     }
+    public function blogid(string $id){
+        $category = DB::table('categories')
+        ->join('posts','posts.category_id','=', 'categories.id')
+        ->select('categories.*')
+        ->get();
+
+        $commentCount = DB::table('comments')
+                ->where('post_id', $id)
+                ->count();
+
+        $comment = DB::table('comments')->where('post_id','=',$id)->get();
+
+      $posts = DB::table('posts')
+        ->join('users','users.id', '=','posts.created_by')
+        ->select('posts.*')
+        ->where('posts.id',$id)
+        ->get();
+        return view('pages.blog-select')->with(['posts'=>$posts,'category'=>$category,'comment'=>$comment,'commentCount'=>$commentCount]);
+    }
 
 
 }

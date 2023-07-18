@@ -4,11 +4,11 @@
     <div class="breadcrumbs d-flex align-items-center" style="background-image: url('img/about-header.jpg');">
         <div class="container position-relative d-flex flex-column align-items-center">
 
-            <h2>{{ $title }}</h2>
+            {{-- <h2>{{ $post->title }}</h2>
             <ol>
                 <li><a href="/">Home</a></li>
-                <li>{{ $title }}</li>
-            </ol>
+                <li>{{ $post->title }}</li>
+            </ol> --}}
 
         </div>
     </div><!-- End Breadcrumbs -->
@@ -21,12 +21,14 @@
             <div class="row g-5">
 
                 <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-                    @if (count($content) > 0)
-                        @foreach ($content as $item)
-                        <article class="blog-details">
 
-                            <div class="post-img">
-                                <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+                         <article class="blog-details">
+@foreach ($posts as $item)
+
+
+
+    <div class="post-img">
+                                <img src="{{asset('/img/blog/blog-1.jpg')}}" alt="" class="img-fluid">
                             </div>
 
                             <h2 class="title">{{$item->title}}</h2>
@@ -34,26 +36,21 @@
                             <div class="meta-top">
                                 <ul>
                                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                            href="blog-details.html">John Doe</a></li>
+                                            href="blog-details.html">john</a></li>
                                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
                                             href="blog-details.html"><time datetime="2020-01-01">Jan 1, 2022</time></a></li>
                                     <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a
-                                            href="blog-details.html">12 Comments</a></li>
+                                            href="blog-details.html">{{$commentCount}} Comments</a></li>
                                 </ul>
                             </div><!-- End meta top -->
 
                             <div class="content">
-                                {{$item->body}}
+                                {!!$item->body!!}
 
                             </div><!-- End post content -->
-
-
-
+                            @endforeach
                         </article><!-- End blog post -->
-                        @endforeach
-                    @else
-                        <center><p>no post</p></center>
-                    @endif
+
 
 
                     {{-- <div class="post-author d-flex align-items-center">
@@ -74,7 +71,7 @@
 
                     <div class="comments">
 
-                        <h4 class="comments-count">8 Comments</h4>
+                        <h4 class="comments-count">{{$commentCount}} Comments</h4>
 
                         @if (count($comment) > 0)
                             @foreach ($comment as $item)
@@ -93,7 +90,7 @@
                             </div><!-- End comment #1 -->
                             @endforeach
                         @else
-<center>no comment</center>
+                            <center>no comment</center>
                         @endif
 
 
@@ -213,17 +210,8 @@
                         <div class="sidebar-item tags">
                             <h3 class="sidebar-title">Tags</h3>
                             <ul class="mt-3">
-                                <li><a href="#">App</a></li>
-                                <li><a href="#">IT</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Mac</a></li>
-                                <li><a href="#">Design</a></li>
-                                <li><a href="#">Office</a></li>
-                                <li><a href="#">Creative</a></li>
-                                <li><a href="#">Studio</a></li>
-                                <li><a href="#">Smart</a></li>
-                                <li><a href="#">Tips</a></li>
-                                <li><a href="#">Marketing</a></li>
+                                <li><a href="#">Team</a></li>
+                       
                             </ul>
                         </div><!-- End sidebar tags-->
 

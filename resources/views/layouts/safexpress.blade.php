@@ -42,7 +42,7 @@
   @vite(['resources/css/app.css'])
 </head>
 <body>
-    
+
         @include('inc.navbar')
 
                <main id="main">

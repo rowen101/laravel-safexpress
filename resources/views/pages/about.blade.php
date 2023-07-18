@@ -16,26 +16,32 @@
 
     <!-- ======= About Section ======= -->
     <section id="about" class="about">
-      <div class="container" data-aos="fade-up">
+        <div class="container aos-init aos-animate" data-aos="fade-up">
 
-        <div class="row gy-4" data-aos="fade-up">
+          <div class="row gy-4 aos-init aos-animate" data-aos="fade-up">
+            <div class="col-lg-4">
+              <img src="{{asset('/img/about.png')}}" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-8">
+              <div class="content ps-lg-5">
+                <h3>About SafeXpress</h3>
+                <p>
+                    We at Safexpress Logistics Inc. uphold our a good reputation as one of the best logistics company in the
+                    Philippines.
+                    We’re dedicated to providing our clients the very best of Supply Chain Solutions, with an emphasis on
+                    our companies mission, vision & core values.
+                  </p>
+                <ul>
+                  <li><i class="bi bi bi-truck"></i> Safexpress Logistics Inc. contenues its mission in providing outstanding delivery and warehousing solutions to our existing clients.</li>
+                  <li><i class="bi bi bi-award-fill"></i> We aspire to be the creative and innovative leader in the industry, anticipating the market needs and steering our company towards long-term successa and growth.</li>
 
-          <div class="col-lg-12">
-            <div class="content ps-lg-5">
-              <h3>About SafeXpress</h3>
-              <p>
-                We at Safexpress Logistics Inc. uphold our a good reputation as one of the best logistics company in the
-                Philippines.
-                We’re dedicated to providing our clients the very best of Supply Chain Solutions, with an emphasis on
-                our companies mission, vision & core values.
-              </p>
-
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
-    </section><!-- End About Section -->
+        </div>
+      </section>
 
     <!-- ======= Why Choose Us Section ======= -->
     <section id="why-us" class="why-us">
@@ -58,7 +64,7 @@
 
                 <div class="swiper-slide">
                   <div class="item">
-                    <h3 class="mb-3">Our Mission</h3>
+
                     <div class="row gy-4" data-aos="fade-up">
                       <div class="col-lg-5">
                         <div class="content ps-lg-5">
@@ -67,6 +73,7 @@
                       </div>
                       <div class="col-lg-7">
                         <div class="content ps-lg-5">
+                            <h3 class="mb-3">Our Mission</h3>
                 <p>Our Mission
                       To provide the highest level of warehousing and transport services by committing to safe and
                       timely deliveries, as well as offer fair and competitive pricing to our clients. Our goal is to
@@ -81,7 +88,7 @@
 
                 <div class="swiper-slide">
                   <div class="item">
-                    <h3 class="mb-3">Our Vission</h3>
+
                     <div class="row gy-4" data-aos="fade-up">
                       <div class="col-lg-5">
                         <div class="content ps-lg-5">
@@ -90,6 +97,7 @@
                       </div>
                       <div class="col-lg-7">
                         <div class="content ps-lg-5">
+                            <h3 class="mb-3">Our Vission</h3>
                           <p>To be a Recognized Leader in the industry. and to be the Preferred Supply Chain Enabler that
                             differentiates our solutions based on in-depth customer understanding and a strong focus on the
                             ever-shifting market needs. All of this is to ensure that Safexpress Logistics propels into an
