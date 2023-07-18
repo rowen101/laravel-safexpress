@@ -27,7 +27,7 @@
                         <div class="col-lg-6">
                             <article class="d-flex flex-column">
                                 <div class="post-img">
-                                    <img src="{{asset ('/img/blog/blog-1.jpg')}}" alt="" class="img-fluid">
+                                    {{-- <img src="{{asset ('/img/blog/blog-1.jpg')}}" alt="" class="img-fluid"> --}}
                                 </div>
                                 <h2 class="title">
                                 <a href="blog/{{$item->id}}">{{$item->title}}</a>

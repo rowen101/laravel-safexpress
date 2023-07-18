@@ -77,7 +77,7 @@
                             @foreach ($comment as $item)
                             <div class="comment">
                                 <div class="d-flex">
-                                    <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
+                                    {{-- <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div> --}}
                                     <div>
                                         <h5><a href="">{{$item->name}}</a> <a href="#" class="reply"><i
                                                     class="bi bi-reply-fill"></i> Reply</a></h5>
@@ -211,7 +211,7 @@
                             <h3 class="sidebar-title">Tags</h3>
                             <ul class="mt-3">
                                 <li><a href="#">Team</a></li>
-                       
+
                             </ul>
                         </div><!-- End sidebar tags-->
 
