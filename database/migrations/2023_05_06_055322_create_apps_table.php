@@ -140,6 +140,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('body');
+            $table->string('photo')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->integer('created_by')->default(0);

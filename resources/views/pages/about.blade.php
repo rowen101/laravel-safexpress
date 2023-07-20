@@ -19,11 +19,11 @@
         <div class="container aos-init aos-animate" data-aos="fade-up">
 
           <div class="row gy-4 aos-init aos-animate" data-aos="fade-up">
-            <div class="col-lg-4">
+            <div class="col-lg-4" data-aos="fade-right">
               <img src="{{asset('/img/about.png')}}" class="img-fluid" alt="">
             </div>
             <div class="col-lg-8">
-              <div class="content ps-lg-5">
+              <div class="content ps-lg-5" data-aos="fade-left">
                 <h3>About SafeXpress</h3>
                 <p>
                     We at Safexpress Logistics Inc. uphold our a good reputation as one of the best logistics company in the
@@ -141,9 +141,9 @@
           <h2>Quality Policy</h2>
 
         </div>
-        <div class="row gy-4" data-aos="fade-up">
+        <div class="row gy-4" >
           <div class="col-lg-5">
-            <div class="content ps-lg-5">
+            <div class="content ps-lg-5" data-aos="fade-right">
               <h4>Safexpress is committed to run its
                 operations with utmost adherence to:</h4>
               <ul>
@@ -154,7 +154,7 @@
               </ul>
             </div>
           </div>
-          <div class="col-lg-7">
+          <div class="col-lg-7" data-aos="fade-left">
             <div class="content ps-lg-5">
 
               <p>

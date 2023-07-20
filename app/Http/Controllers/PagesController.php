@@ -63,21 +63,27 @@ class PagesController extends Controller
 
         $content = DB::table("posts")
         ->join("categories", "categories.id", "=","posts.category_id")
-        ->select("posts.*", "categories.name")
-        ->where('is_active',true)
+        ->join("users", "users.id", "=","posts.created_by")
+        ->select("posts.*", "categories.name","users.first_name as fname")
+        ->where('posts.is_active',true)
         ->orderBy('posts.created_at','DESC')->get();
 
+        $countcomment = DB::table("posts")
+        ->join("comments","comments.post_id", "=","posts.id")
+        ->where('comments.posts_id','posts.id')
+        ->selectRaw('COUNT(*) as count')
+        ->get();
 
         $category = DB::table('categories')
-        ->join('posts','posts.category_id','=', 'categories.id')
-        ->select('categories.*')
-        ->get('categories.name');
+        ->join('posts','posts.category_id','=','categories.id')
+        ->groupBy('categories.name')
+        ->get();
 
         $comment = Comment::all();
 
 
         return view('pages.blog')->with(['title' => $title, 'content' => $content,
-        'category' => $category,'comment' => $comment]);
+        'category' => $category,'comment' => $comment,'countcomment' =>$countcomment]);
     }
     public function blogid(string $id){
     //     $category = DB::table('categories')
