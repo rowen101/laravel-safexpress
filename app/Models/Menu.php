@@ -9,7 +9,7 @@ class Menu extends Model
 {
     protected $table = 'menus';
 
-    protected $fillable = ['app_id', 'menu_code', 'menu_title', 'description','parent_id','menu_icon','menu_route','sort_order','is_active'];
+    protected $fillable = ['id','app_id', 'menu_code', 'menu_title', 'description','parent_id','menu_icon','menu_route','sort_order','is_active'];
 
     public function submenus()
     {
@@ -20,4 +20,6 @@ class Menu extends Model
     {
         return static::where('parent_id', null)->with('submenus')->get();
     }
+
+
 }

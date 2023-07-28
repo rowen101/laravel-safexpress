@@ -20,19 +20,19 @@
       <div class="col-lg-2 col-6 footer-links">
         <h4>Useful Links</h4>
         <ul>
-          <li><i class="bi bi-dash"></i> <a href="#">Home</a></li>
-          <li><i class="bi bi-dash"></i> <a href="#">About us</a></li>
-          <li><i class="bi bi-dash"></i> <a href="#">Services</a></li>
-          <li><i class="bi bi-dash"></i> <a href="#">Terms of service</a></li>
-          <li><i class="bi bi-dash"></i> <a href="#">Privacy policy</a></li>
+            <li><i class="bi bi-dash"></i> <a href="{{url('/')}}">Home</a></li>
+            <li><i class="bi bi-dash"></i> <a href="{{url('/about')}}">About us</a></li>
+            <li><i class="bi bi-dash"></i> <a href="{{url('/services')}}">Services</a></li>
+
         </ul>
       </div>
 
       <div class="col-lg-2 col-6 footer-links">
         <h4>Our Services</h4>
         <ul>
-          <li><i class="bi bi-dash"></i> <a href="#">Web Design</a></li>
-
+          <li><i class="bi bi-dash"></i> <a href="{{url('/warehouse-management')}}">Warehouse Management</a></li>
+          <li><i class="bi bi-dash"></i> <a href="{{url('/transport-services')}}">Tranport Services</a></li>
+          <li><i class="bi bi-dash"></i> <a href="{{url('/other-services')}}">Other Service</a></li>
         </ul>
       </div>
 

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PostController;
@@ -25,18 +27,26 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+
+Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('pages.index');
+Route::get('/about', [App\Http\Controllers\PagesController::class, 'about'])->name('about');
+Route::get('/services', [App\Http\Controllers\PagesController::class, 'services'])->name('services');
+Route::get('/teams', [App\Http\Controllers\PagesController::class, 'teams'])->name('teams');
+Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])->name('contact');
+Route::get('/branch', [App\Http\Controllers\PagesController::class, 'branch'])->name('branch');
+Route::get('/blog', [App\Http\Controllers\PagesController::class, 'blog'])->name('blog');
+Route::get('/blog-details/{id}', [App\Http\Controllers\PagesController::class, 'blogid'])->name('blog-select');
+Route::get('/warehouse-management', [App\Http\Controllers\PagesController::class, 'warehouse']);
+Route::get('/transport-services', [App\Http\Controllers\PagesController::class, 'transport']);
+Route::get('/other-services', [App\Http\Controllers\PagesController::class, 'other']);
+Route::resource('/comment',CommentController::class);
+
+
 Auth::routes();
 
 
 
-Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('pages.index');
-Route::get('/about', [App\Http\Controllers\PagesController::class, 'about'])->name('pages.about');
-Route::get('/services', [App\Http\Controllers\PagesController::class, 'services'])->name('pages.services');
-Route::get('/teams', [App\Http\Controllers\PagesController::class, 'teams'])->name('pages.teams');
-Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])->name('pages.contact');
-Route::get('/branch', [App\Http\Controllers\PagesController::class, 'branch'])->name('pages.branch');
-Route::get('/blog', [App\Http\Controllers\PagesController::class, 'blog'])->name('pages.blog');
-Route::get('/blog/{id}', [App\Http\Controllers\PagesController::class, 'blogid'])->name('pages.blog.blog-select');
+
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/activity', [App\Http\Controllers\AdminController::class, 'activity'])->name('admin.activity');
 Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -50,7 +60,7 @@ Route::resource('/admin/post',PostController::class);
 Route::resource('/admin/categorie', CategorieController::class);
 //Route::get('/admin/gallery/{id}/image', [App\Http\Controllers\GalleryController::class, 'viewimage'])->name('admin.gallery.image');
 Route::post('/admin/gallery/image/{id}', [App\Http\Controllers\GalleryController::class, 'addimage']);
-
+Route::resource('/admin/branch', BranchController::class);
 Route::get('/file-resize', [App\Http\Controllers\ResizeController::class, 'index']);
 Route::post('/resize-file', [App\Http\Controllers\ResizeController::class, 'resizeImage'])->name('resizeImage');
 

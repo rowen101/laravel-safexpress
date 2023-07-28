@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Posts;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -26,9 +27,10 @@ class PostController extends Controller
         $title = "Post";
         $count = Posts::count();
         $ccount = Comment::count();
-      $posts = Posts::all();
-        return view ('admin.post.index')->with(['title' => $title
-        ,'posts'=> $posts,'count' => $count, 'ccount'=>$ccount]);
+        $posts = Posts::all();
+        return view('admin.post.index')->with([
+            'title' => $title, 'posts' => $posts, 'count' => $count, 'ccount' => $ccount
+        ]);
     }
 
     /**
@@ -39,7 +41,7 @@ class PostController extends Controller
         $count = Posts::count();
         $title = "Create Post";
         $categorie = Category::all();
-        return view ('admin.post.create')->with(['title'=> $title, 'count' => $count, 'categorie' => $categorie]);
+        return view('admin.post.create')->with(['title' => $title, 'count' => $count, 'categorie' => $categorie]);
     }
 
     /**
@@ -47,22 +49,40 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
+        try {
+            //dd($request->all());
+            $this->validate($request, [
+                'title' => 'required',
+                'body' => 'required',
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
 
-        ]);
+            ]);
+            // Handle File Upload
+            $image = $request->file('photo');
+            $input['photo'] = time() . '.' . $image->getClientOriginalExtension();
 
-        //create post
-        $apps = new Posts();
-        $apps->title = $request->input('title');
-        $apps->body = $request->input('body');
-        $apps->category_id = 1;
-        $apps->created_by =auth()->user()->id;
-        $apps->save();
+            $destinationPath = public_path('/thumbnail');
+            $imgFile = Image::make($image->getRealPath());
+            $imgFile->resize(1020, 768, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $input['photo']);
+            $destinationPath = public_path('/uploads');
+            $image->move($destinationPath, $input['photo']);
 
-        return redirect('admin/post')->with('success','Post Created Successfully!');
+            //create post
+            $apps = new Posts();
+            $apps->title = $request->input('title');
+            $apps->body = $request->input('body');
+            $apps->category_id = 1;
+            $apps->photo = $input['photo'];
+            $apps->created_by = auth()->user()->id;
+            $apps->save();
+
+            return redirect('admin/post')->with('success', 'Post Created Successfully!');
+            return redirect('admin/post')->with('success', 'Post Created Successfully!');
+        } catch (\Exception $e) {
+            return redirect('admin/post')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -71,7 +91,7 @@ class PostController extends Controller
     public function show(string $id)
     {
         $posts = Posts::find($id);
-        return view('admin.post.show')->with(['posts'=> $posts]);
+        return view('admin.post.show')->with(['posts' => $posts]);
     }
 
     /**
@@ -79,11 +99,11 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-         $categorie = Category::all();
+        $categorie = Category::all();
         $count = Posts::count();
         $title = "Edit Post";
         $post = Posts::find($id);
-        return view('admin.post.edit')->with(['post'=> $post, 'title'=> $title, 'count'=> $count,'categorie' => $categorie]);
+        return view('admin.post.edit')->with(['post' => $post, 'title' => $title, 'count' => $count, 'categorie' => $categorie]);
     }
 
     /**
@@ -91,21 +111,40 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
+        try {
+            //dd($request->all());
+            $this->validate($request, [
+                'title' => 'required',
+                'body' => 'required',
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
 
-        ]);
+            ]);
 
-        //create post
-        $apps =  Posts::find($id);
-        $apps->title = $request->input('title');
-        $apps->body = $request->input('body');
-        $apps->category_id = 1;
-        $apps->created_by =auth()->user()->id;
-        $apps->save();
+            // Handle File Upload
+            $image = $request->file('photo');
+            $input['photo'] = time() . '.' . $image->getClientOriginalExtension();
 
-        return redirect('admin/post')->with('success','Post Created Successfully!');
+            $destinationPath = public_path('/thumbnail');
+            $imgFile = Image::make($image->getRealPath());
+            $imgFile->resize(1020, 768, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $input['photo']);
+            $destinationPath = public_path('/uploads');
+            $image->move($destinationPath, $input['photo']);
+
+            //create post
+            $apps =  Posts::find($id);
+            $apps->title = $request->input('title');
+            $apps->body = $request->input('body');
+            $apps->category_id = $request->input('category_id');
+            $apps->photo = $input['photo'];
+            $apps->created_by = auth()->user()->id;
+            $apps->save();
+
+            return redirect('admin/post')->with('success', 'Post Created Successfully!');
+        } catch (\Exception $e) {
+            return redirect('admin/post')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -116,6 +155,6 @@ class PostController extends Controller
 
         $post = Posts::find($id);
         $post->delete();
-        return view('admin.post.index')->with('success','Post Delete Successfully!');
+        return view('admin.post.index')->with('success', 'Post Delete Successfully!');
     }
 }

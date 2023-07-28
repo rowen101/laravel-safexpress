@@ -16,98 +16,149 @@ class PagesController extends Controller
     {
 
         $title = "Home";
-        return view('pages.index')->with(['title'=> $title]);
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
+
+        return view('pages.index',compact('menuItem'))->with(['title' => $title]);
     }
 
     public function about()
     {
         $title = "About";
-        return view('pages.about')->with('title', $title);
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
+        return view('pages.about',compact('menuItem'))->with(['title'=> $title]);
     }
 
     public function services()
     {
         $title = "Services";
-        return view('pages.services')->with('title', $title);
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
+        return view('pages.services', compact('menuItem'))->with('title', $title);
     }
     public function contact()
     {
         $title = "contact";
-        return view('pages.contact')->with('title', $title);
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
+        return view('pages.contact',compact('menuItem'))->with('title', $title);
     }
     public function teams()
     {
-        $gallery = DB::table('galleries')
-        ->select('id','gurec','foldername', 'is_active','image','filename','caption')
-        ->groupBy('foldername')
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
         ->get();
+
+        $gallery = DB::table('galleries')
+            ->select( 'id','foldername')
+            ->where('is_active', 1)
+            ->get();
 
 
         $thumbnail = DB::table('galleries')
-        ->select('id','gurec','foldername', 'is_active','parent_id','image','filename','caption')
-        ->where('image','<>','')
-        ->get();
+            ->select('id', 'gurec', 'foldername', 'is_active', 'parent_id', 'image', 'filename', 'caption')
+            ->where('image', '<>', '')
+            ->get();
         $title = "Teams";
-        return view('pages.teams')->with(['title'=> $title ,'gallery'=> $gallery,'thumbnail'=>$thumbnail]);
+        return view('pages.teams')->with(['title' => $title, 'gallery' => $gallery, 'thumbnail' => $thumbnail,'menuItem'=> $menuItem]);
     }
 
     public function branch()
     {
         $title = "Branch";
-        return view('pages.branch')->with('title', $title);;
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
+        return view('pages.branch')->with(['title'=> $title,'menuItem'=> $menuItem]);;
     }
 
     public function blog()
     {
         $title = "Blog";
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
+        // $content = DB::table("posts")
+        //     ->join("categories", "categories.id", "=", "posts.category_id")
+        //     ->join("users", "users.id", "=", "posts.created_by")
+        //     ->select("posts.*", "categories.name", "users.first_name as fname")
+        //     ->where('posts.is_active', true)
+        //     ->orderBy('posts.created_at', 'DESC')->get();
 
-        $content = DB::table("posts")
-        ->join("categories", "categories.id", "=","posts.category_id")
-        ->join("users", "users.id", "=","posts.created_by")
-        ->select("posts.*", "categories.name","users.first_name as fname")
-        ->where('posts.is_active',true)
-        ->orderBy('posts.created_at','DESC')->get();
 
-        $countcomment = DB::table("posts")
-        ->join("comments","comments.post_id", "=","posts.id")
-        ->where('comments.posts_id','posts.id')
-        ->selectRaw('COUNT(*) as count')
+
+        // $category = DB::table('categories')
+        //     ->join('posts', 'posts.category_id', '=', 'categories.id')
+        //     ->groupBy('categories.name')
+        //     ->get();
+
+        // $comment = Comment::all();
+
+       $posts = Posts::where('is_active',1)->get();
+        return view('pages.blog',compact('posts', 'title','menuItem'));
+
+
+    }
+    public function blogid(string $id)
+    {
+
+
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
         ->get();
 
-        $category = DB::table('categories')
-        ->join('posts','posts.category_id','=','categories.id')
-        ->groupBy('categories.name')
-        ->get();
+        $posts = Posts::find($id);
+        // $posts = DB::table("posts")
+        //     ->join("users", "users.id", "=", "posts.created_by")
+        //     ->join("comments","posts.id", "=", "comments.post_id")
+        //     ->select("posts.*", "users.name","comments.*")
+        //     ->where('posts.id', $id)
+        //     ->orderBy('posts.created_at', 'DESC')->get();
 
-        $comment = Comment::all();
+        // $comments = DB::table('comments')
+        //     ->get();
 
+        //dd($posts);
 
-        return view('pages.blog')->with(['title' => $title, 'content' => $content,
-        'category' => $category,'comment' => $comment,'countcomment' =>$countcomment]);
-    }
-    public function blogid(string $id){
-    //     $category = DB::table('categories')
-    //     ->join('posts','posts.category_id','=', 'categories.id')
-    //     ->select('categories.*')
-    //     ->get();
+        $post = Posts::withCount('comments')->find($id);
+        $commentCount = $post->comments_count;
 
-    //     $commentCount = DB::table('comments')
-    //             ->where('post_id', $id)
-    //             ->count();
-
-    //     $comment = DB::table('comments')->where('post_id','=',$id)->get();
-
-    //   $posts = DB::table('posts')
-    //     ->join('users','users.id', '=','posts.created_by')
-    //     ->select('posts.*')
-    //     ->where('posts.id',$id)
-    //     ->get();
-    //     return view('pages.blog-details')->with(['posts'=>$posts,'category'=>$category,'comment'=>$comment,'commentCount'=>$commentCount]);
-
-    $posts =Posts::with('category')->latest()->get();
-        // dd($posts);
-        return view('pages.blog-details', compact('posts'));
+        $user = Posts::with(['user'])->find($id);
+        return view('pages.blog-details',compact('posts','menuItem','commentCount','user'));
     }
 
+    public function warehouse()
+    {
+        return view('pages.warehouse-management');
+    }
+    public function transport()
+    {
+        return view('pages.transport-services');
+    }
+    public function other()
+    {
+        return view('pages.other-services');
+    }
 
 }

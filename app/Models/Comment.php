@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     protected $table = 'comments';
+
+    protected $fillable = [
+        'id',
+        'name',
+        'website',
+        'comment',
+        'posts_id',
+        'is_publish'
+
+    ];
 }

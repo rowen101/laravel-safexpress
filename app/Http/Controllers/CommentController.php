@@ -9,16 +9,26 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
       // Store a new comment
-      public function store(Request $request, $id)
+      public function store(Request $request)
       {
-          $validatedData = $request->validate([
-              'content' => 'required',
-          ]);
+          try {
+            $this->validate($request, [
+                'comment' => 'required',
+            ]);
+            //dd($request->all());
+            $data = new Comment();
+            $data->name = $request->input('name');
+            $data->email = $request->input('email');
+            $data->website = $request->input('website');
+            $data->comment = $request->input('comment');
+            $data->posts_id = $request->input('posts_id');
+            // $data->is_active = $request->input('is_active');
+            $data->save();
 
-          $post = Posts::findOrFail($id);
-          $post->comments()->create($validatedData);
-
-          return redirect('/posts/' . $id)->with('success', 'Comment created successfully!');
+            return back()->with('success', 'Comment created successfully!');
+       } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
       }
 
       // Delete a comment

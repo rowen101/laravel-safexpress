@@ -1,7 +1,7 @@
 @extends('layouts.safexpress')
 @section('content')
     <!-- ======= Breadcrumbs ======= -->
-    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('img/about-header.jpg');">
+    <div class="breadcrumbs d-flex align-items-center);" style="background-image: url('img/about-header.jpg');">
         <div class="container position-relative d-flex flex-column align-items-center">
 
             <h2>{{ $title }}</h2>
@@ -22,21 +22,21 @@
 
                 <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200" >
                     <div class="row gy-5 posts-list">
-                        @if (count($content) > 0)
-                        @foreach ($content as $item)
+                        @if (count($posts) > 0)
+                        @foreach ($posts as $item)
                         <div class="col-lg-6">
                             <article class="d-flex flex-column">
                                 <div class="post-img">
-                                    {{-- <img src="{{asset ('/img/blog/blog-1.jpg')}}" alt="" class="img-fluid"> --}}
+                                    <img src="{{asset('thumbnail')}}/{{$item->photo}}" class="img-fluid" alt="{{$item->photo}}">
                                 </div>
                                 <h2 class="title">
-                                <a href="blog/{{$item->id}}">{{$item->title}}</a>
+                                <a href="{{url('/blog-details',$item->id)}}">{{$item->title}}</a>
                                 </h2>
                                 <div class="meta-top">
                                     <ul>
                                       <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{$item->fname}}</a></li>
                                       <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2022-01-01">Jan 1, 2022</time></a></li>
-                                      <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">{{$countcomment[0]->count}} Comments</a></li>
+                                      <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#"> Comments</a></li>
                                     </ul>
                                   </div>
                                   <div class="content">
@@ -45,7 +45,7 @@
                                     </p>
                                   </div>
                                   <div class="read-more mt-auto align-self-end">
-                                    <a href="blog-details.html">Read More <i class="bi bi-arrow-right"></i></a>
+                                    <a href="{{url('/blog-details',$item->id)}}">Read More <i class="bi bi-arrow-right"></i></a>
                                   </div>
                             </article>
                         </div>
@@ -72,14 +72,10 @@
                         <div class="sidebar-item categories">
                             <h3 class="sidebar-title">Categories</h3>
                             <ul class="mt-3">
-                                @if (count($category) > 0)
-                        @foreach ($category as $item)
-                        <li><a href="#">{{$item->name}} <span>(25)</span></a></li>
 
-                        @endforeach
-                        @else
-                                <center>no category</center>
-                        @endif
+                        <li><a href="#">sfds <span>(25)</span></a></li>
+
+
 
                             </ul>
                         </div><!-- End sidebar categories-->

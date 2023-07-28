@@ -106,8 +106,15 @@ Breadcrumbs::for('editpost', function (BreadcrumbTrail $trail) {
 ////////////////////////////////////////////////
 
 
+
 // Home > Post
 Breadcrumbs::for('categorie', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Cateogorie', url('admin/categorie'));
+});
+//////////////////////////////////////////
+// Home > branch
+Breadcrumbs::for('branch', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Branch Setup', url('admin/branch-setup'));
 });

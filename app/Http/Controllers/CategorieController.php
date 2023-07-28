@@ -22,7 +22,7 @@ class CategorieController extends Controller
     public function index(Request $request)
     {
 
-        $title ="Categorie";
+        $title ="Posts Categorie";
 
        if ($request->ajax()) {
 
@@ -42,7 +42,7 @@ class CategorieController extends Controller
                     ->make(true);
         }
 
-        return view('admin.categorie.index')->with(['title' => $title]);
+        return view('admin.categorie.index')->with(['title' => $title,]);
     }
 
     /**
@@ -86,21 +86,6 @@ class CategorieController extends Controller
         return response()->json($category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request,  $id)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
-
-        //update post
-        $apps =  Category::find($id);
-        $apps->name = $request->input('name');
-        $apps->save();
-        return response()->json(['message' => 'Record updated successfully!']);
-    }
 
     /**
      * Remove the specified resource from storage.

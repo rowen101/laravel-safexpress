@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
 
-                        {{ Breadcrumbs::render('categorie') }}
+                        {{ Breadcrumbs::render('branch') }}
 
                     </ol>
                 </div>
@@ -42,7 +42,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-
+                        <div style="overflow-x:auto;">
                         <table class="table table-bordered data-table">
                             <thead>
                                 <tr>
@@ -56,6 +56,7 @@
                             <tbody>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -124,7 +125,7 @@
                 var table = $('.data-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "{{ route('categorie.index') }}",
+                    ajax: "{{ route('branch.index') }}",
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -177,7 +178,7 @@
                     var formData = $('#productForm').serialize();
                     $.ajax({
                         data: $('#productForm').serialize(),
-                        url: "{{ url('/admin/categorie') }}",
+                        url: "{{ url('/admin/branch') }}",
                         type: "POST",
                         data: formData,
                         dataType: 'json',
@@ -202,7 +203,7 @@
                       --------------------------------------------*/
                 $('body').on('click', '.editCategorie', function() {
                     var id = $(this).data('id');
-                    $.get("{{ url('admin/categorie') }}" + '/' + id + '/edit', function(data) {
+                    $.get("{{ url('admin/branch') }}" + '/' + id + '/edit', function(data) {
                         $('#modelHeading').html("Edit Categorie");
                         $('#saveBtn').val("edit-categorie");
                         $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Update');
@@ -228,7 +229,7 @@
 
                         //AJAX
                         $.ajax({
-                            url: "{{ url('admin/categorie') }}" + '/' + id,
+                            url: "{{ url('admin/branch') }}" + '/' + id,
                             type: 'DELETE',
                             data: id,
                             success: function(response) {
@@ -243,6 +244,8 @@
                         });
                     }
                 });
+
+
             });
         </script>
     @endpush

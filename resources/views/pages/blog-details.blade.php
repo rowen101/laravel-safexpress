@@ -4,11 +4,11 @@
     <div class="breadcrumbs d-flex align-items-center" style="background-image: url('img/about-header.jpg');">
         <div class="container position-relative d-flex flex-column align-items-center">
 
-            {{-- <h2>{{ $post->title }}</h2>
+            <h2>{{ $posts->title }}</h2>
             <ol>
                 <li><a href="/">Home</a></li>
-                <li>{{ $post->title }}</li>
-            </ol> --}}
+                <li>{{ $posts->title }}</li>
+            </ol>
 
         </div>
     </div><!-- End Breadcrumbs -->
@@ -21,33 +21,34 @@
             <div class="row g-5">
 
                 <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-                    @foreach ($posts as $post)
+
+
+
                         <article class="blog-details">
 
 
 
 
                             <div class="post-img">
-                                <img src="{{ asset('/img/blog/blog-1.jpg') }}" alt="" class="img-fluid">
+                                {{-- <img src="{{asset('uploads')}}/{{$posts->photo}}" class="img-fluid" alt="{{$posts->photo}}"> --}}
                             </div>
 
-                            <h2 class="title">{{ $post->title }}</h2>
+                            <h2 class="title">{{ $posts->title }}</h2>
 
                             <div class="meta-top">
                                 <ul>
-                                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                            href="blog-details.html">john</a></li>
-                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-                                            href="blog-details.html"><time datetime="2020-01-01">Jan 1, 2022</time></a></li>
-                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>{{-- <a
-                                             href="blog-details.html">{{$commentCount}} Comments</a>--}}</li>
-                                             <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                                href="blog-details.html">{{$post->category->name}}</a></li>
+                                    <li class="d-flex align-items-center"><i class="bi bi-person">
+                                        </i> {{ $user->name}}</li>
+                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i>
+                                        <time datetime="2020-01-01">{{$posts->created_at}}</time></li>
+                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots">
+                                        </i>{{ $commentCount}}</li>
+
                                 </ul>
                             </div><!-- End meta top -->
 
                             <div class="content">
-                                {!! $post->body !!}
+                                {!! $posts->body !!}
 
                             </div><!-- End post content -->
 
@@ -56,49 +57,56 @@
 
 
                         {{-- <div class="post-author d-flex align-items-center">
-            <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
-            <div>
-              <h4>Jane Smith</h4>
-              <div class="social-links">
-                <a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
-                <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
-                <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
-              </div>
-              <p>
-                Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
-              </p>
-            </div>
-          </div> --}}
+                        <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
+                        <div>
+                        <h4>Jane Smith</h4>
+                        <div class="social-links">
+                            <a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
+                            <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                            <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
+                        </div>
+                        <p>
+                            Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
+                        </p>
+                        </div>
+                        </div> --}}
                         <!-- End post author -->
 
                         <div class="comments">
 
                             {{-- <h4 class="comments-count">{{$commentCount}} Comments</h4> --}}
 
+                            @if (count($posts->comments) > 0)
 
-                            @foreach ($post->comments as $comment)
+
+                            @foreach ($posts->comments as $comment)
                             <div class="comment">
                                 <div class="d-flex">
-                                    <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
+                                    <div class="comment-img">
+                                        <img src="{{asset('uploads')}}/{{$comment->photo}}" class="img-fluid" alt="{{$comment->photo}}">
+                                    </div>
                                     <div>
                                         <h5><a href="">{{$comment->name}}</a> <a href="#" class="reply"><i
                                                     class="bi bi-reply-fill"></i> Reply</a></h5>
                                         <time datetime="2020-01-01">{{$comment->created_at}}</time>
                                         <p>
-                                           {{$comment->content}}
+                                           {{$comment->comment}}
                                         </p>
                                     </div>
                                 </div>
                             </div><!-- End comment #1 -->
                             @endforeach
-
+                            @else
+                            <center>no comment</center>
+                            @endif
 
 
                             <div class="reply-form">
 
                                 <h4>Leave a Reply</h4>
                                 <p>Your email address will not be published. Required fields are marked * </p>
-                                <form action="">
+                                <form action="{{url('/comment')}}" method="post">
+                                    {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col-md-6 form-group">
                                             <input name="name" type="text" class="form-control"
@@ -115,6 +123,7 @@
                                                 placeholder="Your Website">
                                         </div>
                                     </div>
+                                    <input type="hidden" name="posts_id" value="{{$posts->id}}">
                                     <div class="row">
                                         <div class="col form-group">
                                             <textarea name="comment" class="form-control" placeholder="Your Comment*"></textarea>
@@ -127,7 +136,7 @@
                             </div>
 
                         </div><!-- End blog comments -->
-                    @endforeach
+
                 </div>
 
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">

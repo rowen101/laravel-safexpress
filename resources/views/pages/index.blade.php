@@ -51,7 +51,7 @@
     <header id="header" class="header d-flex align-items-center fixed-top sticked">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{url('/')}}" class="logo d-flex align-items-center">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
                 <div class="d-flex align-items-center"><img src="{{ asset('img/logo.png') }}" /></div>
@@ -527,20 +527,20 @@
                     <div class="col-lg-2 col-6 footer-links">
                         <h4>Useful Links</h4>
                         <ul>
-                            <li><i class="bi bi-dash"></i> <a href="#">Home</a></li>
-                            <li><i class="bi bi-dash"></i> <a href="#">About us</a></li>
-                            <li><i class="bi bi-dash"></i> <a href="#">Services</a></li>
-                            <li><i class="bi bi-dash"></i> <a href="#">Terms of service</a></li>
-                            <li><i class="bi bi-dash"></i> <a href="#">Privacy policy</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{url('/')}}">Home</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{url('/about')}}">About us</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{url('/services')}}">Services</a></li>
+
                         </ul>
                     </div>
 
                     <div class="col-lg-2 col-6 footer-links">
                         <h4>Our Services</h4>
                         <ul>
-                            <li><i class="bi bi-dash"></i> <a href="#">Web Design</a></li>
-
-                        </ul>
+                            <li><i class="bi bi-dash"></i> <a href="{{url('/warehouse-management')}}">Warehouse Management</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{url('/transport-services')}}">Tranport Services</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{url('/other-services')}}">Other Service</a></li>
+                          </ul>
                     </div>
 
                     <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">

@@ -239,6 +239,7 @@
         </div>
 
       </div>
-    </section><!-- End Testimonials Section --> --}}
+    </section><!-- End Testimonials Section -->
+--}}
 @endsection
 

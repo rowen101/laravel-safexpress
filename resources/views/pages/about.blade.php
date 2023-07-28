@@ -68,12 +68,12 @@
                     <div class="row gy-4" data-aos="fade-up">
                       <div class="col-lg-5">
                         <div class="content ps-lg-5">
-                          <img src="{{ asset('img/pngwing.com-2-768x768.png')}}"/>
+                          <center><img src="{{ asset('img/mission.png')}}"/></center>
                         </div>
                       </div>
                       <div class="col-lg-7">
                         <div class="content ps-lg-5">
-                            <h3 class="mb-3">Our Mission</h3>
+                            <center><h3 class="mb-3">Our Mission</h3></center>
                 <p>Our Mission
                       To provide the highest level of warehousing and transport services by committing to safe and
                       timely deliveries, as well as offer fair and competitive pricing to our clients. Our goal is to
@@ -92,12 +92,12 @@
                     <div class="row gy-4" data-aos="fade-up">
                       <div class="col-lg-5">
                         <div class="content ps-lg-5">
-                          <img src="{{ asset('img/pngwing.com_-768x768.png')}}"/>
+                        <center>  <img src="{{ asset('img/pngwing.com_-768x768.png')}}"/></center>
                         </div>
                       </div>
                       <div class="col-lg-7">
                         <div class="content ps-lg-5">
-                            <h3 class="mb-3">Our Vission</h3>
+                        <center> <h3 class="mb-3">Our Vission</h3></center>
                           <p>To be a Recognized Leader in the industry. and to be the Preferred Supply Chain Enabler that
                             differentiates our solutions based on in-depth customer understanding and a strong focus on the
                             ever-shifting market needs. All of this is to ensure that Safexpress Logistics propels into an
@@ -109,19 +109,33 @@
                   </div>
                 </div><!-- End slide item -->
 
-                <div class="swiper-slide">
-                  <div class="item">
-                    <h3 class="mb-3">Core Value</h3>
 
-                     <ul class="list-unstyled">
-                <li><i class="fa-solid fa-circle-a" style="color: #c6e916;"></i>Food Safety</li>
-                <li><i class="fa-solid fa-circle-c" style="color: #c6e916;"></i>Accountability</li>
-                <li><i class="fa-solid fa-circle-t" style="color: #c6e916;"></i>Commitment</li>
-                <li><i class="fa-solid fa-circle-s" style="color: #c6e916;"></i>Tinacity</li>
-                <li><i class="fa-solid fa-circle-s" style="color: #c6e916;"></i>Selflessness</li>
-              </ul>
-                  </div>
-                </div><!-- End slide item -->
+                <div class="swiper-slide">
+                    <div class="item">
+
+                      <div class="row gy-4" data-aos="fade-up">
+                        <div class="col-lg-5">
+                          <div class="content ps-lg-5">
+                          <center>  <img src="{{ asset('img/corevalues.png')}}"/></center>
+                          </div>
+                        </div>
+                        <div class="col-lg-7">
+                          <div class="content ps-lg-5">
+                          <center> <h3 class="mb-3">Core Values</h3></center>
+                          <ul class="list-unstyled">
+
+                            <li><i class="bi bi-dash"></i>Accountability</li>
+                            <li><i class="bi bi-dash"></i>Commitment</li>
+                            <li><i class="bi bi-dash"></i>Tinacity</li>
+                            <li><i class="bi bi-dash"></i>Selflessness</li>
+                        </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div><!-- End slide item -->
+
 
               </div>
               <div class="swiper-pagination"></div>
@@ -134,6 +148,30 @@
 
       </div>
     </section><!-- End Why Choose Us Section -->
+
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+          <div class="section-header">
+            <h2>Overview</h2>
+
+          </div>
+          <div class="row gy-4" >
+
+            <div class="col-lg-12" data-aos="fade-down">
+              <div class="content ps-lg-5">
+
+                <p>
+                    We at Safexpress Logistics Inc. uphold our good reputation as one of the best logistics company in the Philippines. We're dedicated to providing our clients the very best of Supply Chain Solutions, with an emphasis on our companies mission, vision & core values.
+                </p>
+                <p>
+                    We aspire to be the creative and innovative leader in the industry, anticipating the market needs and steering our company towards  long-term success and growth.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
 
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">

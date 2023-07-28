@@ -50,7 +50,7 @@ return new class extends Migration
         Schema::create('permission', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('menu_id')->unsigned();
-            $table->foreign('menu_id')->references('id')->on('core_menu');
+            $table->foreign('menu_id')->references('id')->on('menus');
             $table->string('permission_code', 50);
             $table->string('description', 150)->nullable();
             $table->integer('created_by')->default(0);
@@ -153,10 +153,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('website')->nullable();
-            $table->text('content');
+            $table->text('comment');
             $table->unsignedBigInteger('post_id');
-            $table->boolean('is_active')->default(true)->nullable();
-            $table->foreign('post_id')->references('id')->on('blogs')->onDelete('cascade');
+            $table->boolean('is_publish')->default(true)->nullable();
+            $table->foreign('posts_id')->references('id')->on('blogs')->onDelete('cascade');
             $table->timestamps();
         });
         Artisan::call('db:seed');
