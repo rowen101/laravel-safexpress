@@ -23,3 +23,4 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('/core/menu', [App\Http\Controllers\AdminController::class, 'menu']);
     });
 Route::post("login",[App\Http\Controllers\UserController::class,'login']);
+Route::post("register",[App\Http\Controllers\UserController::class,'sign_up']);

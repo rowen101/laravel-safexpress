@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Comment;
 use App\Models\Posts;
+use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
@@ -27,9 +28,10 @@ class PostController extends Controller
         $title = "Post";
         $count = Posts::count();
         $ccount = Comment::count();
+        $countpublish = Posts::where('is_publish','1')->count();
         $posts = Posts::all();
         return view('admin.post.index')->with([
-            'title' => $title, 'posts' => $posts, 'count' => $count, 'ccount' => $ccount
+            'title' => $title, 'posts' => $posts, 'count' => $count, 'ccount' => $ccount,'countpublish'=> $countpublish
         ]);
     }
 
@@ -88,10 +90,28 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function publish($id)
     {
+        // $title = "Create Post";
+        // $count = Posts::count();
+        // $ccount = Comment::count();
+
         $posts = Posts::find($id);
-        return view('admin.post.show')->with(['posts' => $posts]);
+        //dd($posts->is_publish);
+        if($posts->is_publish == 0){
+            $posts->is_publish = 1;
+            $posts->save();
+            return back()->with('success', 'Post publish Successfully!');
+        }
+        elseif($posts->is_publish == 1){
+            $posts->is_publish = 0;
+            $posts->save();
+            return back()->with('error', 'Post Unpublish Successfully!');
+        }
+        else{
+
+        }
+
     }
 
     /**
@@ -153,8 +173,19 @@ class PostController extends Controller
     public function destroy(string $id)
     {
 
-        $post = Posts::find($id);
-        $post->delete();
+        $post = DB::table('posts')
+            ->select('id','photos')
+            ->where('id',$id)->get();
+
+            $image_thumbnail_path = public_path('thumbnail/' . $post->photo);
+            $image_upload_path = public_path('uploads/' . $post->photo);
+            if (file_exists($image_thumbnail_path) || file_exists($image_upload_path)) {
+                unlink($image_thumbnail_path);
+                unlink($image_upload_path);
+            }
+
+        $postdel = Posts::find($id);
+        $postdel->delete();
         return view('admin.post.index')->with('success', 'Post Delete Successfully!');
     }
 }

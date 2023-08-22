@@ -123,14 +123,24 @@
                                                             </div>
                                                         </td>
 
-                                                        <td class="mailbox-name"><a
-                                                                href="{{url('/admin/post',$item->id)}}">{{ $item->title }}</a></td>
+                                                        <td class="mailbox-name">{{ $item->title }}</td>
 
                                                         {{-- <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td> --}}
                                                         <td class="mailbox-date">{{$item->created_at}}</td>
-                                                        <td class="mailbox-date"><a href="{{url('/admin/post',$item->id)}}"><button type="button" class="btn btn-sm btn-success"><i
-                                                            class="fas fa-eye"></i></button></a>&nbsp;<a href="/admin/post/{{$item->id}}/edit"><button type="button" class="btn btn-sm btn-primary"><i
-                                                                class="fas fa-edit"></i></button></a></td>
+                                                        <td class="mailbox-date">
+                                                            <form action={{ url('admin/post-publish', $item->id) }} method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+
+                                                                    <button type="submit" class="btn btn-sm {{$item->is_publish = 1 ? 'btn-success' : 'btn-danger'}}">
+
+                                                                <i
+                                                                class="{{$item->is_publish = 1 ? 'fas fa-eye' : 'fas fa-eye-slash'}}"></i></button>
+                                                                &nbsp;<a href="/admin/post/{{$item->id}}/edit"><button type="button" class="btn btn-sm btn-primary"><i
+                                                                    class="fas fa-edit"></i></button></a></td>
+                                                            </form>
+
+
                                                     </tr>
                                                 @endforeach
                                             @else

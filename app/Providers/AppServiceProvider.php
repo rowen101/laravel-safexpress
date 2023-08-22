@@ -23,10 +23,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        Schema::defaultStringLength(191);
+       Schema::defaultStringLength(191);
+
+
         $adminmenu = Menu::where('is_active', 1)
         ->where('app_id', 1)
         ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
         ->get();
        view()->share('adminmenu', $adminmenu);
 

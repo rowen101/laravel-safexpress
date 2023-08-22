@@ -6,7 +6,7 @@ use App\Models\Menu;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Yajra\DataTables\Facades\DataTables;
 class MenuController extends Controller
 {
     /**
@@ -21,20 +21,46 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $title ="Menu";
-        $menu = DB::table("menus")
-         ->join("app", "app.id", "=","menus.app_id")
-         ->select("menus.*", "app.app_name")
-         ->orderBy('menus.created_at','DESC')->get();
+        $title = "Menu";
+// Fetch departments
+        $app=  DB::table('app')->select('id', 'app_name')->where('is_active', '1')->get();
+        $mparent = DB::table('menus')->select('id', 'menu_title')->where('is_active', '1')->get();
+        if ($request->ajax()) {
 
-       return view('admin.menu.index',[
-        'menu'=>$menu,
-        'title'=>$title,
+            $data = DB::table("menus")
+            ->join("app", "app.id", "=", "menus.app_id")
+            ->select("menus.*", "app.app_name")
+            ->orderBy('menus.created_at', 'DESC')->get();
 
-    ]);
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm edit">Edit</a>';
+
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete">Delete</a>';
+
+                    return $btn;
+                })
+                ->editColumn('is_active', function ($row) {
+                    return $row->is_active == '1' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa fa-circle"></i>';
+                })
+                ->addColumn('created_at', function ($data) {
+                    return date('d/m/Y', strtotime($data->created_at));
+                })
+                ->rawColumns(['action', 'is_active', 'created_at'])
+                ->make(true);
+        }
+        return view('admin.menu.index', [
+
+            'title' => $title,
+            'app' => $app,
+            'mparent' => $mparent
+
+        ]);
     }
 
     /**
@@ -42,10 +68,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $mparent = DB::table('menus')->select('id','menu_title')->where('is_active','1')->get();
-        $app =  DB::table('app')->select('id','app_name')->where('is_active','1')->get();
-        $title ="Create Menu";
-        return view('admin.menu.create')->with(['title'=>$title,'app'=>$app,'mparent'=>$mparent]);
+
+
     }
 
     /**
@@ -55,26 +79,35 @@ class MenuController extends Controller
     {
         //dd($request->all());
         $this->validate($request, [
+            'app_id' => 'required',
             'menu_code' => 'required',
             'menu_title' => 'required',
             'description' => 'required',
+            'menu_route' => 'required',
+            'sort_order'=>'required',
+            'parent_id'=>'required'
         ]);
+        Menu::updateOrCreate(
+            [
+                'id' => $request->id
+            ],
+            [
+                'app_id' => $request->app_id,
+                'menu_code' => $request->menu_code,
+                'menu_title' => $request->menu_title,
+                'description' => $request->description,
+                'parent_id' => $request->parent_id,
+                'menu_icon' => $request->menu_icon,
+                'menu_route' => $request->menu_route,
+                'sort_order' => $request->sort_order,
+                'is_active' => $request->is_active,
+                'created_by' => auth()->user()->id,
+            ]
+        );
 
-        //create post
-        $apps = new Menu();
-        $apps->app_id = $request->input('app_id');
-        $apps->menu_code = $request->input('menu_code');
-        $apps->menu_title = $request->input('menu_title');
-        $apps->description = $request->input('description');
-        $apps->parent_id = $request->input('parent_id');
-        $apps->menu_icon = $request->input('menu_icon');
-        $apps->menu_route = $request->input('menu_route');
-        $apps->sort_order = $request->input('sort_order');
-        $apps->is_active = $request->input('is_active');
-        $apps->created_by =auth()->user()->id;
-        $apps->save();
 
-        return redirect('admin/menu')->with('success','Menu Created');
+        return response()->json(['success' => 'Record saved successfully!']);
+
     }
 
     /**
@@ -83,7 +116,7 @@ class MenuController extends Controller
     public function show(string $id)
     {
         $data = Menu::find($id);
-        return view('admin.menu.show')->with(['data'=> $data]);
+        return view('admin.menu.show')->with(['data' => $data]);
     }
 
     /**
@@ -91,16 +124,21 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $app =  DB::table('app')->select('id','app_name')->where('is_active','1')->get();
-        $mparent = DB::table('menus')->select('id','menu_title')->where('is_active','1')->get();
+        $app =  DB::table('app')->select('id', 'app_name')->where('is_active', '1')->get();
+        $mparent = DB::table('menus')->select('id', 'menu_title')->where('is_active', '1')->get();
         $data = Menu::find($id);
         // ->join("app", "app.id", "=","menus.app_id")
         // ->select("menus.*", "app.app_name","app.id")
         // ->where('menu.id',$id)
         // ->orderBy('menus.created_at','DESC')->get();
-        $title ="Edit Menu";
-        return view('admin.menu.edit')->with(['data'=>$data,'title'=>$title,'app'=>$app,'mparent'=>$mparent]);
+        $title = "Edit Menu";
+        return response()->json([$data,$app,$mparent]);
 
+    }
+    public function menuapp()
+    {
+        $app =  DB::table('app')->select('id', 'app_name')->where('is_active', '1')->get();
+        return response()->json($app);
     }
 
     /**
@@ -108,33 +146,6 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
- //dd($request->all());
- $this->validate($request, [
-    'menu_code' => 'required',
-    'menu_title' => 'required',
-    'description' => 'required',
-]);
-
-//create post
-$apps = Menu::find($id);
-$apps->app_id = $request->input('app_id');
-$apps->menu_code = $request->input('menu_code');
-$apps->menu_title = $request->input('menu_title');
-$apps->description = $request->input('description');
-$apps->parent_id = $request->input('parent_id');
-$apps->menu_icon = $request->input('menu_icon');
-$apps->menu_route = $request->input('menu_route');
-$apps->sort_order = $request->input('sort_order');
-$apps->is_active = $request->input('is_active');
-$apps->created_by =auth()->user()->id;
-$apps->save();
-
-return redirect('admin/menu')->with('success','Menu update!');
-        }catch(\Exception $e)
-        {
-            return redirect('/admin/menu/create')->with('error', $e->getMessage());
-        }
 
     }
 
@@ -143,6 +154,8 @@ return redirect('admin/menu')->with('success','Menu update!');
      */
     public function destroy(string $id)
     {
-        //
+        Menu::find($id)->delete();
+
+        return response()->json(['success'=>'Product deleted successfully.']);
     }
 }

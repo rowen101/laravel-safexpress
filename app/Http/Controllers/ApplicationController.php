@@ -6,6 +6,7 @@ use App\Models\App;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
 {
@@ -22,11 +23,35 @@ class ApplicationController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        $data = App::orderBy('created_at','desc')->paginate(10);
-        $title ="Application";
-        return view('admin.application.index')->with(['title' => $title,'data' =>$data]);
+
+        $title = "Application";
+        if ($request->ajax()) {
+
+            $data = App::select('*');
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm edit">Edit</a>';
+
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete">Delete</a>';
+
+                    return $btn;
+                })
+                ->editColumn('is_active', function ($row) {
+                    return $row->is_active == '1' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa fa-circle"></i>';
+                })
+                ->addColumn('created_at', function ($data) {
+                    return date('d/m/Y', strtotime($data->created_at));
+                })
+                ->rawColumns(['action', 'is_active', 'created_at'])
+                ->make(true);
+        }
+
+        return view('admin.application.index')->with(['title' => $title]);
     }
 
     /**
@@ -34,8 +59,6 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        $title ="Application";
-        return view('admin.application.create')->with('title',$title);
     }
 
     /**
@@ -43,22 +66,30 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'app_code' => 'required',
-            'app_name' => 'required',
 
+        $request->validate([
+            'app_code'          => 'required',
+            'app_name'         => 'required',
+            'description'        => 'required',
         ]);
 
-        //create post
-        $apps = new App();
-        $apps->app_code = $request->input('app_code');
-        $apps->app_name = $request->input('app_name');
-        $apps->description = $request->input('description');
-        $apps->is_active = $request->has('is_active') ? true : false;
-        $apps->created_by =auth()->user()->id;
-        $apps->save();
+        App::updateOrCreate(
+            [
+                'id' => $request->id
+            ],
+            [
+                'app_code' => $request->app_code,
+                'app_name' => $request->app_name,
+                'description' => $request->description,
+                'app_icon' => $request->app_icon,
+                'is_active' => $request->is_active,
+                // 'status' => $request->status,
+                'created_by' => auth()->user()->id,
+            ]
+        );
 
-        return redirect('admin/apps')->with('success','App Created Successfully!');
+
+        return response()->json(['success' => 'Record saved successfully!']);
     }
 
     /**
@@ -66,7 +97,6 @@ class ApplicationController extends Controller
      */
     public function show(string $id)
     {
-
     }
 
     /**
@@ -75,8 +105,7 @@ class ApplicationController extends Controller
     public function edit($id)
     {
         $data = App::find($id);
-        $title ="Application";
-        return view('admin.application.edit')->with(['title' => $title,'data' =>$data]);
+        return response()->json($data);
     }
 
     /**
@@ -84,38 +113,19 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
-        $this->validate($request, [
-            'app_code' => 'required',
-            'app_name' => 'required',
-
-        ]);
-        $apps = App::find($id);
-        $apps->app_code = $request->input('app_code');
-        $apps->app_name = $request->input('app_name');
-        $apps->description = $request->input('description');
-        $apps->is_active = $request->input('is_active');
-        $apps->created_by =auth()->user()->id;
-        $apps->save();
-
-        return redirect('admin/apps')->with('success','App Update Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $data = App::find($id);
-        if(Menu::find($id) !== $data->id){
+        if (Menu::find($id) !== $data->id) {
             $data->delete();
-            return redirect('admin/apps')->with('success','Application  Removed');
+            return response()->json(['success' => 'Application Remove successfully!']);
+        } else {
+            return response()->json(['error' => 'Application is use!']);
         }
-        else
-        {
-            return redirect('admin/apps')->with('error','Application  not Removed');
-        }
-
-
     }
 }

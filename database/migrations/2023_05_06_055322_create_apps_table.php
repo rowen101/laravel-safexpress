@@ -74,9 +74,9 @@ return new class extends Migration
           Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password', 255);
+            $table->string('password', 255)->nullable();
             $table->date('password_change_date')->nullable();
             $table->string('user_type', 20)->nullable();
             $table->integer('role_id')->unsigned()->nullable();
@@ -108,23 +108,22 @@ return new class extends Migration
             $table->string('caption', 225)->nullable();
             $table->integer('parent_id')->default(0)->nullable();
             $table->integer('sort')->default(100)->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(true)->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
 
         Schema::create('branches', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('site');
-            $table->string('branch', 100)->index()->nullable();
-            $table->integer('parent_id')->default(0)->nullable();
+            $table->string('branch', 50)->nullable();
             $table->string('sitehead')->nullable();
             $table->string('location')->nullable();
             $table->text('maps')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(true)->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->nullable();
             $table->timestamps();
@@ -144,6 +143,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->integer('created_by')->default(0);
+            $table->boolean('is_publish')->default(false)->nullable();
             $table->boolean('is_active')->default(true)->nullable();
             $table->timestamps();
         });
@@ -154,11 +154,25 @@ return new class extends Migration
             $table->string('email');
             $table->string('website')->nullable();
             $table->text('comment');
-            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('posts_id');
             $table->boolean('is_publish')->default(true)->nullable();
-            $table->foreign('posts_id')->references('id')->on('blogs')->onDelete('cascade');
+            $table->foreign('posts_id')->references('id')->on('posts')->onDelete('cascade');
             $table->timestamps();
         });
+
+        Schema::create('replies', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('comment_id');
+            $table->text('content');
+            $table->timestamps();
+
+            // Define foreign key constraint for the comment_id column
+            $table->foreign('comment_id')
+                ->references('id')
+                ->on('comments')
+                ->onDelete('cascade');
+        });
+
         Artisan::call('db:seed');
     }
 
@@ -176,5 +190,6 @@ return new class extends Migration
         Schema::dropIfExists('categories');
         Schema::dropIfExists('posts');
         Schema::dropIfExists('comments');
+        Schema::dropIfExists('replies');
     }
 };

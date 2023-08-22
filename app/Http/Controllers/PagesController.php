@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
+
+    public function menu(){
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
+
+        return $menuItem;
+    }
     public function index()
     {
 
@@ -97,23 +107,13 @@ class PagesController extends Controller
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        // $content = DB::table("posts")
-        //     ->join("categories", "categories.id", "=", "posts.category_id")
-        //     ->join("users", "users.id", "=", "posts.created_by")
-        //     ->select("posts.*", "categories.name", "users.first_name as fname")
-        //     ->where('posts.is_active', true)
-        //     ->orderBy('posts.created_at', 'DESC')->get();
 
-
-
-        // $category = DB::table('categories')
-        //     ->join('posts', 'posts.category_id', '=', 'categories.id')
-        //     ->groupBy('categories.name')
-        //     ->get();
-
-        // $comment = Comment::all();
-
-       $posts = Posts::where('is_active',1)->get();
+        $postid = DB::table('posts')
+        ->select('id')->get();
+        //dd($postid);
+       $posts = Posts::where('is_active',1)->where('is_publish',1)->get();
+    //    $post = Posts::withCount('comments')->find();
+    //     $commentCount = $post->comments_count;
         return view('pages.blog',compact('posts', 'title','menuItem'));
 
 
@@ -121,43 +121,48 @@ class PagesController extends Controller
     public function blogid(string $id)
     {
 
+        $posts = Posts::find($id);
+        if($posts && $posts->is_publish){
+            $post = Posts::withCount('comments')->find($id);
+            $commentCount = $post->comments_count;
+            $menuItem = Menu::where('is_active', 1)
+            ->where('app_id', 2)
+            ->where('parent_id', 0)
+            ->orderBy('sort_order', 'ASC')
+            ->get();
+            $user = Posts::with(['user'])->find($id);
+            return view('pages.blog-details',compact('posts','menuItem','commentCount','user'));
+        }else{
+            return view('inactivate');
+        }
 
+    }
+
+    public function warehouse()
+    {
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-
-        $posts = Posts::find($id);
-        // $posts = DB::table("posts")
-        //     ->join("users", "users.id", "=", "posts.created_by")
-        //     ->join("comments","posts.id", "=", "comments.post_id")
-        //     ->select("posts.*", "users.name","comments.*")
-        //     ->where('posts.id', $id)
-        //     ->orderBy('posts.created_at', 'DESC')->get();
-
-        // $comments = DB::table('comments')
-        //     ->get();
-
-        //dd($posts);
-
-        $post = Posts::withCount('comments')->find($id);
-        $commentCount = $post->comments_count;
-
-        $user = Posts::with(['user'])->find($id);
-        return view('pages.blog-details',compact('posts','menuItem','commentCount','user'));
-    }
-
-    public function warehouse()
-    {
         return view('pages.warehouse-management');
     }
     public function transport()
     {
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
         return view('pages.transport-services');
     }
     public function other()
     {
+        $menuItem = Menu::where('is_active', 1)
+        ->where('app_id', 2)
+        ->where('parent_id', 0)
+        ->orderBy('sort_order', 'ASC')
+        ->get();
         return view('pages.other-services');
     }
 

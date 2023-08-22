@@ -268,5 +268,20 @@
         "createdBy": 1,
         "created_at": null,
         "updated_at": null
+    },
+    {
+        "id": 19,
+        "app_id": 1,
+        "menuCode": "SA",
+        "menuTitle": "Branch Setup",
+        "description": "Branch Setup",
+        "parent_id": 3,
+        "menuIcon": "fa fa-building-o",
+        "menuRoute": "/admin/branch",
+        "sortOrder": 100,
+        "isActive": 1,
+        "createdBy": 1,
+        "created_at": null,
+        "updated_at": null
     }
 ]

@@ -30,7 +30,7 @@
 
 
                             <div class="post-img">
-                                {{-- <img src="{{asset('uploads')}}/{{$posts->photo}}" class="img-fluid" alt="{{$posts->photo}}"> --}}
+                                <img src="{{asset('uploads')}}/{{$posts->photo}}" class="img-fluid" alt="{{$posts->photo}}">
                             </div>
 
                             <h2 class="title">{{ $posts->title }}</h2>

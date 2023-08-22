@@ -29,34 +29,30 @@
 
 
                 <div class="card">
-                    <div class="card-header">
 
-                        <div class="card-tools">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-success" href="javascript:void(0)"
-                                    id="createNewCategory"><i class="fas fa-plus"></i></button>
-                            </div>
 
-                        </div>
-                        <!-- /.card-tools -->
-                    </div>
+
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div style="overflow-x:auto;">
-                        <table class="table table-bordered data-table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th></th>
-                                    <th>Categorie</th>
-                                    <th width="280px">Action</th>
-                                </tr>
-                            </thead>
 
-                            <tbody>
-                            </tbody>
-                        </table>
-                        </div>
+                        <table class="table table-bordered data-table table-hover table-striped small " width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th></th>
+                                        <th>Site</th>
+                                        <th>Branch</th>
+                                        <th>SiteHead</th>
+                                        <th>Active</th>
+                                        <th>Created Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                </tbody>
+                            </table>
+
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -67,44 +63,21 @@
 
     </div>
     <!--end container-->
-    <div class="modal fade" id="ajaxModel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-
-            <div class="modal-content">
-                <form id="productForm" name="productForm" class="form-horizontal">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="modelHeading"></h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="form-group">
-
-                            <!-- Hidden field to store the user ID for update -->
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Categorie">
-                        </div>
-                        <input type="hidden" id="txtcat_id" name="id" value="id">
-
-
-                        <div class="modal-footer justify-content-between">
-
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="saveBtn" value="create-categorie"><i
-                                    class="fas fa-save"></i>&nbsp;Save</button>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-            <!-- /.modal-content -->
+    @include('admin.branch.form')
+    <div class="fab-container">
+        <div class="button iconbutton">
+            <a href="javascript:void(0)" id="createNew"><i class="fas fa-plus"></i></a>
         </div>
-        <!-- /.modal-dialog -->
     </div>
     </div>
+
+    @push('head')
+        <link rel='stylesheet' href='{{ asset('css/sweetalert2.min.css') }}'>
+    @endpush
+
     @push('buttom')
+        <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+
         <script type="text/javascript">
             $(function() {
                 /*------------------------------------------
@@ -139,8 +112,24 @@
                             visible: false
                         },
                         {
-                            data: 'name',
-                            name: 'name'
+                            data: 'site',
+                            name: 'site'
+                        },
+                        {
+                            data: 'branch',
+                            name: 'branch'
+                        },
+                        {
+                            data: 'sitehead',
+                            name: 'sitehead'
+                        },
+                        {
+                            data: 'is_active',
+                            name: 'is_active'
+                        },
+                        {
+                            data: 'created_at',
+                            name: 'created_at'
                         },
                         {
                             data: 'action',
@@ -156,11 +145,11 @@
                 Click to Button
                 --------------------------------------------
                 --------------------------------------------*/
-                $('#createNewCategory').click(function() {
-                    $('#saveBtn').val("create-categorie");
-                    $('#txtcat_id').val('');
+                $('#createNew').click(function() {
+                    $('#saveBtn').val("create");
+                    $('#txtid').val('');
                     $('#productForm').trigger("reset");
-                    $('#modelHeading').html("Create New Categorie");
+                    $('#modelHeading').html("Create New {{ $title }}");
                     $('#ajaxModel').modal('show');
                 });
 
@@ -188,11 +177,19 @@
                             $('#ajaxModel').modal('hide');
                             $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Save');
                             table.ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.success
+
+                            })
 
                         },
                         error: function(data) {
                             console.log('Error:', data);
-
+                            $('#app_codeErrorMsg').text(response.responseJSON.errors.app_code);
+                            $('#app_nameErrorMsg').text(response.responseJSON.errors.app_name);
+                            $('#descriptionErrorMsg').text(response.responseJSON.errors
+                                .description);
                         }
                     });
                 });
@@ -201,49 +198,87 @@
                       Click to Edit Button
                       --------------------------------------------
                       --------------------------------------------*/
-                $('body').on('click', '.editCategorie', function() {
+                $('body').on('click', '.edit', function() {
                     var id = $(this).data('id');
                     $.get("{{ url('admin/branch') }}" + '/' + id + '/edit', function(data) {
-                        $('#modelHeading').html("Edit Categorie");
-                        $('#saveBtn').val("edit-categorie");
+                        $('#modelHeading').html("Edit {{$title}}");
+                        $('#saveBtn').val("edit");
                         $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Update');
                         $('#ajaxModel').modal('show');
-                        $('#txtcat_id').val(data.id);
-                        $('#name').val(data.name);
+                        $('#txtid').val(data.id);
+                        $('#site').val(data.site);
+                        $('#branch').val(data.branch);
+                        $('#sitehead').val(data.sitehead);
+                        $('#location').val(data.location);
+                        $('#phone').val(data.phone);
+                        $('#email').val(data.email);
+                        $('#maps').val(data.maps);
+                        $('#is_active').prop("checked", (data.is_active == 1 ? true : false));
+                        //hide span alert
+                        document.getElementById('app_codeErrorMsg').style.visibility = 'hidden';
+                        document.getElementById('app_nameErrorMsg').style.visibility = 'hidden';
+                        document.getElementById('descriptionErrorMsg').style.visibility = 'hidden';
                     })
-
-
                 });
 
+
+                $("#is_active").on('change', function() {
+                    if ($(this).is(':checked')) {
+                        $(this).attr('value', 1);
+                    } else {
+                        $(this).attr('value', 0);
+                    }
+
+                    //  $('#checkbox-value').text($('#is_active').val());
+                });
 
                 /*------------------------------------------
                   --------------------------------------------
                   delete Click Button
                   --------------------------------------------
                   --------------------------------------------*/
-                $('body').on('click', '.deleteCategorie', function() {
+                $('body').on('click', '.delete', function() {
                     var id = $(this).data('id');
-                    var deleteConfirm = confirm("Are you sure?");
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            //AJAX
+                            $.ajax({
+                                url: "{{ url('admin/branch') }}" + '/' + id,
+                                type: 'DELETE',
+                                data: id,
+                                success: function(response) {
+                                    // Handle success, update the DataTable, close the modal, etc.
+                                    $('#productForm').trigger("reset");
+                                    table.ajax.reload();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.success
 
-                    if (deleteConfirm == true) {
+                                    })
 
-                        //AJAX
-                        $.ajax({
-                            url: "{{ url('admin/branch') }}" + '/' + id,
-                            type: 'DELETE',
-                            data: id,
-                            success: function(response) {
-                                // Handle success, update the DataTable, close the modal, etc.
-                                $('#productForm').trigger("reset");
-                                table.ajax.reload();
-                            },
-                            error: function(data) {
-                                console.log('Error:', data);
-                                $('#saveBtn').html('Update Changes');
-                            }
-                        });
-                    }
+                                },
+                                error: function(data) {
+                                    console.log('Error:', data);
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: `This Application is use!`,
+                                    })
+                                    $('#saveBtn').html(
+                                        '<i class="fas fa-save"></i>&nbsp;Save');
+                                }
+                            });
+                        }
+                    })
                 });
+
 
 
             });

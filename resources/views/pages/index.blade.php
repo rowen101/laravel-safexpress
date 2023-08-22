@@ -125,96 +125,7 @@
     <main id="id">
 
  <!-- ======= Why Choose Us Section ======= -->
- <section id="why-us" class="why-us">
-    <div class="container" data-aos="fade-up">
-
-      <div class="section-header">
-        <h2>The Company Tenets</h2>
-
-      </div>
-
-      <div class="row g-0" data-aos="fade-left" data-aos-delay="200">
-
-        <!-- <div class="col-xl-5 img-bg" style="background-image: url('assets/img/why-us-bg.jpg')"></div> -->
-        <div class="col-xl-12 slides  position-relative">
-
-          <div class="slides-1 swiper">
-            <div class="swiper-wrapper">
-
-
-
-              <div class="swiper-slide">
-                <div class="item">
-
-                  <div class="row gy-4" data-aos="fade-up">
-                    <div class="col-lg-5">
-                      <div class="content ps-lg-5">
-                        <img src="{{ asset('img/pngwing.com-2-768x768.png')}}"/>
-                      </div>
-                    </div>
-                    <div class="col-lg-7">
-                      <div class="content ps-lg-5">
-                          <h3 class="mb-3">Our Mission</h3>
-              <p>Our Mission
-                    To provide the highest level of warehousing and transport services by committing to safe and
-                    timely deliveries, as well as offer fair and competitive pricing to our clients. Our goal is to
-                    make the workplace a safe and encouraging environment for employees and maintain integrity,
-                    fairness, and honesty with our business partners.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div><!-- End slide item -->
-
-              <div class="swiper-slide">
-                <div class="item">
-
-                  <div class="row gy-4" data-aos="fade-up">
-                    <div class="col-lg-5">
-                      <div class="content ps-lg-5">
-                        <img src="{{ asset('img/pngwing.com_-768x768.png')}}"/>
-                      </div>
-                    </div>
-                    <div class="col-lg-7">
-                      <div class="content ps-lg-5">
-                          <h3 class="mb-3">Our Vission</h3>
-                        <p>To be a Recognized Leader in the industry. and to be the Preferred Supply Chain Enabler that
-                          differentiates our solutions based on in-depth customer understanding and a strong focus on the
-                          ever-shifting market needs. All of this is to ensure that Safexpress Logistics propels into an
-                          eminent business moving forward.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div><!-- End slide item -->
-
-              <div class="swiper-slide">
-                <div class="item">
-                  <h3 class="mb-3">Core Value</h3>
-
-                   <ul class="list-unstyled">
-              <li><i class="fa-solid fa-circle-a" style="color: #c6e916;"></i>Food Safety</li>
-              <li><i class="fa-solid fa-circle-c" style="color: #c6e916;"></i>Accountability</li>
-              <li><i class="fa-solid fa-circle-t" style="color: #c6e916;"></i>Commitment</li>
-              <li><i class="fa-solid fa-circle-s" style="color: #c6e916;"></i>Tinacity</li>
-              <li><i class="fa-solid fa-circle-s" style="color: #c6e916;"></i>Selflessness</li>
-            </ul>
-                </div>
-              </div><!-- End slide item -->
-
-            </div>
-            <div class="swiper-pagination"></div>
-          </div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
+        @include("pages.partial_page.company")
 
 
         <section class="about">
@@ -266,145 +177,145 @@
                     <div class="row text-center text-lg-start col-md-12 border-none">
 
                         <div class="col-lg-3 col-md-4 col-6 ">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/1617168794_logo-header.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail "
                                     src="{{asset('img/partners/1617168794_logo-header.png')}}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/1kx1k_LOGO_yellow.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/1kx1k_LOGO_yellow.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/2560px-Logo_DB_Schenker.svg-1536x302.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/2560px-Logo_DB_Schenker.svg-1536x302.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/300964142_453263313486094_72733862803007486_n.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/300964142_453263313486094_72733862803007486_n.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/3g-logistics-and-cold-storage-inc.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/3g-logistics-and-cold-storage-inc.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/Alfamart-Logo-1024x576.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/Alfamart-Logo-1024x576.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/aljoy-300x200.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/aljoy-300x200.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/Bounty_Fresh_Chicken_logo.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/Bounty_Fresh_Chicken_logo.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/Coca-Cola-Logo-1934-768x461.png')}}"  data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/Coca-Cola-Logo-1934-768x461.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/cropped-Potato-Corner-Logo@2x-600x200.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/cropped-Potato-Corner-Logo@2x-600x200.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/Del_Monte_logo.svg-1024x795.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/Del_Monte_logo.svg-1024x795.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/KFC-logo-2006-2048x1152.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/KFC-logo-2006-2048x1152.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/mekeni-up.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/mekeni-up.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/download-1.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/download-1.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/download-1_1-300x200.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/download-1_1-300x200.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/Popeyes-Logo.wine_-2048x1365.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/Popeyes-Logo.wine_-2048x1365.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/mother-daughter.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/mother-daughter.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/Mondelez-Logo-1536x960.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/Mondelez-Logo-1536x960.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/images.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/images.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/download.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/download.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/Popeyes-Logo.wine_-2048x1365.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/Popeyes-Logo.wine_-2048x1365.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/golden-essential-foods.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/golden-essential-foods.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/igloo_logo.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/igloo_logo.png')}}"  alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="#" class="d-block mb-4 h-100">
+                            <a href="{{asset('img/partners/prose--2048x468.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
                                 src="{{asset('img/partners/prose--2048x468.png')}}"  alt="">
                             </a>

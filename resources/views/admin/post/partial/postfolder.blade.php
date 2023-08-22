@@ -24,7 +24,8 @@
 
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="far fa-trash-alt"></i> Trash
+            <i class="fab fa-blogger"></i> Publish
+            <span class="badge bg-primary float-right">{{$countpublish}}</span>
           </a>
         </li>
       </ul>

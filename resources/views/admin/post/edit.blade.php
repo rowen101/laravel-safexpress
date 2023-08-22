@@ -55,7 +55,7 @@
                   <input class="form-control" name="title" value="{{$post->title}}" placeholder="Your Post">
                 </div>
                 <div class="form-group">
-                    
+
                     <label for="photo">Select a image:</label>
                     <input class="form-control" type="file" id="photo" name="photo">
                   </div>

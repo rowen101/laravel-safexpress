@@ -52,11 +52,12 @@ class DropzoneController extends Controller
         }
     }
 
-    function fetch()
+    function fetch(string $id)
     {
         $images = DB::table('galleries')
             ->select('id', 'foldername', 'is_active', 'image', 'filename', 'caption')
             ->where('image', '<>', '')
+            ->where('id', $id)
             ->get();
         $output = '<div class="row">';
         foreach ($images as $image) {
@@ -82,9 +83,9 @@ class DropzoneController extends Controller
                 unlink($image_thumbnail_path);
                 unlink($image_upload_path);
             }
-            $user = Gallery::where('image', $name)->firstorfail()->delete();
+           Gallery::where('image', $name)->firstorfail()->delete();
         }
     }
 
-   
+
 }

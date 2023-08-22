@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Posts;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -42,7 +44,9 @@ class AdminController extends Controller
     public function dashboard()
     {
         $title ="Dasboard";
-        return view('admin.dashboard')->with('title',$title);
+        $user = User::count();
+        $post = Posts::count();
+        return view('admin.dashboard', compact(['title','user','post']));
     }
 
 

@@ -29,21 +29,10 @@
 
 
                 <div class="card">
-                    <div class="card-header">
 
-                        <div class="card-tools">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-success" href="javascript:void(0)"
-                                    id="createNewCategory"><i class="fas fa-plus"></i></button>
-                            </div>
-
-                        </div>
-                        <!-- /.card-tools -->
-                    </div>
-                    <!-- /.card-header -->
                     <div class="card-body">
 
-                        <table class="table table-bordered data-table">
+                        <table class="table table-bordered data-table table-hover table-striped small " width="100%">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -84,6 +73,7 @@
                             <!-- Hidden field to store the user ID for update -->
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Categorie">
+                            <span class="text-danger" id="nameErrorMsg"></span>
                         </div>
                         <input type="hidden" id="txtcat_id" name="id" value="id">
 
@@ -103,7 +93,22 @@
         <!-- /.modal-dialog -->
     </div>
     </div>
+    <div class="fab-container">
+
+        <div class="button iconbutton">
+
+            <a href="javascript:void(0)" id="createNewCategory"><i class="fas fa-plus"></i></a>
+
+        </div>
+
+    </div>
+
+    @push('head')
+        <link rel='stylesheet' href='{{asset('css/sweetalert2.min.css')}}'>
+    @endpush
+
     @push('buttom')
+        <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
         <script type="text/javascript">
             $(function() {
                 /*------------------------------------------
@@ -116,6 +121,8 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
+
 
                 /*------------------------------------------
                 --------------------------------------------
@@ -159,7 +166,8 @@
                     $('#saveBtn').val("create-categorie");
                     $('#txtcat_id').val('');
                     $('#productForm').trigger("reset");
-                    $('#modelHeading').html("Create New Categorie");
+                    $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Save');
+                    $('#modelHeading').html("Create {{ $title }}");
                     $('#ajaxModel').modal('show');
                 });
 
@@ -185,12 +193,17 @@
 
                             $('#productForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
-                            $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Save');
                             table.ajax.reload();
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Save Complete',
+                            })
 
                         },
                         error: function(data) {
                             console.log('Error:', data);
+                            $('#nameErrorMsg').text(data.responseJSON.errors.name);
 
                         }
                     });
@@ -203,12 +216,15 @@
                 $('body').on('click', '.editCategorie', function() {
                     var id = $(this).data('id');
                     $.get("{{ url('admin/categorie') }}" + '/' + id + '/edit', function(data) {
-                        $('#modelHeading').html("Edit Categorie");
+                        $('#modelHeading').html("Edit {{ $title }}");
                         $('#saveBtn').val("edit-categorie");
                         $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Update');
                         $('#ajaxModel').modal('show');
                         $('#txtcat_id').val(data.id);
                         $('#name').val(data.name);
+
+                        //hide span alert
+                        document.getElementById('nameErrorMsg').style.visibility = 'hidden';
                     })
 
 
@@ -220,28 +236,46 @@
                   delete Click Button
                   --------------------------------------------
                   --------------------------------------------*/
-                $('body').on('click', '.deleteCategorie', function() {
+                $('body').on('click', '.delete', function() {
+
                     var id = $(this).data('id');
-                    var deleteConfirm = confirm("Are you sure?");
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            //AJAX
+                            $.ajax({
+                                url: "{{ url('admin/categorie') }}" + '/' + id,
+                                type: 'DELETE',
+                                data: id,
+                                success: function(response) {
+                                    // Handle success, update the DataTable, close the modal, etc.
+                                    $('#productForm').trigger("reset");
+                                    table.ajax.reload();
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    )
 
-                    if (deleteConfirm == true) {
+                                },
+                                error: function(data) {
+                                    console.log('Error:', data);
+                                    $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Save');
+                                }
+                            });
 
-                        //AJAX
-                        $.ajax({
-                            url: "{{ url('admin/categorie') }}" + '/' + id,
-                            type: 'DELETE',
-                            data: id,
-                            success: function(response) {
-                                // Handle success, update the DataTable, close the modal, etc.
-                                $('#productForm').trigger("reset");
-                                table.ajax.reload();
-                            },
-                            error: function(data) {
-                                console.log('Error:', data);
-                                $('#saveBtn').html('Update Changes');
-                            }
-                        });
-                    }
+
+                        }
+                    })
+
+
                 });
             });
         </script>
