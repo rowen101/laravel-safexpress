@@ -28,12 +28,17 @@ WORKDIR /var/www
 COPY --chown=www-data:www-data . .
 
 # Create laravel caching folders.
-RUN mkdir -p /var/www/storage/framework
-RUN mkdir -p /var/www/storage/framework/cache
-RUN mkdir -p /var/www/storage/framework/testing
-RUN mkdir -p /var/www/storage/framework/sessions
-RUN mkdir -p /var/www/storage/framework/views
+# RUN mkdir -p /var/www/storage/framework
+# RUN mkdir -p /var/www/storage/framework/cache
+# RUN mkdir -p /var/www/storage/framework/testing
+# RUN mkdir -p /var/www/storage/framework/sessions
+# RUN mkdir -p /var/www/storage/framework/views
+RUN mkdir -p /var/www/storage/framework /var/www/storage/framework/cache \
+    /var/www/storage/framework/testing /var/www/storage/framework/sessions \
+    /var/www/storage/framework/views
 
+RUN mkdir -p /var/www/storage /var/www/storage/logs /var/www/storage/framework \
+    /var/www/storage/framework/sessions /var/www/bootstrap
 # Fix files ownership.
 RUN chown -R www-data /var/www/storage
 RUN chown -R www-data /var/www/storage/framework
