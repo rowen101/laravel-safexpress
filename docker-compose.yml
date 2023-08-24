@@ -1,6 +1,21 @@
 version: "3.8"
 services:
-
+    api:
+        container_name: api
+        build:
+            context: .
+            target: php
+            args:
+                - APP_ENV=${APP_ENV}
+        environment:
+            - APP_ENV=${APP_ENV}
+        volumes:
+            - .:/var/www
+        ports:
+            - 8000:8080
+        depends_on:
+            - database
+            - redis
     database:
         container_name: database
         image: mysql:8.1
@@ -20,5 +35,11 @@ services:
         environment:
          - PMA_ARBITRARY=1
 
+    redis:
+        container_name:  redis
+        image: redis:alpine
+        command: redis-server --appendonly yes --requirepass  "secret"
+        ports:
+            - 6380:6379
 volumes:
     db-data: ~
