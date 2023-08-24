@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => 'auth:sanctum'], function(){
+    //All secure URL's
+    Route::get('/core/menu', [App\Http\Controllers\AdminController::class, 'menu']);
+    });
+Route::post("login",[App\Http\Controllers\UserController::class,'login']);
+Route::post("register",[App\Http\Controllers\UserController::class,'sign_up']);
