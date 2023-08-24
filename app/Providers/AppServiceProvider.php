@@ -26,12 +26,12 @@ class AppServiceProvider extends ServiceProvider
        Schema::defaultStringLength(191);
 
 
-        $adminmenu = Menu::where('is_active', 1)
-        ->where('app_id', 1)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
-       view()->share('adminmenu', $adminmenu);
+    //     $adminmenu = Menu::where('is_active', 1)
+    //     ->where('app_id', 1)
+    //     ->where('parent_id', 0)
+    //     ->orderBy('sort_order', 'ASC')
+    //     ->get();
+    //    view()->share('adminmenu', $adminmenu);
 
         // $menuItem = Menu::where('is_active', 1)
         //  ->where('app_id', 2)

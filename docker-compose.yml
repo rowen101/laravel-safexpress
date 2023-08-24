@@ -14,10 +14,10 @@ services:
         ports:
             - 8000:8080
         depends_on:
-            - database
+            - mysql_db
             - redis
-    database:
-        container_name: database
+    mysql_db:
+        container_name: mysql_db
         image: mysql:8.1
         ports:
             -   3306:3306
