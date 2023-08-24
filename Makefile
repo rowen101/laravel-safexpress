@@ -1,58 +1,32 @@
-.PHONY: help ps build build-prod start fresh fresh-prod stop restart destroy \
-	cache cache-clear migrate migrate migrate-fresh tests tests-html
+run-app-with-setup:
+	cp ./src/.env.example ./src/.env
+	docker compose build
+	docker compose up -d
+	docker exec php /bin/sh -c "composer install && chmod -R 777 storage && php artisan key:generate"
 
-CONTAINER_PHP=api
-CONTAINER_REDIS=redis
-CONTAINER_DATABASE=database
+run-app-with-setup-db:
+	cp ./src/.env.example ./src/.env
+	docker compose build
+	docker compose up -d
+	docker exec php /bin/sh -c "composer install && chmod -R 777 storage && php artisan key:generate && php artisan migrate:fresh --seed"
 
-help: ## Print help.
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
+run-app:
+	docker compose up -d
 
-ps: ## Show containers.
-	@docker compose ps
+kill-app:
+	docker compose down
 
-build: ## Build all containers for DEV
-	@docker build --no-cache . -f ./Dockerfile.local
+enter-nginx-container:
+	docker exec -it nginx /bin/sh
 
-build-prod: ## Build all containers for PROD
-	@docker build --no-cache . -f ./Dockerfile
+enter-php-container:
+	docker exec -it php /bin/sh
 
-start: ## Start all containers
-	@docker compose up --force-recreate -d
+enter-mysql-container:
+	docker exec -it mysql /bin/sh
 
-fresh:  ## Destroy & recreate all uing dev containers.
-	make stop
-	make destroy
-	make build
-	make start
+flush-db:
+	docker exec php /bin/sh -c "php artisan migrate:fresh"
 
-fresh-prod: ## Destroy & recreate all using prod containers.
-	make stop
-	make destroy
-	make build-prod
-	make start
-
-stop: ## Stop all containers
-	@docker compose stop
-
-restart: stop start ## Restart all containers
-
-destroy: stop ## Destroy all containers
-
-ssh: ## SSH into PHP container
-	docker exec -it ${CONTAINER_PHP} sh
-
-install: ## Run composer install
-	docker exec ${CONTAINER_PHP} composer install
-
-migrate: ## Run migration files
-	docker exec ${CONTAINER_PHP} php artisan migrate
-
-migrate-fresh: ## Clear database and run all migrations
-	docker exec ${CONTAINER_PHP} php artisan migrate:fresh
-
-tests: ## Run all tests
-	docker exec ${CONTAINER_PHP} ./vendor/bin/phpunit
-
-tests-html: ## Run tests and generate coverage. Report found in reports/index.html
-	docker exec ${CONTAINER_PHP} php -d zend_extension=xdebug.so -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-html reports
+flush-db-with-seeding:
+	docker exec php /bin/sh -c "php artisan migrate:fresh --seed"
