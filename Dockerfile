@@ -1,23 +1,21 @@
-# Use the official PHP image as the base image
-FROM php:8.0-fpm
+FROM php:8.2-fpm-alpine
 
-# Install PHP extensions and system dependencies
-RUN apt-get update && apt-get install -y \
-    libzip-dev \
+RUN apk update && apk add \
+    curl \
+    libpng-dev \
+    libxml2-dev \
     zip \
-    unzip \
-    && docker-php-ext-install zip pdo pdo_mysql
+    unzip
+
+RUN docker-php-ext-install pdo pdo_mysql \
+    && apk --no-cache add nodejs npm
 
 # Copy composer executable.
-# Install Composer globally
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Copy the application code into the container
-COPY . .
+COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
 
 # Copy configuration files.
-# COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
-# COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
 
 # Set working directory to /var/www.
