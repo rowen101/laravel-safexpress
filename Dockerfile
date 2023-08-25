@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.1-fpm-alpine
 
 RUN apk update && apk add \
     curl \
@@ -12,8 +12,8 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql bcmath curl opcache mbstring
 # Copy composer executable.
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
 # Copy configuration files.
-COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
-COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+# COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+# COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
 
 # Set working directory to /var/www.
