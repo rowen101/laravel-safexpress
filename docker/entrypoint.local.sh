@@ -5,7 +5,7 @@ if [ ! -f "vendor/autoload.php" ]; then
 fi
 
 if [ ! -f ".env" ]; then
-    echo "Creating env file for env $APP_ENV"
+    echo "Creating env file for env"
     cp .env.example .env
 else
     echo "env file exists."
@@ -15,6 +15,3 @@ php artisan migrate
 php artisan optimize clear
 php artisan view:clear
 php artisan route:clear
-
-php-fpm -D
-nginx -g "daemon off;"
