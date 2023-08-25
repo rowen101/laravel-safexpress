@@ -7,8 +7,7 @@ RUN apk update && apk add \
     zip \
     unzip
 
-RUN docker-php-ext-install pdo pdo_mysql \
-    && apk --no-cache add nodejs npm
+RUN docker-php-ext-install pdo pdo_mysql 
 
 # Copy composer executable.
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
