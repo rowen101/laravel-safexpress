@@ -1,17 +1,23 @@
-FROM php:8.1-fpm
+# Use the official PHP image as the base image
+FROM php:8.0-fpm
 
-# Install dependencies.
-RUN apt-get update && apt-get install -y unzip libpq-dev libcurl4-gnutls-dev nginx libonig-dev
-
-# Install PHP extensions.
-RUN docker-php-ext-install mysqli pdo pdo_mysql bcmath curl opcache mbstring
+# Install PHP extensions and system dependencies
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    zip \
+    unzip \
+    && docker-php-ext-install zip pdo pdo_mysql
 
 # Copy composer executable.
-COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
+# Install Composer globally
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copy the application code into the container
+COPY . .
 
 # Copy configuration files.
-COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
-COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+# COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+# COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
 
 # Set working directory to /var/www.
