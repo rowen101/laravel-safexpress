@@ -1,57 +1,53 @@
 version: '3'
 
-networks:
-  webapp:
-
 services:
-  nginx:
-    image: nginx:stable-alpine
-    container_name: nginx
-    ports:
-    - "8000:80"
-    links:
-      - php
-    volumes:
-      - .:/var/www
-      - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf:rw
-      - ./docker/logs/nginx:/var/logs/nginx:rw
-    depends_on:
-      - php
-      - mysqldb
-    networks:
-      - webapp
-  php:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: php
+    image: my-laravel-app
     volumes:
-       - .:/var/www
-    ports:
-      - "9001:9000"
+      - .:/var/www
     networks:
-      - webapp
+      - laravel
 
-  mysqldb:
-    container_name: mysqldb
-    image: mysql:8.1
+  nginx:
+    image: nginx:latest
+    container_name: nginx
     ports:
-      - 3306:3306
-    environment:
-        MYSQL_DATABASE: db_safexpress
-        MYSQL_PASSWORD=: secret
-        MYSQL_ROOT_PASSWORD: secret
+      - "80:80"
     volumes:
-      - db-data:/var/lib/mysql
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www
+
+    depends_on:
+      - app
+      - database
     networks:
-      - webapp
+      - laravel
+
+  database:
+    image: mysql:8.1
+    container_name: database
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: app
+      MYSQL_PASSWORD=: secret
+      MYSQL_ROOT_PASSWORD: secret
+    networks:
+      - laravel
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   phpmyadmin:
-      image: phpmyadmin:latest
-      ports:
-        - 9002:80
-      environment:
-        - PMA_ARBITRARY=1
+    image: phpmyadmin:latest
+    ports:
+    - 9001:80
+    environment:
+    - PMA_ARBITRARY=1
+
+networks:
+  laravel:
 
 volumes:
-    db-data: ~
+  mysql-data: ~
