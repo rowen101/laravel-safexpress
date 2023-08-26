@@ -30,7 +30,7 @@ services:
     image: mysql:8.1
     container_name: database
     environment:
-      MYSQL_DATABASE: laravel
+      MYSQL_DATABASE: db_safexpress
       MYSQL_USER: app
       MYSQL_PASSWORD=: secret
       MYSQL_ROOT_PASSWORD: secret
