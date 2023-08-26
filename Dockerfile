@@ -38,7 +38,7 @@ RUN chmod -R 755 /var/www/storage
 RUN chmod -R 755 /var/www/storage/logs
 RUN chmod -R 755 /var/www/storage/framework
 RUN chmod -R 755 /var/www/storage/framework/sessions
-RUN chmod -R 755 /var/www/bootstrap
+RUN sudo chmod -R ugo+rw storage
 
 # Adjust user permission & group
 RUN usermod --uid 1000 www-data
