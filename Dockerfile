@@ -1,26 +1,16 @@
 FROM php:8.1-fpm
-# Arguments defined in docker-compose.yml
-ARG user
-ARG uid
 
-# Install system dependencies
+WORKDIR /var/www
+
 RUN apt-get update && apt-get install -y \
     git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
     zip \
-    unzip
+    unzip \
+    nginx \
+    && docker-php-ext-install pdo pdo_mysql libjpeg-dev
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
-
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Copy composer executable.
+COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
 
 # Copy files from current folder to container current folder (set in workdir).
 COPY --chown=www-data:www-data . .
@@ -45,7 +35,10 @@ RUN chmod -R 755 /var/www/storage/framework
 RUN chmod -R 755 /var/www/storage/framework/sessions
 
 
-USER $user
+COPY . /var/www
+
+CMD ["php-fpm"]
+
 
 #Run the entrypoint file.
 # ENTRYPOINT [ "docker/entrypoint.sh" ]
