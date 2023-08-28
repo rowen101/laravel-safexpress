@@ -3,7 +3,7 @@ FROM php:8.1-fpm
 WORKDIR /var/www
 
 RUN apt-get update && apt-get install unzip -y
-RUN apt-get install docker-php-ext-install pdo pdo_mysql libjpeg-dev -y
+# RUN apt-get install docker-php-ext-install pdo pdo_mysql libjpeg-dev -y
 
 # Copy composer executable.
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
