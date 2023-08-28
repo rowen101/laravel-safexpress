@@ -3,9 +3,6 @@ FROM php:8.1-fpm
 WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y \
-    git \
-    zip \
-    unzip \
     nginx \
     && docker-php-ext-install pdo pdo_mysql libjpeg-dev
 
