@@ -1,16 +1,21 @@
 FROM php:8.1-fpm
 
-WORKDIR /var/www
+# Install dependencies.
+RUN apt-get update && apt-get install -y unzip libpq-dev libcurl4-gnutls-dev nginx libonig-dev
 
-RUN apt-get update && apt-get install -y \
-    git \
-    zip \
-    unzip \
-    nginx \
-    && docker-php-ext-install pdo pdo_mysql libjpeg-dev
+# Install PHP extensions.
+RUN docker-php-ext-install mysqli pdo pdo_mysql bcmath curl opcache mbstring
 
 # Copy composer executable.
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
+
+# Copy configuration files.
+COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+
+
+# Set working directory to /var/www.
+WORKDIR /var/www
 
 # Copy files from current folder to container current folder (set in workdir).
 COPY --chown=www-data:www-data . .
@@ -33,13 +38,11 @@ RUN chmod -R 755 /var/www/storage
 RUN chmod -R 755 /var/www/storage/logs
 RUN chmod -R 755 /var/www/storage/framework
 RUN chmod -R 755 /var/www/storage/framework/sessions
+RUN chmod -R 755 /var/www/bootstrap
 
+# Adjust user permission & group
+RUN usermod --uid 1000 www-data
+RUN groupmod --gid 1001 www-data
 
-COPY . /var/www
-
-CMD ["php-fpm"]
-
-
-#Run the entrypoint file.
+# Run the entrypoint file.
 # ENTRYPOINT [ "docker/entrypoint.sh" ]
-

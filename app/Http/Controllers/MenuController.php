@@ -82,7 +82,6 @@ class MenuController extends Controller
             'app_id' => 'required',
             'menu_code' => 'required',
             'menu_title' => 'required',
-            'description' => 'required',
             'menu_route' => 'required',
             'sort_order'=>'required',
             'parent_id'=>'required'
