@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y unzip
 
 
 # Install PHP extensions.
-RUN docker-php-ext-install pdo pdo_mysql pdo_sqlite
+RUN docker-php-ext-install pdo 
 
 # Copy composer executable.
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
