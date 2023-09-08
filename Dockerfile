@@ -3,9 +3,11 @@ FROM php:8.1-fpm
 # Install dependencies.
 RUN apt-get update && apt-get install -y unzip
 
-# Install PHP extensions.
-RUN docker-php-ext-install pdo bcmath curl opcache mbstring libjpeg-dev php8.1-sqlite3
 
+# Install SQLite3 extension
+RUN apt-get update && apt-get install -y libsqlite3-dev && \
+    docker-php-ext-install pdo_sqlite && \
+    docker-php-ext-enable pdo_sqlite pdo bcmath curl opcache mbstring libjpeg-dev
 # Copy composer executable.
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
 
