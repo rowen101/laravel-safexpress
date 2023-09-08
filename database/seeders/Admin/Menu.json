@@ -159,7 +159,7 @@
         "menuIcon": "fas fa-book",
         "menuRoute": "/admin/apps",
         "sortOrder": 200,
-        "isActive": 1,
+        "isActive": 0,
         "createdBy": 1,
         "created_at": null,
         "updated_at": null
@@ -174,7 +174,7 @@
         "menuIcon": "fas fa-window-restore",
         "menuRoute": "/admin/menu",
         "sortOrder": 200,
-        "isActive": 1,
+        "isActive": 0,
         "createdBy": 1,
         "created_at": null,
         "updated_at": null
@@ -283,5 +283,51 @@
         "createdBy": 1,
         "created_at": null,
         "updated_at": null
+    },
+    {
+        "id": 20,
+        "app_id": 1,
+        "menuCode": "SA",
+        "menuTitle": "Board-Director",
+        "description": "Board Stup",
+        "parent_id": 2,
+        "menuIcon": "fa fa-building-o",
+        "menuRoute": "/admin/bdirector",
+        "sortOrder": 100,
+        "isActive": 1,
+        "createdBy": 1,
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": 21,
+        "app_id": 1,
+        "menuCode": "SA",
+        "menuTitle": "Partner",
+        "description": "Sli Partner",
+        "parent_id": 2,
+        "menuIcon": "fa fa-building-o",
+        "menuRoute": "/admin/partner-setup",
+        "sortOrder": 100,
+        "isActive": 1,
+        "createdBy": 1,
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": 22,
+        "app_id": 1,
+        "menuCode": "SA",
+        "menuTitle": "Carousel",
+        "description": "banner slider",
+        "parent_id": 2,
+        "menuIcon": "fa fa-building-o",
+        "menuRoute": "/admin/carousel-setup",
+        "sortOrder": 10,
+        "isActive": 1,
+        "createdBy": 1,
+        "created_at": null,
+        "updated_at": null
     }
+
 ]
