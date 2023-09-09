@@ -88,6 +88,7 @@
         <div class="row gy-5">
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+
             <div class="card-item">
               <div class="row">
                 <div class="col-xl-5">
@@ -95,12 +96,14 @@
                 </div>
                 <div class="col-xl-7 d-flex align-items-center">
                   <div class="card-body">
+<a href="/warehouse-management">
                     <h4 class="card-title">Warehouse Management</h4>
-
+</a>
                   </div>
                 </div>
               </div>
             </div>
+
           </div><!-- End Card Item -->
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
@@ -111,8 +114,9 @@
                 </div>
                 <div class="col-xl-7 d-flex align-items-center">
                   <div class="card-body">
+                    <a href="/transport-services">
                     <h4 class="card-title">Transport Services</h4>
-
+                    </a>
                   </div>
                 </div>
               </div>
@@ -127,8 +131,9 @@
                 </div>
                 <div class="col-xl-7 d-flex align-items-center">
                   <div class="card-body">
+                    <a href="/other-services">
                     <h4 class="card-title">Other Services</h4>
-
+                    </a>
                   </div>
                 </div>
               </div>

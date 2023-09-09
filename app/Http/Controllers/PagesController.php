@@ -140,30 +140,33 @@ class PagesController extends Controller
 
     public function warehouse()
     {
+        $title = "Warehouse Management";
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.warehouse-management');
+        return view('pages.warehouse-management',compact('title', 'menuItem'));
     }
     public function transport()
     {
+        $title = "Transport Serveces";
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.transport-services');
+        return view('pages.transport-services',compact('menuItem','title'));
     }
     public function other()
     {
+        $title = "Other Services";
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.other-services');
+        return view('pages.other-services',compact('menuItem','title'));
     }
 
 }

@@ -80,7 +80,7 @@
 
                           <li><i class="bi bi-dash"></i>Accountability</li>
                           <li><i class="bi bi-dash"></i>Commitment</li>
-                          <li><i class="bi bi-dash"></i>Tinacity</li>
+                          <li><i class="bi bi-dash"></i>Tenacity</li>
                           <li><i class="bi bi-dash"></i>Selflessness</li>
                       </ul>
                         </div>

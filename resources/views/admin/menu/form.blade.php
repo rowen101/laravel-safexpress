@@ -29,7 +29,7 @@
                                 <input type="text" class="form-control" name="menu_title" id="menu_title"
                                     placeholder="Menu Title">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label for="exampleInputPassword1" class="control-label">Description</label>
                                 <input type="text" class="form-control" name="description" id="description"
                                     placeholder="Menu Code">
@@ -42,7 +42,7 @@
                                     <option value="0" disabled>--Select Menu--</option>
                                     <option value="0" >&#xf0aa;</option>
                                     @foreach ($mparent as $item)
-                                    <option value="{{$item->id}} {{ $item->id == $item->id ? 'selected="selected"' : '' }}">{{$item->menu_title}}</option>
+                                    <option value="{{$item->id}}">{{$item->menu_title}}</option>
                                     @endforeach
                                 </select>
                                 {{-- <input type="hidden" id="parent_id" value="parent_id" name="parent_id"/> --}}
