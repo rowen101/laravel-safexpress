@@ -154,7 +154,7 @@ class PagesController extends Controller
     }
     public function transport()
     {
-        $title = "Transport Serveces";
+        $title = "Transport Services";
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
