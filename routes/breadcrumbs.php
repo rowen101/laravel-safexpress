@@ -118,3 +118,9 @@ Breadcrumbs::for('branch', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Branch Setup', url('admin/branch-setup'));
 });
+//////////////////////////////////////////
+// Home > branch
+Breadcrumbs::for('board', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Bord of Director', url('admin/bderictor'));
+});

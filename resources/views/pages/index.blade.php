@@ -337,7 +337,40 @@
 
                 <div class="row gy-4">
 
+                    @foreach ($directors as $item )
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="team-member">
+                            <div class="member-img">
+                                <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid" alt="{{$item->name}}">
+                                <div class="social">
+
+                                    @if ($item->fb == '')
+                                    <a href="{{$item->fb_url}}" target="_blank"> <i class="bi bi-facebook"></i></a>
+                                    @endif
+
+                                    @if ($item->instagram == '')
+                                    <a href="{{$item->instagram_url}}" target="_blank"> <i class="bi bi-instagram"></i></a>
+                                    @endif
+
+                                    @if ($item->tw == '')
+                                    <a href="{{$item->tw_url}}" target="_blank"> <i class="bi bi-twitter"></i></a>
+                                    @endif
+
+                                    @if ($item->linkin == '')
+                                    <a href="{{$item->linkin_url}}" target="_blank"> <i class="bi bi-linkedin"></i></a>
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4>{{ $item->name}}</h4>
+                                <span>{{ $item->position}}</span>
+                            </div>
+                        </div>
+                    </div><!-- End Team Member -->
+                    @endforeach
+
+                    {{-- <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="team-member">
                             <div class="member-img">
                                 <img src="{{ asset('img/team/team-1.jpg') }}" class="img-fluid" alt="">
@@ -407,7 +440,7 @@
                                 <span>Corporate Secretary/Legal</span>
                             </div>
                         </div>
-                    </div><!-- End Team Member -->
+                    </div><!-- End Team Member --> --}}
 
                 </div>
 
@@ -471,7 +504,7 @@
         <div class="footer-legal">
             <div class="container">
                 <div class="copyright">
-                    &copy; Copyright <strong><span>Safexpress</span></strong>. All Rights Reserved
+                    Copyright &copy; {{ now()->year }}  <strong><span>Safexpress</span></strong>. All Rights Reserved
                 </div>
 
             </div>

@@ -63,7 +63,7 @@
                     @foreach ($menuItem as $item)
                         @if (count($item->submenus) > 0)
                             <li class="dropdown"><a
-                                    href="{{ $item->id }}"><span>{{ $item->menu_title }}</span> <i
+                                    href="{{ $item->menu_route }}"><span>{{ $item->menu_title }}</span> <i
                                         class="bi bi-chevron-down dropdown-indicator"></i></a>
                                 <ul>
                                     @foreach ($item->submenus as $submenu)
@@ -74,12 +74,9 @@
                                 </ul>
                             </li>
                         @else
-
-                                <li >
-                                    <a class="{{ (\Request::route()->getName() == '$item->menu_route') ? 'active' : '' }}" href="{{ $item->menu_route }}" >{{ $item->menu_title }}</a>
-                                </li>
-
-
+                            <li> <a href="{{ $item->menu_route }}"
+                                    class="{{ request()->is($item->menu_route) ? 'active' : '' }}">{{ $item->menu_title }}</a>
+                            </li>
                         @endif
                     @endforeach
                 </ul>

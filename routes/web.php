@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\BDController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommentController;
@@ -73,3 +74,4 @@ Route::get('dropzone/fetch/{id}/image', [App\Http\Controllers\GalleryController:
 
 Route::get('dropzone/delete', [App\Http\Controllers\GalleryController::class,'delete'])->name('dropzone.delete');
 Route::get('/admin/menuapp',[App\Http\Controllers\MenuController::class,'menuapp']);
+Route::resource('/admin/bdirector',BDController::class);

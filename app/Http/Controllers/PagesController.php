@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BDirector;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Menu;
@@ -32,7 +33,10 @@ class PagesController extends Controller
         ->orderBy('sort_order', 'ASC')
         ->get();
 
-        return view('pages.index',compact('menuItem'))->with(['title' => $title]);
+        $directors = BDirector::where('is_active',1)
+        ->get();
+
+        return view('pages.index',compact('menuItem','directors'))->with(['title' => $title]);
     }
 
     public function about()

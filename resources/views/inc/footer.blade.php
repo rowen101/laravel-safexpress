@@ -53,7 +53,7 @@
 <div class="footer-legal">
   <div class="container">
     <div class="copyright">
-      &copy; Copyright <strong><span>Safexpress</span></strong>. All Rights Reserved
+        Copyright &copy; {{ now()->year }}  <strong><span>Safexpress</span></strong>. All Rights Reserved
     </div>
 
   </div>
