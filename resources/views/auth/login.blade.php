@@ -27,7 +27,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{url('admin')}}" class="h1 text-primary"><b>Safe</b>Express</a>
+                <a href="{{url('admin')}}" class="h1 text-primary"><b>Safe</b>xpress</a>
               </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>

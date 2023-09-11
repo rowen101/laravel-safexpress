@@ -24,7 +24,7 @@
             </div>
             <div class="col-lg-8">
               <div class="content ps-lg-5" data-aos="fade-left">
-                <h3>About SafeXpress</h3>
+                <h3>About Safexpress</h3>
                 <p>
                     We at Safexpress Logistics Inc. uphold our a good reputation as one of the best logistics company in the
                     Philippines.
