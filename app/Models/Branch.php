@@ -11,13 +11,13 @@ class Branch extends Model
 
     protected $fillable = [
         'id',
+        'region',
         'site',
-        'branch',
         'sitehead',
         'location',
         'email',
         'phone',
-        'maps',
+        'image',
         'is_active',
         'created_by',
         'updated_by'

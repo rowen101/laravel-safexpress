@@ -27,6 +27,7 @@ class PagesController extends Controller
     {
 
         $title = "Home";
+
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
@@ -41,7 +42,9 @@ class PagesController extends Controller
 
     public function about()
     {
-        $title = "About";
+        //$title = "About";
+        $title = Menu::where('menu_code','about')->pluck('menu_title')->first();
+
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
@@ -52,7 +55,7 @@ class PagesController extends Controller
 
     public function services()
     {
-        $title = "Services";
+        $title = Menu::where('menu_code','ser')->pluck('menu_title')->first();
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
@@ -62,7 +65,7 @@ class PagesController extends Controller
     }
     public function contact()
     {
-        $title = "contact";
+        $title = Menu::where('menu_code','ct')->pluck('menu_title')->first();
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
@@ -88,13 +91,13 @@ class PagesController extends Controller
             ->select('id', 'gurec', 'foldername', 'is_active', 'parent_id', 'image', 'filename', 'caption')
             ->where('image', '<>', '')
             ->get();
-        $title = "Teams";
+            $title = Menu::where('menu_code','teams')->pluck('menu_title')->first();
         return view('pages.teams')->with(['title' => $title, 'gallery' => $gallery, 'thumbnail' => $thumbnail,'menuItem'=> $menuItem]);
     }
 
     public function branch()
     {
-        $title = "Branch";
+        $title = Menu::where('menu_code','brancl')->pluck('menu_title')->first();
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
@@ -105,7 +108,7 @@ class PagesController extends Controller
 
     public function blog()
     {
-        $title = "Blog";
+        $title = Menu::where('menu_code','bl')->pluck('menu_title')->first();
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
@@ -144,7 +147,7 @@ class PagesController extends Controller
 
     public function warehouse()
     {
-        $title = "Warehouse Management";
+        $title = Menu::where('menu_code','ws')->pluck('menu_title')->first();
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
@@ -154,7 +157,7 @@ class PagesController extends Controller
     }
     public function transport()
     {
-        $title = "Transport Services";
+        $title = Menu::where('menu_code','ts')->pluck('menu_title')->first();
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)
@@ -164,7 +167,7 @@ class PagesController extends Controller
     }
     public function other()
     {
-        $title = "Other Services";
+        $title = Menu::where('menu_code','os')->pluck('menu_title')->first();
         $menuItem = Menu::where('is_active', 1)
         ->where('app_id', 2)
         ->where('parent_id', 0)

@@ -40,8 +40,8 @@
                                     <tr>
                                         <th>No</th>
                                         <th></th>
+                                        <th>Region</th>
                                         <th>Site</th>
-                                        <th>Branch</th>
                                         <th>SiteHead</th>
                                         <th>Active</th>
                                         <th>Created Date</th>
@@ -112,13 +112,14 @@
                             visible: false
                         },
                         {
+                            data: 'region',
+                            name: 'region'
+                        },
+                        {
                             data: 'site',
                             name: 'site'
                         },
-                        {
-                            data: 'branch',
-                            name: 'branch'
-                        },
+
                         {
                             data: 'sitehead',
                             name: 'sitehead'
@@ -158,38 +159,46 @@
 
                 /*------------------------------------------
                 --------------------------------------------
-                Create Categorie Code
+                Create branch Code
                 --------------------------------------------
                 --------------------------------------------*/
-                $('#saveBtn').click(function(e) {
+                $("#productForm").submit(function(e) {
                     e.preventDefault();
-                    $(this).html('Sending..');
+                    const fd = new FormData(this);
+                    $("#saveBtn").text('Sending...');
                     var formData = $('#productForm').serialize();
                     $.ajax({
-                        data: $('#productForm').serialize(),
                         url: "{{ url('/admin/branch') }}",
-                        type: "POST",
-                        data: formData,
+                        method: 'post',
+                        data: fd,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
                         dataType: 'json',
-                        success: function(data) {
+                        success: function(response) {
+
+                                Swal.fire({
+                                        icon: 'success',
+                                        title: response.success
+
+                                    })
+
 
                             $('#productForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
-                            $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Save');
                             table.ajax.reload();
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.success
-
-                            })
-
                         },
                         error: function(data) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: `Oop Something wrong!`,
+                                text: data.responseJSON.errors
+
+                            })
                             console.log('Error:', data);
-                            $('#app_codeErrorMsg').text(response.responseJSON.errors.app_code);
-                            $('#app_nameErrorMsg').text(response.responseJSON.errors.app_name);
-                            $('#descriptionErrorMsg').text(response.responseJSON.errors
-                                .description);
+                            // $('#nameErrorMsg').text(data.responseJSON.errors.name);
+                            // $('#positionErrorMsg').text(data.responseJSON.errors.position);
+                            // $('#aboutErrorMsg').text(data.responseJSON.errors.about);
                         }
                     });
                 });
@@ -207,12 +216,12 @@
                         $('#ajaxModel').modal('show');
                         $('#txtid').val(data.id);
                         $('#site').val(data.site);
-                        $('#branch').val(data.branch);
                         $('#sitehead').val(data.sitehead);
                         $('#location').val(data.location);
                         $('#phone').val(data.phone);
                         $('#email').val(data.email);
-                        $('#maps').val(data.maps);
+                        $('#region').val(data.region);
+                        $('#imgwarehouse').attr('src',"{{ asset('storage/img/') }}" + '/' + data.image);
                         $('#is_active').prop("checked", (data.is_active == 1 ? true : false));
                         //hide span alert
                         document.getElementById('app_codeErrorMsg').style.visibility = 'hidden';

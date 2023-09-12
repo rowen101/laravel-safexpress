@@ -329,14 +329,15 @@
 
                 /*------------------------------------------
                 --------------------------------------------
-                Create Categorie Code
+                Create directory Code
                 --------------------------------------------
                 --------------------------------------------*/
 
                 $("#productForm").submit(function(e) {
                     e.preventDefault();
                     const fd = new FormData(this);
-                    $("#saveBtn").text('Adding...');
+                    $("#saveBtn").text('Sending...');
+                    var formData = $('#productForm').serialize();
                     $.ajax({
                         url: "{{ url('/admin/bdirector') }}",
                         method: 'post',
@@ -346,14 +347,12 @@
                         processData: false,
                         dataType: 'json',
                         success: function(response) {
-                            if (response.status == 200) {
-                                Swal.fire(
-                                    'Added!',
-                                    'Employee Added Successfully!',
-                                    'success'
-                                )
 
-                            }
+                             Swal.fire({
+                                icon: 'success',
+                                title: response.success
+
+                            })
                             $('#productForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.ajax.reload();

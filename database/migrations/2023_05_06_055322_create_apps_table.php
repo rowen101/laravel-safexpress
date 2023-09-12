@@ -116,11 +116,11 @@ return new class extends Migration
 
         Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('region');
             $table->string('site');
-            $table->string('branch', 50)->nullable();
             $table->string('sitehead')->nullable();
             $table->string('location')->nullable();
-            $table->text('maps')->nullable();
+            $table->text('image')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->boolean('is_active')->default(true)->nullable();

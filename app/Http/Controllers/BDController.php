@@ -75,55 +75,73 @@ class BDController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        try {
-            //dd($request->all());
-            $request->validate([
-                'name' => 'required',
-                'position' => 'required',
-                'about' => 'required',
-                //'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg|max:2048', // Validation for image upload
-            ]);
+{
+    try {
+        $request->validate([
+            'name' => 'required',
+            'position' => 'required',
+            'about' => 'required',
+        ]);
 
-            // Check if an image file was provided in the request
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('public/img', $fileName); //php artisan storage:link
-            } else {
-                // No image provided, set $fileName to null or default value
-                $fileName = null; // You can set it to a default image filename if needed
+        // Find the branch by ID or create a new instance if ID doesn't exist
+        $bDirector = BDirector::findOrNew($request->id);
+
+        // Check if an image file was provided in the request
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/img', $fileName);
+
+            // Delete the old image if it exists
+            if ($bDirector->image) {
+                Storage::delete('public/img/' . $bDirector->image);
             }
 
-
-            BDirector::updateOrCreate(
-                [
-                    'id' => $request->id
-                ],
-                [
-                    'name' => $request->name,
-                    'image' => $fileName, // Save the image filename in the database
-                    'position' => $request->position,
-                    'about' => $request->about,
-                    'fb_url' => $request->fb_url,
-                    'tw_url' => $request->tw_url,
-                    'linkin_url' => $request->linkin_url,
-                    'instagram_url' => $request->instagram_url,
-                    'fb' => $request->fb,
-                    'tw' => $request->tw,
-                    'linkin' => $request->linkin,
-                    'instagram' => $request->instagram,
-                    'is_active' => $request->is_active,
-                    'created_by' => auth()->user()->id,
-                ]
-            );
-
-
-            return response()->json(['status' => 200]);
-        } catch (\Exception $e) {
-            return response()->json(['error', $e->getMessage()]);
+            // Update the director with the new image
+            $bDirector->file([
+                'name' => $request->name,
+                'image' => $fileName, // Save the image filename in the database
+                'position' => $request->position,
+                'about' => $request->about,
+                'fb_url' => $request->fb_url,
+                'tw_url' => $request->tw_url,
+                'linkin_url' => $request->linkin_url,
+                'instagram_url' => $request->instagram_url,
+                'fb' => $request->fb,
+                'tw' => $request->tw,
+                'linkin' => $request->linkin,
+                'instagram' => $request->instagram,
+                'is_active' => $request->is_active,
+                'created_by' => auth()->user()->id,
+            ]);
+        } else {
+            // No image provided, update other fields without changing the image
+            $bDirector->fill([
+                'name' => $request->name,
+                'position' => $request->position,
+                'about' => $request->about,
+                'fb_url' => $request->fb_url,
+                'tw_url' => $request->tw_url,
+                'linkin_url' => $request->linkin_url,
+                'instagram_url' => $request->instagram_url,
+                'fb' => $request->fb,
+                'tw' => $request->tw,
+                'linkin' => $request->linkin,
+                'instagram' => $request->instagram,
+                'is_active' => $request->is_active,
+                'created_by' => auth()->user()->id,
+            ]);
         }
+
+        // Save the branch instance (creating a new one if necessary)
+        $bDirector->save();
+
+         return response()->json(['success' => 'Success!']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()]);
     }
+}
+
 
     /**
      * Display the specified resource.

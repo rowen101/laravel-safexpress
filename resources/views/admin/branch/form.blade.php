@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
 
         <div class="modal-content">
-            <form id="productForm" name="productForm" class="form-horizontal">
+            <form id="productForm" name="productForm" class="form-horizontal" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h4 class="modal-title" id="modelHeading"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -12,10 +12,35 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
+                            <div class="container">
+                                <div class="row justify-content-center align-items-center">
+
+                                    <div class="col-md-6 text-center">
+                                        <div class="my-2">
+                                            <img src="" id="imgwarehouse" alt="" alt="Warehouse Image" class="img-fluid"/>
+                                            <input type="file" name="image" id="image"
+                                                class="form-control" accept="image/*">
+                                                <p>Note: image must be 600x600 px</p>
+                                        </div>
+                                        <div class="mt-2" id="avatar"></div>
+                                    </div>
+
+                                </div>
+                            </div>
                             <!-- left column -->
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
+
+                                        <div class="form-group required">
+                                            <label for="exampleInputEmail1" class="control-label">Region</label>
+                                            <select class="custom-select rounded-0" name="region" id="region">
+                                                <option value="0" disabled>--Select Region--</option>
+                                                <option value="Luzon">Luzon</option>
+                                                <option value="Visayas">Visayas</option>
+                                                <option value="Mindanao">Mindanao</option>
+                                            </select>
+                                        </div>
                                         <div class="form-group required">
                                             <label for="exampleInputPassword1" class="control-label">Site</label>
                                             <input type="text" class="form-control" name="site" id="site"
@@ -28,23 +53,15 @@
                                         </div>
                                         <div class="form-group required">
                                             <label for="exampleInputPassword1" class="control-label">Phone no.</label>
-                                            <input type="text" class="form-control" name="phone" id="phone"
+                                            <input type="number" class="form-control" name="phone" id="phone"
                                                 placeholder="Phone">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1" class="control-label">Map</label>
-                                            <input type="text" class="form-control" name="maps" id="maps"
-                                                placeholder="Maps">
-                                        </div>
+
                                     </div>
                                     <div class="col-md-6">
+
                                         <div class="form-group required">
-                                            <label for="exampleInputPassword1" class="control-label">Branch</label>
-                                            <input type="text" class="form-control" name="branch" id="branch"
-                                                placeholder="Branch">
-                                        </div>
-                                        <div class="form-group required">
-                                            <label for="exampleInputPassword1" class="control-label">Address</label>
+                                            <label for="exampleInputPassword1" class="control-label">Location</label>
                                             <input type="text" class="form-control" name="location" id="location"
                                                 placeholder="Address">
                                         </div>
@@ -79,7 +96,7 @@
 
                         <button type="button" class="btn btn-default"
                             data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="saveBtn"
+                        <button type="submit" class="btn btn-primary" id="saveBtn"
                             value="create-categorie"><i class="fas fa-save"></i>&nbsp;Save</button>
                     </div>
                 </div>
