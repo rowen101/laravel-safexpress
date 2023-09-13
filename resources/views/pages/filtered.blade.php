@@ -27,8 +27,10 @@
     </div>
 </div>
 @endforeach
+<div class="d-none">
 <script>
     // Remove query parameters from the URL
     var newURL = window.location.pathname;
     history.pushState({}, '', newURL);
 </script>
+</div>
