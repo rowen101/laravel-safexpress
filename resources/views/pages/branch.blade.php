@@ -81,7 +81,7 @@
                                                         <p>Site Head: {{ $branch->sitehead }}</p>
                                                         <p>Location: {{ $branch->location }}</p>
                                                         <p>Email: {{ $branch->email }}</p>
-                                                        
+
                                                     </div>
                                                     <div class="col-md-6">
                                                         <img src="{{ asset('/storage/img/' . $branch->image) }}"
@@ -118,8 +118,11 @@
                         method: 'POST',
                         data: {
                             region: selectedRegion,
-                            _token: '{{ csrf_token() }}'
+                            _token: '{{ csrf_token() }}',
+
                         },
+                         // Add the following line to fix serialization issue:
+                         traditional: true,
                         success: function(data) {
                             $('#filtered-branches').html(data);
                         }
