@@ -1,3 +1,6 @@
+<a hidden href="{{ url()->current(['_token' => null]) }}">Link Without Token</a>
+
+
 @foreach($branches as $branch)
 <div class="branch card mt-2">
     <div class="card-body">
