@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BDirector;
-use App\Models\Category;
-use App\Models\Comment;
 use App\Models\Menu;
 use App\Models\Posts;
+use App\Models\Branch;
+use App\Models\Comment;
 use App\Models\Gallery;
+use App\Models\Category;
+use App\Models\BDirector;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -95,7 +96,7 @@ class PagesController extends Controller
         return view('pages.teams')->with(['title' => $title, 'gallery' => $gallery, 'thumbnail' => $thumbnail,'menuItem'=> $menuItem]);
     }
 
-    public function branch()
+    public function branch(Request $request)
     {
         $title = Menu::where('menu_code','brancl')->pluck('menu_title')->first();
         $menuItem = Menu::where('is_active', 1)
@@ -103,9 +104,24 @@ class PagesController extends Controller
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.branch')->with(['title'=> $title,'menuItem'=> $menuItem]);;
-    }
 
+        $regions = Branch::distinct()->pluck('region');
+
+        $selectedRegion = $request->input('region');
+
+        $branches = Branch::when($selectedRegion, function ($query) use ($selectedRegion) {
+            return $query->where('region', $selectedRegion);
+        })->get();
+
+        return view('pages.branch', compact('title','menuItem','regions', 'selectedRegion', 'branches'));
+    }
+    public function filterBranches(Request $request)
+    {
+        $selectedRegion = $request->input('region');
+        $branches = Branch::where('region', $selectedRegion)->get();
+
+        return view('pages.filtered', compact('branches'));
+    }
     public function blog()
     {
         $title = Menu::where('menu_code','bl')->pluck('menu_title')->first();

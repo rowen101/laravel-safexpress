@@ -29,13 +29,14 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-
-Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('pages.index');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('pages.index');
 Route::get('/about', [App\Http\Controllers\PagesController::class, 'about'])->name('about');
 Route::get('/services', [App\Http\Controllers\PagesController::class, 'services'])->name('services');
 Route::get('/teams', [App\Http\Controllers\PagesController::class, 'teams'])->name('teams');
 Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])->name('contact');
 Route::get('/branch', [App\Http\Controllers\PagesController::class, 'branch'])->name('branch');
+Route::post('/filter-branches', [App\Http\Controllers\PagesController::class, 'filterBranches'])->name('pages.filtered');
 Route::get('/blog', [App\Http\Controllers\PagesController::class, 'blog'])->name('blog');
 Route::get('/blog-details/{id}', [App\Http\Controllers\PagesController::class, 'blogid'])->name('blog-select');
 Route::get('/warehouse-management', [App\Http\Controllers\PagesController::class, 'warehouse']);
@@ -75,3 +76,5 @@ Route::get('dropzone/fetch/{id}/image', [App\Http\Controllers\GalleryController:
 Route::get('dropzone/delete', [App\Http\Controllers\GalleryController::class,'delete'])->name('dropzone.delete');
 Route::get('/admin/menuapp',[App\Http\Controllers\MenuController::class,'menuapp']);
 Route::resource('/admin/bdirector',BDController::class);
+
+});

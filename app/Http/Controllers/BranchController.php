@@ -6,6 +6,7 @@ use App\Models\Branch;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
+
 class BranchController extends Controller
 {
     /**
@@ -50,64 +51,65 @@ class BranchController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    try {
-        $request->validate([
-            'region' => 'required',
-            'site' => 'required',
-            'sitehead' => 'required',
-            'location' => 'required',
-            'phone' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        ]);
+    {
+        //dd($request->all());
+        try {
+            $request->validate([
+                'region' => 'required',
+                'site' => 'required',
+                'sitehead' => 'required',
+                'location' => 'required',
+                'phone' => 'required',
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            ]);
 
-        // Find the branch by ID or create a new instance if ID doesn't exist
-        $branch = Branch::findOrNew($request->id);
+            // Find the branch by ID or create a new instance if ID doesn't exist
+            $branch = Branch::findOrNew($request->id);
 
-        // Check if an image file was provided in the request
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/img', $fileName);
+            // Check if an image file was provided in the request
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/img', $fileName);
 
-            // Delete the old image if it exists
-            if ($branch->image) {
-                Storage::delete('public/img/' . $branch->image);
+                // Delete the old image if it exists
+                if ($branch->image) {
+                    Storage::delete('public/img/' . $branch->image);
+                }
+
+                // Update the branch with the new image
+                $branch->fill([
+                    'region' => $request->region,
+                    'site' => $request->site,
+                    'sitehead' => $request->sitehead,
+                    'location' => $request->location,
+                    'image' => $fileName,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'is_active' => $request->is_active,
+                    'created_by' => auth()->user()->id,
+                ]);
+            } else {
+                // No image provided, update other fields without changing the image
+                $branch->fill([
+                    'site' => $request->site,
+                    'sitehead' => $request->sitehead,
+                    'location' => $request->location,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'is_active' => $request->is_active,
+                    'created_by' => auth()->user()->id,
+                ]);
             }
 
-            // Update the branch with the new image
-            $branch->fill([
-                'region' => $request->region,
-                'site' => $request->site,
-                'sitehead' => $request->sitehead,
-                'location' => $request->location,
-                'image' => $fileName,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'is_active' => $request->is_active,
-                'created_by' => auth()->user()->id,
-            ]);
-        } else {
-            // No image provided, update other fields without changing the image
-            $branch->fill([
-                'site' => $request->site,
-                'sitehead' => $request->sitehead,
-                'location' => $request->location,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'is_active' => $request->is_active,
-                'created_by' => auth()->user()->id,
-            ]);
+            // Save the branch instance (creating a new one if necessary)
+            $branch->save();
+
+            return response()->json(['success' => 'Success!']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
-
-        // Save the branch instance (creating a new one if necessary)
-        $branch->save();
-
-        return response()->json(['success' => 'Success!']);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()]);
     }
-}
 
 
 
@@ -147,6 +149,5 @@ class BranchController extends Controller
             Branch::destroy($id);
         }
         return response()->json(['success' => 'Successfully deleted!']);
-
     }
 }
