@@ -1,7 +1,8 @@
-<a hidden href="{{ url()->current(['_token' => null]) }}">Link Without Token</a>
-
-
 @foreach($branches as $branch)
+@php
+// Get the current URL without the query parameters
+$urlWithoutQuery = strtok(url()->current(), '?');
+@endphp
 <div class="branch card mt-2">
     <div class="card-body">
         <div class="container-fluid">
