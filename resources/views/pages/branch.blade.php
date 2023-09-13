@@ -104,31 +104,28 @@
 
 
     <script>
-        $(document).ready(function() {
-            $('#region').change(function() {
-                var selectedRegion = $(this).val();
+     $(document).ready(function() {
+    $('#region').change(function() {
+        var selectedRegion = $(this).val();
 
-                if (selectedRegion === "") {
-                    // If "All" is selected, reset the display to show all branches.
-                    $('#filtered-branches').html(`@include('pages.filtered', ['branches' => $branches])`);
-                } else {
-                    // Filter branches based on the selected region.
-                    $.ajax({
-                        url: '/filter-branches',
-                        method: 'POST',
-                        data: {
-                            region: selectedRegion,
-                            _token: '{{ csrf_token() }}',
-
-                        },
-                         // Add the following line to fix serialization issue:
-                         traditional: true,
-                        success: function(data) {
-                            $('#filtered-branches').html(data);
-                        }
-                    });
+        if (selectedRegion === "") {
+            // If "All" is selected, reset the display to show all branches.
+            $('#filtered-branches').html(`@include('pages.filtered', ['branches' => $branches])`);
+        } else {
+            // Filter branches based on the selected region.
+            $.ajax({
+                url: '/filter-branches',
+                method: 'POST',
+                data: { region: selectedRegion, _token: '{{ csrf_token() }}' },
+                // Add the following line to fix serialization issue:
+                traditional: true,
+                success: function(data) {
+                    $('#filtered-branches').html(data);
                 }
             });
-        });
+        }
+    });
+});
+
     </script>
 @endsection
