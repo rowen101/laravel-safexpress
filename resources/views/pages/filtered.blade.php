@@ -1,8 +1,4 @@
 @foreach($branches as $branch)
-@php
-// Get the current URL without the query parameters
-$urlWithoutQuery = strtok(url()->current(), '?');
-@endphp
 <div class="branch card mt-2">
     <div class="card-body">
         <div class="container-fluid">
@@ -31,3 +27,8 @@ $urlWithoutQuery = strtok(url()->current(), '?');
     </div>
 </div>
 @endforeach
+<script>
+    // Remove query parameters from the URL
+    var newURL = window.location.pathname;
+    history.pushState({}, '', newURL);
+</script>
