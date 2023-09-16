@@ -110,7 +110,7 @@ return new class extends Migration
             $table->integer('sort')->default(100)->nullable();
             $table->boolean('is_active')->default(true)->nullable();
             $table->integer('created_by')->default(0);
-            $table->integer('updated_by')->nullable();
+            $table->integer('updated_by')->nullable(0);
             $table->timestamps();
         });
 

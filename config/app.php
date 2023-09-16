@@ -160,9 +160,11 @@ return [
          * Package Service Providers...
          */
         'Intervention\Image\ImageServiceProvider',
+
         /*
          * Application Service Providers...
          */
+        Intervention\Image\ImageServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -186,6 +188,7 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Image' => 'Intervention\Image\Facades\Image',
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ])->toArray(),
 
 ];

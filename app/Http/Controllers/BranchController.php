@@ -6,7 +6,7 @@ use App\Models\Branch;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
-
+use Image;
 class BranchController extends Controller
 {
     /**
@@ -72,6 +72,11 @@ class BranchController extends Controller
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
                 $file->storeAs('public/img', $fileName);
 
+                //  // Resize the image here
+                // $image = Branch::make(storage_path('app/public/img/' . $fileName));
+                // $image->resize(600, 600); // Replace these dimensions with your desired width and height
+                // $image->save();
+
                 // Delete the old image if it exists
                 if ($branch->image) {
                     Storage::delete('public/img/' . $branch->image);
@@ -92,6 +97,7 @@ class BranchController extends Controller
             } else {
                 // No image provided, update other fields without changing the image
                 $branch->fill([
+                    'region' => $request->region,
                     'site' => $request->site,
                     'sitehead' => $request->sitehead,
                     'location' => $request->location,

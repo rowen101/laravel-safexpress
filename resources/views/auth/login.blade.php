@@ -28,6 +28,7 @@
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <a href="{{url('admin')}}" class="h1 text-primary"><b>Safe</b>xpress</a>
+                <img src="{{ asset('')}}"/>
               </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
@@ -102,10 +103,10 @@
 
 
                 </p>
-                <p>
-                    {{-- <a href="/register" class="text-center">Register a new User</a> --}}
+                {{-- <p>
+
                     <a href="#" class="text-center">Request user</a>
-                </p>
+                </p> --}}
                 </div>
 
             </div>

@@ -341,7 +341,7 @@
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid" alt="{{$item->name}}">
+                                <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid rounded-circle" alt="{{$item->name}}">
                                 <div class="social">
 
                                     @if ($item->fb == '')
