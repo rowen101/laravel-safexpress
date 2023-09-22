@@ -84,9 +84,16 @@
 
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <img src="{{ asset('/storage/img/' . $branch->image) }}"
-                                                            class="img-fluid" alt="{{ $branch->name }}" width="250"
-                                                            height="100">
+                                                        @if ($branch->image)
+                                                            <img src="{{ asset('/storage/img/' . $branch->image) }}"
+                                                                class="img-fluid" alt="{{ $branch->name }}" width="250"
+                                                                height="100">
+                                                        @else
+                                                            <!-- Display a temporary image when no image is available -->
+                                                            <img src="{{ asset('/img/warehouse-logo.png') }}"
+                                                                class="img-fluid" alt="Temporary Image" width="250"
+                                                                height="100">
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,28 +111,30 @@
 
 
     <script>
-     $(document).ready(function() {
-    $('#region').change(function() {
-        var selectedRegion = $(this).val();
+        $(document).ready(function() {
+            $('#region').change(function() {
+                var selectedRegion = $(this).val();
 
-        if (selectedRegion === "") {
-            // If "All" is selected, reset the display to show all branches.
-            $('#filtered-branches').html(`@include('pages.filtered', ['branches' => $branches])`);
-        } else {
-            // Filter branches based on the selected region.
-            $.ajax({
-                url: '/filter-branches',
-                method: 'POST',
-                data: { region: selectedRegion, _token: '{{ csrf_token() }}' },
-                // Add the following line to fix serialization issue:
-                traditional: true,
-                success: function(data) {
-                    $('#filtered-branches').html(data);
+                if (selectedRegion === "") {
+                    // If "All" is selected, reset the display to show all branches.
+                    $('#filtered-branches').html(`@include('pages.filtered', ['branches' => $branches])`);
+                } else {
+                    // Filter branches based on the selected region.
+                    $.ajax({
+                        url: '/filter-branches',
+                        method: 'POST',
+                        data: {
+                            region: selectedRegion,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        // Add the following line to fix serialization issue:
+                        traditional: true,
+                        success: function(data) {
+                            $('#filtered-branches').html(data);
+                        }
+                    });
                 }
             });
-        }
-    });
-});
-
+        });
     </script>
 @endsection

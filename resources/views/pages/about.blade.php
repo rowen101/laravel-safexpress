@@ -117,78 +117,40 @@
 
         <div class="row gy-4">
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-1.jpg')}}" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>EDEN S. SATINITIGAN</h4>
-                <span>President/CEO</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
+            @foreach ($directors as $item )
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid rounded-circle" alt="{{$item->name}}">
+                        <div class="social">
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-2.jpg')}}" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>DARLYN ALEJANDRO</h4>
-                <span>COO/CFO</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
+                            @if ($item->fb == '')
+                            <a href="{{$item->fb_url}}" target="_blank"> <i class="bi bi-facebook"></i></a>
+                            @endif
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-4.jpg')}}" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>JOHN ANGELO CRUZ</h4>
-                <span>Director</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
+                            @if ($item->instagram == '')
+                            <a href="{{$item->instagram_url}}" target="_blank"> <i class="bi bi-instagram"></i></a>
+                            @endif
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-3.jpg')}}" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>JULIUS VINCENT LIBANG</h4>
-                <span>Corporate Secretary/Legal</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
+                            @if ($item->tw == '')
+                            <a href="{{$item->tw_url}}" target="_blank"> <i class="bi bi-twitter"></i></a>
+                            @endif
 
+                            @if ($item->linkin == '')
+                            <a href="{{$item->linkin_url}}" target="_blank"> <i class="bi bi-linkedin"></i></a>
+                            @endif
+
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>{{ $item->name}}</h4>
+                        <span>{{ $item->position}}</span>
+                    </div>
+                </div>
+            </div><!-- End Team Member -->
+            @endforeach
+
+         
         </div>
 
       </div>

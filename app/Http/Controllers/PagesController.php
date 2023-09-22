@@ -51,7 +51,11 @@ class PagesController extends Controller
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.about',compact('menuItem'))->with(['title'=> $title]);
+
+        $directors = BDirector::where('is_active',1)
+        ->get();
+
+        return view('pages.about',compact('menuItem','directors'))->with(['title'=> $title]);
     }
 
     public function services()

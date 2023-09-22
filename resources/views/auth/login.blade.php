@@ -19,16 +19,31 @@
     <link rel="stylesheet" href="{{ asset('../../assets/dist/css/adminlte.min.css') }}">
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+
+    <style>
+        .logo img {
+        max-height: 85px;
+
+        }
+        .header-card-bgcontainer {
+            background: #0C2D74;
+        }
+    </style>
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page ">
     <div class="login-box">
 
         <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a href="{{url('admin')}}" class="h1 text-primary"><b>Safe</b>xpress</a>
-                <img src="{{ asset('')}}"/>
+        <div class="card header-card-bgcontainer">
+            <div class="card-header text-center ">
+                <div class="d-flex align-items-center">
+                    <a href="{{url('admin')}}" class="logo d-flex align-items-center">
+                    <img src="{{ asset('img/logo.png') }}" alt="safexpress">
+                </a>
+                </div>
+
+
               </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
