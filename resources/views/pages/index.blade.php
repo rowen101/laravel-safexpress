@@ -9,8 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Safexpress</title>
-
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/public/favicon.png') }}" />
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
