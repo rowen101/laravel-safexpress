@@ -36,7 +36,25 @@
     </script>
     <!-- Template Main CSS File -->
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <style>
+        .container-iframe {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
 
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+    </style>
     <script src="{{ asset('js/AutoLightbox.js') }}"></script>
     @vite(['resources/css/app.css'])
 </head>
@@ -122,8 +140,18 @@
     </section>
 
     <main id="id">
+        <section class="about">
+            <div class="container" data-aos="fade-up">
 
- <!-- ======= Why Choose Us Section ======= -->
+                <div class="row gy-4">
+
+
+                    <div class="container-iframe" data-aos="fade-up" data-aos-delay="100">
+                        <iframe class="responsive-iframe" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Ffb.watch%2Fneu4cfOHIi%2F%3Fmibextid%3DNif5oz&width=500&show_text=false&appId=505690469525036&height=281"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+                    </div>
+
+            </div>
+        </section>
         @include("pages.partial_page.company")
 
 
