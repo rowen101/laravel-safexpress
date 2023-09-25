@@ -221,7 +221,7 @@
                         $('#phone').val(data.phone);
                         $('#email').val(data.email);
                         $('#region').val(data.region);
-                        $('#imgwarehouse').attr('src',"{{ asset('storage/img/') }}" + '/' + data.image);
+                        $('#imgwarehouse').attr('src',"{{ asset('storage/images/warehouse') }}" + '/' + data.image);
                         $('#is_active').prop("checked", (data.is_active == 1 ? true : false));
                         //hide span alert
                         document.getElementById('app_codeErrorMsg').style.visibility = 'hidden';

@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-md-6">
                                 @if ($branch->image)
-                                    <img src="{{ asset('/storage/img/' . $branch->image) }}" class="img-fluid"
+                                    <img src="{{ asset('/storage/images/warehouse/' . $branch->image) }}" class="img-fluid"
                                         alt="{{ $branch->name }}" width="250" height="100">
                                 @else
                                     <!-- Display a temporary image when no image is available -->

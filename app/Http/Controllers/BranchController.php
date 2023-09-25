@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Image;
+
 class BranchController extends Controller
 {
     /**
@@ -61,56 +62,42 @@ class BranchController extends Controller
                 'location' => 'required',
                 'phone' => 'required',
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
-            // Find the branch by ID or create a new instance if ID doesn't exist
-            $branch = Branch::findOrNew($request->id);
 
-            // Check if an image file was provided in the request
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('public/img', $fileName);
+            // Include the 'created_by' field with the authenticated user's ID
+            $data = $request->all();
+            $data['created_by'] = auth()->user()->id;
 
-                //  // Resize the image here
-                // $image = Branch::make(storage_path('app/public/img/' . $fileName));
-                // $image->resize(600, 600); // Replace these dimensions with your desired width and height
-                // $image->save();
+            // Check if an existing product ID is provided in the request for updating
+            if ($request->has('id')) {
+                $branch = Branch::findOrFail($request->input('id'));
 
-                // Delete the old image if it exists
-                if ($branch->image) {
-                    Storage::delete('public/img/' . $branch->image);
+                // Update the product data
+                $branch->update($data);
+
+                // Handle image update
+                if ($request->hasFile('image')) {
+                    // Delete the old image file
+                    Storage::delete('public/images/warehouse/' . $branch->image);
+
+                    // Store and update the new image
+                    $imagePath = $request->file('image')->store('public/images/warehouse');
+                    $branch->update(['image' => str_replace('public/images/warehouse', '', $imagePath)]);
+                }
+            } else {
+                // If no existing product ID is provided, create a new product
+                if ($request->hasFile('image')) {
+                    $imagePath = $request->file('image')->store('public/images/warehouse');
+                    $data['image'] = str_replace('public/images/warehouse/', '', $imagePath);
+                } else {
+                    // If no image was uploaded, set the image field to null or an empty string, depending on your database schema.
+                    $data['image'] = null; // You can use an empty string '' instead of null if preferred.
                 }
 
-                // Update the branch with the new image
-                $branch->fill([
-                    'region' => $request->region,
-                    'site' => $request->site,
-                    'sitehead' => $request->sitehead,
-                    'location' => $request->location,
-                    'image' => $fileName,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'is_active' => $request->is_active,
-                    'created_by' => auth()->user()->id,
-                ]);
-            } else {
-                // No image provided, update other fields without changing the image
-                $branch->fill([
-                    'region' => $request->region,
-                    'site' => $request->site,
-                    'sitehead' => $request->sitehead,
-                    'location' => $request->location,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'is_active' => $request->is_active,
-                    'created_by' => auth()->user()->id,
-                ]);
+                Branch::create($data);
             }
-
-            // Save the branch instance (creating a new one if necessary)
-            $branch->save();
-
             return response()->json(['success' => 'Success!']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);

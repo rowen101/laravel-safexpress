@@ -85,7 +85,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         @if ($branch->image)
-                                                            <img src="{{ asset('/storage/img/' . $branch->image) }}"
+                                                            <img src="{{ asset('/storage/images/warehouse/' . $branch->image) }}"
                                                                 class="img-fluid" alt="{{ $branch->name }}" width="250"
                                                                 height="100">
                                                         @else
