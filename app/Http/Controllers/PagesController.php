@@ -114,15 +114,19 @@ class PagesController extends Controller
         $selectedRegion = $request->input('region');
 
         $branches = Branch::when($selectedRegion, function ($query) use ($selectedRegion) {
-            return $query->where('region', $selectedRegion);
-        })->get();
+             $query->where('region', $selectedRegion);
+        })
+        ->where('is_active', 1)
+        ->get();
 
         return view('pages.branch', compact('title','menuItem','regions', 'selectedRegion', 'branches'));
     }
     public function filterBranches(Request $request)
     {
         $selectedRegion = $request->input('region');
-        $branches = Branch::where('region', $selectedRegion)->get();
+        $branches = Branch::where('region', $selectedRegion)
+        ->where('is_active', 1)
+        ->get();
 
         return view('pages.filtered', compact('branches'));
     }
