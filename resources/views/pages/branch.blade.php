@@ -85,9 +85,9 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         @if ($branch->image)
-                                                            <img src="{{ asset('/storage/images/warehouse/' . $branch->image) }}"
-                                                                class="img-fluid" alt="{{ $branch->name }}" width="250"
-                                                                height="100">
+                                                        <a href="{{ asset('/storage/img') }}/{{ $branch->image }}" class="example-image-link" data-lightbox="{{ $branch->id}}" data-title="{{ $branch->site }}">
+                                                            <img src="{{ asset('/storage/img/' . $branch->image) }}"
+                                                                alt="{{ $branch->name }}" width="250" height="100" class="img-fluid"></a>
                                                         @else
                                                             <!-- Display a temporary image when no image is available -->
                                                             <img src="{{ asset('/img/warehouse-logo.png') }}"

@@ -62,42 +62,43 @@ class BranchController extends Controller
                 'location' => 'required',
                 'phone' => 'required',
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                //'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
+            // Find the branch by ID or create a new instance if ID doesn't exist
+            $branch = Branch::findOrNew($request->id);
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/img', $fileName);
 
-            // Include the 'created_by' field with the authenticated user's ID
-            $data = $request->all();
-            $data['created_by'] = auth()->user()->id;
-
-            // Check if an existing product ID is provided in the request for updating
-            if ($request->has('id')) {
-                $branch = Branch::findOrFail($request->input('id'));
-
-                // Update the product data
-                $branch->update($data);
-
-                // Handle image update
-                if ($request->hasFile('image')) {
-                    // Delete the old image file
-                    Storage::delete('public/images/warehouse/' . $branch->image);
-
-                    // Store and update the new image
-                    $imagePath = $request->file('image')->store('public/images/warehouse');
-                    $branch->update(['image' => str_replace('public/images/warehouse', '', $imagePath)]);
-                }
+                // Update the branch with the new image
+                $branch->fill([
+                    'region' => $request->region,
+                    'site' => $request->site,
+                    'sitehead' => $request->sitehead,
+                    'location' => $request->location,
+                    'image' => $fileName,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'is_active' => $request->is_active,
+                    'created_by' => auth()->user()->id,
+                ]);
             } else {
-                // If no existing product ID is provided, create a new product
-                if ($request->hasFile('image')) {
-                    $imagePath = $request->file('image')->store('public/images/warehouse');
-                    $data['image'] = str_replace('public/images/warehouse/', '', $imagePath);
-                } else {
-                    // If no image was uploaded, set the image field to null or an empty string, depending on your database schema.
-                    $data['image'] = null; // You can use an empty string '' instead of null if preferred.
-                }
 
-                Branch::create($data);
+                $branch->fill([
+                    'region' => $request->region,
+                    'site' => $request->site,
+                    'sitehead' => $request->sitehead,
+                    'location' => $request->location,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'is_active' => $request->is_active,
+                    'created_by' => auth()->user()->id,
+                ]);
             }
+            $branch->save();
+
             return response()->json(['success' => 'Success!']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);

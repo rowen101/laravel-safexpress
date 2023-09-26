@@ -13,6 +13,9 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
 
+    <!-- Lightbox -->
+    <link href="{{ asset('css/lightbox.min.css') }}" rel="stylesheet">
+    
     <!-- Favicons -->
 
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">

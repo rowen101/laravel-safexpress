@@ -31,7 +31,7 @@
                     @foreach ($gallery as $item)
                         <li data-filter=".filter-{{ $item->id }}">{{ $item->foldername }}</li>
                     @endforeach
-                   
+
                 </ul><!-- End Portfolio Filters -->
 
                 <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="300">

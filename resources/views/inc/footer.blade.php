@@ -73,9 +73,13 @@
 <script src="{{ asset('vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
 <script src="{{ asset('vendor/php-email-form/validate.js')}}"></script>
 
+
+<script src="{{ asset("js/lightbox-plus-jquery.min.js") }}"></script>
 <!-- Template Main JS File -->
 <script src="{{ asset('js/main.js')}}"></script>
 @vite('resources/js/app.js')
+
+
 <script>
     var x, i, j, l, ll, selElmnt, a, b, c;
     /*look for any elements with the class "custom-select":*/
@@ -155,4 +159,7 @@
     /*if the user clicks anywhere outside the select box,
     then close all select boxes:*/
     document.addEventListener("click", closeAllSelect);
+
+
     </script>
+
