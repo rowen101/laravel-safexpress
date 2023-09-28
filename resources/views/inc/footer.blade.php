@@ -10,10 +10,11 @@
         </a>
         <p>Unit E, Vag Bldg, Brgy. Patubig, Marilao, Bulacan</p>
         <div class="social-links d-flex  mt-3">
-          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+          {{-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a> --}}
           <a href="https://www.facebook.com/SafexpressLogisticsInc/" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.linkedin.com/company/safexpress-logistics-inc/" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.youtube.com/@safexpressphilippines" target="_blank" class="youtube"><i class="bi bi-youtube"></i></a>
         </div>
       </div>
 
