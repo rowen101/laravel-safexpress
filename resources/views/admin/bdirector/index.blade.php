@@ -113,7 +113,7 @@
                                                         name="position" placeholder="Position">
                                                     <span class="text-danger" id="positionErrorMsg"></span>
                                                 </div>
-                                                <div class="form-group required">
+                                                <div class="form-group">
                                                     <label class="control-label">About</label>
 
                                                     <!-- Hidden field to store the user ID for update -->
@@ -121,11 +121,23 @@
                                                         class="form-control">
                                                     <span class="text-danger" id="aboutErrorMsg"></span>
                                                 </div>
+                                                <div class="form-group required">
+                                                    <label for="exampleInputEmail1" class="control-label">Oraganization Type</label>
+                                                    <select class="custom-select rounded-0" name="org_type" id="org_type">
+                                                        <option value="0" disabled>--Select Organization--</option>
+                                                        <option value="board">Board</option>
+                                                        <option value="mancom">Mancom</option>
+                                                    </select>
+                                                    {{-- <input type="hidden" id="app_id" value="app_id" name="app_id"/> --}}
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <input type="hidden" id="txt_id" name="id" value="id">
                                                 <fieldset class="form-group border p-3">
-                                                    <legend class="w-auto px-1">Social Media</legend>
+                                                    <legend class="w-auto px-1">
+                                                        <input type="checkbox" id="is_social" name="is_social" value=""/>
+                                                        Show Social Media
+                                                    </legend>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">
@@ -180,7 +192,7 @@
                                                                 aria-invalid="true" />
 
                                                             <label class="custom-control-label" name="is_active"
-                                                                for="is_active">Active <div id="is_active"></div></label>
+                                                                for="is_active">Active</label>
                                                         </div>
 
                                                     </div>
@@ -324,6 +336,8 @@
                     $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Save');
                     $('#modelHeading').html("Create {{ $title }}");
                     $('#ajaxModel').modal('show');
+                    $('#image').val('');
+                    $('#profile').attr('src', '');
                 });
 
 
@@ -355,6 +369,10 @@
                             })
                             $('#productForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
+
+                             // Clear the file input
+                           $('#image').val('');
+                           $('#profile').attr('src', '');
                             table.ajax.reload();
                         },
                         error: function(data) {
@@ -389,6 +407,7 @@
                         $('#name').val(data.name);
                         $('#position').val(data.position);
                         $('#about').val(data.about);
+                        $('#org_type').val(data.org_type);
                         $('#fb_url').val(data.fb_url);
                         $('#tw_url').val(data.tw_url);
                         $('#linkin_url').val(data.linkin_url);
@@ -396,7 +415,8 @@
                         $('#is_active').val(data.is_active);
                         $('#profile').attr('src',"{{ asset('storage/img/') }}" + '/' + data.image);
                         $('#is_active').prop("checked", (data.is_active == 1 ? true : false));
-
+                        $('#is_social').val(data.is_social);
+                        $('#is_social').prop("checked", (data.is_social == 1 ? true : false));
                         //social media
                         if (data.fb == 0) {
                             $('#fb').prop("checked", true);
@@ -438,6 +458,17 @@
 
 
                 });
+
+                $("#is_social").on('change', function() {
+                    if ($(this).is(':checked')) {
+                        $(this).attr('value', 1);
+                    } else {
+                        $(this).attr('value', 0);
+                    }
+
+                    //  $('#checkbox-value').text($('#is_active').val());
+                });
+
 
                 $("#is_active").on('change', function() {
                     if ($(this).is(':checked')) {

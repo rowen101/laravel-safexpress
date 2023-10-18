@@ -1,79 +1,65 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">{{ $title }}</h1>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="breadcrumb-item active">
-                        {{ $title }}
-                    </li>
-                </ol>
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
+    <div class="content-header">
+        <!-- ... Your existing code for the header ... -->
     </div>
-    <!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Contact Us</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="settingForm">
+                            @csrf
+                            <div class="form-group">
+                                <input type="hidden" id="id" name="id" value="{{ $setting->id  ?? ''}}">
+                                <label for="site_email">Site Email</label>
+                                <input class="form-control" type="text" id="site_email" name="site_email" value="{{ $setting->site_email  ?? ''}}">
+                            </div>
 
-          <div class="card">
+                            <div class="form-group">
+                                <label for="site_phone">Site Phone</label>
+                                <input class="form-control" type="number" id="site_phone" name="site_phone" value="{{ $setting->site_phone ?? '' }}">
+                            </div>
 
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>MenuCode</th>
-                  <th>Menu Title</th>
-                  <th>Description</th>
-                  <th>Perent Id</th>
-                  <th>Menu Icon</th>
-                  <th>Menu Route</th>
-                  <th>Sort</th>
-                  <th>Active</th>
-                </tr>
-                </thead>
-                <tbody>
+                            <div class="form-group">
+                                <label for="site_phone">Site Address</label>
+                                <input class="form-control" type="text" id="site_address" name="site_address" value="{{ $setting->site_address ?? '' }}">
+                            </div>
 
-
-
-                <tr >
-                  <td>sfds</td>
-                  <td>sfds</td>
-                  <td>sfds</td>
-                  <td>sfds</td>
-                  <td>sfds</td>
-                  <td>sfds</td>
-                  <td>sfds</td>
-                  <td>sfds</td>
-                </tr>
-
-                </tbody>
-
-              </table>
+                            <button type="button" id="saveSettings" class="btn btn-primary">Save Settings</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
         </div>
-        <!-- /.col -->
-      </div>
-
-</div><!--end container-->
-</div>
+    </div>
 @endsection
+
+@push('scripts')
+    <script>
+        // JavaScript code for handling the form submission
+        $(document).ready(function () {
+            $('#saveSettings').click(function () {
+                var formData = $('#settingForm').serialize();
+                $.ajax({
+                    url: '{{ route('setting.store') }}',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        // Handle the success response here, e.g., show a success message
+                        alert(response.success);
+                    },
+                    error: function (error) {
+                        // Handle errors here
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

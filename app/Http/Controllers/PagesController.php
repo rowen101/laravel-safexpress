@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\Gallery;
 use App\Models\Category;
 use App\Models\BDirector;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,10 +36,17 @@ class PagesController extends Controller
         ->orderBy('sort_order', 'ASC')
         ->get();
 
+        $setting = Setting::first();
+
         $directors = BDirector::where('is_active',1)
+        ->where('org_type','board')
         ->get();
 
-        return view('pages.index',compact('menuItem','directors'))->with(['title' => $title]);
+        $mancom = BDirector::where('is_active',1)
+        ->where('org_type','mancom')
+        ->get();
+
+        return view('pages.index',compact('menuItem','directors','setting','mancom'))->with(['title' => $title]);
     }
 
     public function about()
@@ -52,10 +60,13 @@ class PagesController extends Controller
         ->orderBy('sort_order', 'ASC')
         ->get();
 
+        $setting = Setting::first();
+
         $directors = BDirector::where('is_active',1)
+        ->where('org_type','board')
         ->get();
 
-        return view('pages.about',compact('menuItem','directors'))->with(['title'=> $title]);
+        return view('pages.about',compact('menuItem','directors','setting'))->with(['title'=> $title]);
     }
 
     public function services()
@@ -66,7 +77,9 @@ class PagesController extends Controller
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.services', compact('menuItem'))->with('title', $title);
+
+        $setting = Setting::first();
+        return view('pages.services', compact('menuItem','setting'))->with('title', $title);
     }
     public function contact()
     {
@@ -76,7 +89,8 @@ class PagesController extends Controller
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.contact',compact('menuItem'))->with('title', $title);
+        $setting = Setting::first();
+        return view('pages.contact',compact('menuItem','setting'))->with('title', $title);
     }
     public function teams()
     {
@@ -97,7 +111,9 @@ class PagesController extends Controller
             ->where('image', '<>', '')
             ->get();
             $title = Menu::where('menu_code','teams')->pluck('menu_title')->first();
-        return view('pages.teams')->with(['title' => $title, 'gallery' => $gallery, 'thumbnail' => $thumbnail,'menuItem'=> $menuItem]);
+
+            $setting = Setting::first();
+        return view('pages.teams',compact('setting'))->with(['title' => $title, 'gallery' => $gallery, 'thumbnail' => $thumbnail,'menuItem'=> $menuItem]);
     }
 
     public function branch(Request $request)
@@ -113,13 +129,15 @@ class PagesController extends Controller
 
         $selectedRegion = $request->input('region');
 
+        $setting = Setting::first();
+
         $branches = Branch::when($selectedRegion, function ($query) use ($selectedRegion) {
              $query->where('region', $selectedRegion);
         })
         ->where('is_active', 1)
         ->get();
 
-        return view('pages.branch', compact('title','menuItem','regions', 'selectedRegion', 'branches'));
+        return view('pages.branch', compact('setting','title','menuItem','regions', 'selectedRegion', 'branches'));
     }
     public function filterBranches(Request $request)
     {
@@ -127,8 +145,8 @@ class PagesController extends Controller
         $branches = Branch::where('region', $selectedRegion)
         ->where('is_active', 1)
         ->get();
-
-        return view('pages.filtered', compact('branches'));
+        $setting = Setting::first();
+        return view('pages.filtered', compact('branches','setting'));
     }
     public function blog()
     {
@@ -141,11 +159,13 @@ class PagesController extends Controller
 
         $postid = DB::table('posts')
         ->select('id')->get();
+
+        $setting = Setting::first();
         //dd($postid);
        $posts = Posts::where('is_active',1)->where('is_publish',1)->get();
     //    $post = Posts::withCount('comments')->find();
     //     $commentCount = $post->comments_count;
-        return view('pages.blog',compact('posts', 'title','menuItem'));
+        return view('pages.blog',compact('posts', 'title','menuItem','setting'));
 
 
     }
@@ -161,8 +181,9 @@ class PagesController extends Controller
             ->where('parent_id', 0)
             ->orderBy('sort_order', 'ASC')
             ->get();
+            $setting = Setting::first();
             $user = Posts::with(['user'])->find($id);
-            return view('pages.blog-details',compact('posts','menuItem','commentCount','user'));
+            return view('pages.blog-details',compact('posts','menuItem','commentCount','user','setting'));
         }else{
             return view('inactivate');
         }
@@ -177,7 +198,9 @@ class PagesController extends Controller
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.warehouse-management',compact('title', 'menuItem'));
+
+        $setting = Setting::first();
+        return view('pages.warehouse-management',compact('title', 'menuItem','setting'));
     }
     public function transport()
     {
@@ -187,7 +210,9 @@ class PagesController extends Controller
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.transport-services',compact('menuItem','title'));
+
+        $setting = Setting::first();
+        return view('pages.transport-services',compact('menuItem','title','setting'));
     }
     public function other()
     {
@@ -197,7 +222,10 @@ class PagesController extends Controller
         ->where('parent_id', 0)
         ->orderBy('sort_order', 'ASC')
         ->get();
-        return view('pages.other-services',compact('menuItem','title'));
+
+        $setting = Setting::first();
+        return view('pages.other-services',compact('menuItem','title','setting'));
     }
+
 
 }

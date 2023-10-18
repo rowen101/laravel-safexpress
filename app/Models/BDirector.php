@@ -14,6 +14,8 @@ class BDirector extends Model
         'position',
         'image',
         'about',
+        'org_type',
+        'is_social',
         'fb',
         'tw',
         'linkin',

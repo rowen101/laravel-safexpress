@@ -230,7 +230,7 @@
         <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
         <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('js/toastr.min.js')}}"></script>
-       
+
 <script>
     @if(Session::has('success'))
     toastr.options =
@@ -268,7 +268,7 @@
             toastr.warning("{{ session('warning') }}");
     @endif
   </script>
-
+@stack('scripts')
 @stack('buttom')
 {{-- @vite('resources/js/app.js') --}}
     </div>

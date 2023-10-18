@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -20,8 +21,10 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $title ="setting";
-        return view('admin.setting.index')->with('title', $title);
+        $title ="Setting";
+
+        $setting = Setting::first(); // Retrieve the first settings record
+        return view('admin.setting.index', compact('title', 'setting'));
     }
 
     /**
@@ -37,7 +40,18 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+       Setting::updateOrCreate([
+            'id' => $request->id
+       ],
+       [
+            'site_email' => $request->site_email,
+            'site_phone' => $request->site_phone,
+            'site_address' => $request->site_address
+       ]);
+
+
+        return response()->json(['success' => 'Saved Record successfully!']);
     }
 
     /**
@@ -61,7 +75,12 @@ class SettingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->all();
+
+        $setting = Setting::first(); // Assuming you have only one settings record
+        $setting->update($data);
+
+        return response()->json(['success' => 'Settings updated successfully!']);
     }
 
     /**

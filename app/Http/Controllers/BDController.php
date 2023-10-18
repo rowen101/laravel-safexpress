@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\File;
 use App\Models\BDirector;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class BDController extends Controller
 {
@@ -80,11 +80,13 @@ class BDController extends Controller
         $request->validate([
             'name' => 'required',
             'position' => 'required',
-            'about' => 'required',
         ]);
 
-        // Find the branch by ID or create a new instance if ID doesn't exist
-        $bDirector = BDirector::findOrNew($request->id);
+        $bDirector = BDirector::find($request->id);
+
+        if (!$bDirector) {
+            $bDirector = new BDirector(); // Create a new instance if it doesn't exist
+        }
 
         // Check if an image file was provided in the request
         if ($request->hasFile('image')) {
@@ -98,49 +100,35 @@ class BDController extends Controller
             }
 
             // Update the director with the new image
-            $bDirector->file([
-                'name' => $request->name,
-                'image' => $fileName, // Save the image filename in the database
-                'position' => $request->position,
-                'about' => $request->about,
-                'fb_url' => $request->fb_url,
-                'tw_url' => $request->tw_url,
-                'linkin_url' => $request->linkin_url,
-                'instagram_url' => $request->instagram_url,
-                'fb' => $request->fb,
-                'tw' => $request->tw,
-                'linkin' => $request->linkin,
-                'instagram' => $request->instagram,
-                'is_active' => $request->is_active,
-                'created_by' => auth()->user()->id,
-            ]);
-        } else {
-            // No image provided, update other fields without changing the image
-            $bDirector->fill([
-                'name' => $request->name,
-                'position' => $request->position,
-                'about' => $request->about,
-                'fb_url' => $request->fb_url,
-                'tw_url' => $request->tw_url,
-                'linkin_url' => $request->linkin_url,
-                'instagram_url' => $request->instagram_url,
-                'fb' => $request->fb,
-                'tw' => $request->tw,
-                'linkin' => $request->linkin,
-                'instagram' => $request->instagram,
-                'is_active' => $request->is_active,
-                'created_by' => auth()->user()->id,
-            ]);
+            $bDirector->image = $fileName; // Save the image filename in the database
         }
 
-        // Save the branch instance (creating a new one if necessary)
+        // Update or create the rest of the fields
+        $bDirector->name = $request->name;
+        $bDirector->position = $request->position;
+        $bDirector->about = $request->about;
+        $bDirector->org_type = $request->org_type;
+        $bDirector->is_social = $request->is_social;
+        $bDirector->fb_url = $request->fb_url;
+        $bDirector->tw_url = $request->tw_url;
+        $bDirector->linkin_url = $request->linkin_url;
+        $bDirector->instagram_url = $request->instagram_url;
+        $bDirector->fb = $request->fb;
+        $bDirector->tw = $request->tw;
+        $bDirector->linkin = $request->linkin;
+        $bDirector->instagram = $request->instagram;
+        $bDirector->is_active = $request->is_active;
+        $bDirector->created_by = auth()->user()->id;
+
+        // Save the branch instance
         $bDirector->save();
 
-         return response()->json(['success' => 'Success!']);
+        return response()->json(['success' => 'Success!']);
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()]);
     }
 }
+
 
 
     /**

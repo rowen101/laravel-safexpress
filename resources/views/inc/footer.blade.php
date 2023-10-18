@@ -8,7 +8,7 @@
         <a href="index.html" class="logo d-flex align-items-center">
           <span>Safexpress</span>
         </a>
-        <p>Unit E, Vag Bldg, Brgy. Patubig, Marilao, Bulacan</p>
+        <p>{{$setting->site_address}}</p>
         <div class="social-links d-flex  mt-3">
           {{-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
           <a href="#" class="instagram"><i class="bi bi-instagram"></i></a> --}}
@@ -41,8 +41,8 @@
         <h4>Contact Us</h4>
         <p>
 
-          <strong>Phone:</strong><br>
-          <strong>Email:</strong> safexpress@gmail.com.ph<br>
+          <strong>Phone:</strong>&nbsp;{{ $setting->site_phone }}<br>
+          <strong>Email:</strong>&nbsp;{{ $setting->site_email }}<br>
         </p>
 
       </div>

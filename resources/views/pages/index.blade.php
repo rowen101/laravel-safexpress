@@ -353,7 +353,7 @@
 
             </div>
         </section>
-        <!-- ======= Team Section ======= -->
+        <!-- ======= board Section ======= -->
         <section id="team" class="team">
             <div class="container" data-aos="fade-up">
 
@@ -368,7 +368,8 @@
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid rounded-circle" alt="{{$item->name}}">
+                                <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid img-fluid border border-0 " alt="{{$item->name}}">
+                                @if ($item->is_social != '')
                                 <div class="social">
 
                                     @if ($item->fb == '')
@@ -388,6 +389,7 @@
                                     @endif
 
                                 </div>
+                                @endif
                             </div>
                             <div class="member-info">
                                 <h4>{{ $item->name}}</h4>
@@ -396,79 +398,57 @@
                         </div>
                     </div><!-- End Team Member -->
                     @endforeach
+                </div>
 
-                    {{-- <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            </div>
+        </section><!-- End Team Section -->
+
+        <!-- ======= mancom Section ======= -->
+        <section id="team" class="team">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Mancom Organizational Structure</h2>
+
+                </div>
+
+                <div class="row gy-4">
+
+                    @foreach ($mancom as $item )
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="team-member">
                             <div class="member-img">
-                                <img src="{{ asset('img/team/team-1.jpg') }}" class="img-fluid" alt="">
+                                <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid border border-0 " alt="{{$item->name}}">
+                                @if ($item->is_social != '')
                                 <div class="social">
-                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                </div>
+
+                                        @if ($item->fb == '')
+                                        <a href="{{$item->fb_url}}" target="_blank"> <i class="bi bi-facebook"></i></a>
+                                        @endif
+
+                                        @if ($item->instagram == '')
+                                        <a href="{{$item->instagram_url}}" target="_blank"> <i class="bi bi-instagram"></i></a>
+                                        @endif
+
+                                        @if ($item->tw == '')
+                                        <a href="{{$item->tw_url}}" target="_blank"> <i class="bi bi-twitter"></i></a>
+                                        @endif
+
+                                        @if ($item->linkin == '')
+                                        <a href="{{$item->linkin_url}}" target="_blank"> <i class="bi bi-linkedin"></i></a>
+                                        @endif
+
+                                    </div>
+                                    @endif
+
                             </div>
                             <div class="member-info">
-                                <h4>EDEN S. SATINITIGAN</h4>
-                                <span>President/CEO</span>
+                                <h4>{{ $item->name}}</h4>
+                                <span>{{ $item->position}}</span>
                             </div>
                         </div>
                     </div><!-- End Team Member -->
-
-                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="team-member">
-                            <div class="member-img">
-                                <img src="{{ asset('img/team/team-2.jpg') }}" class="img-fluid" alt="">
-                                <div class="social">
-                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                </div>
-                            </div>
-                            <div class="member-info">
-                                <h4>DARLYN ALEJANDRO</h4>
-                                <span>COO/CFO</span>
-                            </div>
-                        </div>
-                    </div><!-- End Team Member -->
-
-                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                        <div class="team-member">
-                            <div class="member-img">
-                                <img src="{{ asset('img/team/team-4.jpg') }}" class="img-fluid" alt="">
-                                <div class="social">
-                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                </div>
-                            </div>
-                            <div class="member-info">
-                                <h4>JOHN ANGELO CRUZ</h4>
-                                <span>Director</span>
-                            </div>
-                        </div>
-                    </div><!-- End Team Member -->
-
-                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                        <div class="team-member">
-                            <div class="member-img">
-                                <img src="{{ asset('img/team/team-3.jpg') }}" class="img-fluid" alt="">
-                                <div class="social">
-                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                </div>
-                            </div>
-                            <div class="member-info">
-                                <h4>JULIUS VINCENT LIBANG</h4>
-                                <span>Corporate Secretary/Legal</span>
-                            </div>
-                        </div>
-                    </div><!-- End Team Member --> --}}
-
+                    @endforeach
                 </div>
 
             </div>
@@ -485,7 +465,7 @@
                         <a href="index.html" class="logo d-flex align-items-center">
                             <span>Safexpress</span>
                         </a>
-                        <p>Unit E, Vag Bldg, Brgy. Patubig, Marilao, Bulacan</p>
+                        <p>{{ $setting->site_address}}</p>
                         <div class="social-links d-flex  mt-3">
                             {{-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
           <a href="#" class="instagram"><i class="bi bi-instagram"></i></a> --}}
@@ -518,8 +498,8 @@
                         <h4>Contact Us</h4>
                         <p>
 
-                            <strong>Phone:</strong><br>
-                            <strong>Email:</strong> safexpress@gmail.com.ph<br>
+                            <strong>Phone:</strong>&nbsp;{{ $setting->site_phone}}<br>
+                            <strong>Email:</strong>&nbsp;{{ $setting->site_email}}<br>
                         </p>
 
                     </div>

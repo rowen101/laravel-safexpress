@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('position', 150);
             $table->text('about')->nullable();
+            $table->string('org_type',20)->nullable();
+            $table->boolean('is_social')->default(true)->nullable();
             $table->boolean('fb')->default(false)->nullable();
             $table->boolean('tw')->default(false)->nullable();
             $table->boolean('linkin')->default(false)->nullable();
