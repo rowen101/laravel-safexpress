@@ -78,21 +78,35 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
+
+
         $this->validate($request, [
             'app_id' => 'required',
-            'menu_code' => 'required',
             'menu_title' => 'required',
             'menu_route' => 'required',
             'sort_order'=>'required',
             'parent_id'=>'required'
         ]);
+
+        $latestMenu = Menu::orderBy('id', 'desc')->first();
+
+        // Determine the next "techno" number
+        if ($latestMenu) {
+            $lastNumber = intval(substr($latestMenu->menu_code, 3)); // Assuming the current format is TEC####
+            $nextNumber = $lastNumber + 1;
+        } else {
+            $nextNumber = 1; // If no previous record exists, start from 1
+        }
+
+        // Generate the new "techno" value
+        $menucode = 'MENU' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT); // Padded to 4 digits
         Menu::updateOrCreate(
             [
                 'id' => $request->id
             ],
             [
                 'app_id' => $request->app_id,
-                'menu_code' => $request->menu_code,
+                'menu_code' => $menucode,
                 'menu_title' => $request->menu_title,
                 'description' => $request->description,
                 'parent_id' => $request->parent_id,

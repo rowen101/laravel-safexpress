@@ -10,6 +10,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserMenuController;
 use App\Http\Controllers\WebUserController;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Route;
@@ -76,5 +77,6 @@ Route::get('dropzone/fetch/{id}/image', [App\Http\Controllers\GalleryController:
 Route::get('dropzone/delete', [App\Http\Controllers\GalleryController::class,'delete'])->name('dropzone.delete');
 Route::get('/admin/menuapp',[App\Http\Controllers\MenuController::class,'menuapp']);
 Route::resource('/admin/bdirector',BDController::class);
+Route::resource('/admin/usermenu',UserMenuController::class);
 
 });

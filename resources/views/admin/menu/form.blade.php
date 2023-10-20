@@ -10,7 +10,7 @@
 
                             <div class="form-group required">
                                 <label for="exampleInputPassword1" class="control-label">Menu Code</label>
-                                <input type="text" class="form-control" name="menu_code" id="menu_code"
+                                <input type="text"  class="form-control" name="menu_code" id="menu_code"
                                     placeholder="Menu Code">
 
                             </div>

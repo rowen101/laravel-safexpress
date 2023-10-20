@@ -11,12 +11,9 @@
                 <!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-
-                        {{ Breadcrumbs::render('apps') }}
-
+                        {{ Breadcrumbs::render('user') }}
                     </ol>
                 </div>
-
                 <!-- /.col -->
             </div>
             <!-- /.row -->
@@ -36,66 +33,68 @@
                                     <tr>
                                         <th>No</th>
                                         <th></th>
-                                        <th>App Name</th>
-                                        <th>Menu Code</th>
-                                        <th>Menu Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Created</th>
                                         <th>Active</th>
-                                        <th>Created Date</th>
-                                        <th>Action</th>
+                                        <th width="280px">Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                 </tbody>
                             </table>
+
                         </div>
-                        <!-- /.card-body -->
+                        <!-- /.card -->
                     </div>
-                    <!-- /.card -->
+                    <!-- /.col -->
                 </div>
-                <!-- /.col -->
+
             </div>
+            <!--end container-->
+            <div class="modal fade" id="ajaxModel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
 
-        </div>
-        <!--end container-->
-        <div class="modal fade" id="ajaxModel" aria-hidden="true">
-            <div class=" modal-dialog modal-lg">
+                    <div class="modal-content">
 
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="modelHeading"></h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeading"></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            @include('admin.usermenu.form')
+
+                            <div class="modal-footer justify-content-between">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="saveBtn" value="create-categorie"><i
+                                        class="fas fa-save"></i>&nbsp;Save</button>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div class="modal-body">
-                        @include('admin.menu.form')
-                    </div>
-
+                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-content -->
+                <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal-dialog -->
         </div>
     </div>
-    <div class="fab-container">
 
-        <div class="button iconbutton">
-
-            <a href="javascript:void(0)" id="createNew"><i class="fas fa-plus"></i></a>
-
-        </div>
-
-    </div>
 
     @push('head')
-        <link rel='stylesheet' href='{{asset('css/sweetalert2.min.css')}}'>
+        <link rel='stylesheet' href='{{ asset('css/sweetalert2.min.css') }}'>
     @endpush
 
     @push('buttom')
-        <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
-
+        <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
         <script type="text/javascript">
+            var label = document.getElementById('clabel');
+
             $(function() {
                 /*------------------------------------------
                  --------------------------------------------
@@ -117,7 +116,7 @@
                 var table = $('.data-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "{{ route('menu.index') }}",
+                    ajax: "{{ route('usermenu.index') }}",
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -131,23 +130,20 @@
                             visible: false
                         },
                         {
-                            data: 'app_name',
-                            name: 'app_name'
+                            data: 'name',
+                            name: 'name'
                         },
                         {
-                            data: 'menu_code',
-                            name: 'menu_code'
+                            data: 'email',
+                            name: 'email'
                         },
-                        {
-                            data: 'menu_title',
-                            name: 'menu_title'
-                        },
+
                         {
                             data: 'is_active',
                             name: 'is_active'
-
                         },
                         {
+
                             data: 'created_at',
                             name: 'created_at'
                         },
@@ -165,14 +161,22 @@
                 Click to Button
                 --------------------------------------------
                 --------------------------------------------*/
-                $('#createNew').click(function() {
-                    $('#saveBtn').val("create");
+                $('#createNewCategory').click(function() {
+                    $('#saveBtn').val("create-categorie");
                     $('#txtid').val('');
+                    $('#name').val('');
+                    $('#first_name').val('');
+                    $('#last_name').val('');
+                    $('#role_id').val('');
+                    $('#user_type').val('');
+                    $('#email').val('');
+                    $('#password').val('');
                     $('#productForm').trigger("reset");
-                    $('#modelHeading').html("Create {{ $title }}");
                     $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Save');
+                    $('#modelHeading').html("Create {{ $title }}");
                     $('#ajaxModel').modal('show');
-                    $('#menu_code').prop('readonly', true);
+                    label.style.display = 'none';
+
                 });
 
 
@@ -189,28 +193,29 @@
                     var formData = $('#productForm').serialize();
                     $.ajax({
                         data: $('#productForm').serialize(),
-                        url: "{{ url('/admin/menu') }}",
+                        url: "{{ url('/admin/usermenu') }}",
                         type: "POST",
                         data: formData,
                         dataType: 'json',
-                        success: function(data) {
-
-                            $('#productForm').trigger("reset");
+                        success: function(response) {
+                            console.log(response);
+                            $('#productForm').tdatarigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.ajax.reload();
 
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Save Complete',
+                                text: response.success
+
                             })
 
                         },
                         error: function(response) {
-                            console.log('Error:', response);
-                            $('#app_codeErrorMsg').text(response.responseJSON.errors.app_code);
-                            $('#app_nameErrorMsg').text(response.responseJSON.errors.app_name);
-                            $('#descriptionErrorMsg').text(response.responseJSON.errors
-                                .description);
+                            console.error('Error:', response);
+
+                            // $('#first_nameErrorMsg').text(response.responseJSON.errors.first_name);
+                            // $('#last_nameErrorMsg').text(response.responseJSON.errors.last_name);
 
                         }
                     });
@@ -222,47 +227,31 @@
                       --------------------------------------------*/
                 $('body').on('click', '.edit', function() {
                     var id = $(this).data('id');
-                    $.get("{{ url('/admin/menu') }}" + '/' + id + '/edit', function(data) {
-                        $('#modelHeading').html("Edit {{ $title }}");
-                        $('#saveBtn').val("edit");
+
+                    $.get("{{ url('admin/user') }}" + '/' + id + '/edit', function(data) {
+                        $('#modelHeading').html("{{ $title }} Maintenance");
+                        $('#saveBtn').val("edit-categorie");
                         $('#saveBtn').html('<i class="fas fa-save"></i>&nbsp;Update');
                         $('#ajaxModel').modal('show');
                         $('#txtid').val(data[0].id);
-                        $('#menu_code').val(data[0].menu_code);
-                        $('#menu_code').prop('readonly', true);
-                        $('#menu_title').val(data[0].menu_title);
-                        $('#description').val(data[0].description);
-                        $('#menu_icon').val(data[0].menu_icon);
-                        $('#menu_route').val(data[0].menu_route);
-                        $('#sort_order').val(data[0].sort_order);
+                        $('#txtid').prop('readonly', true);
+                        $('#name').val(data[0].name);
                         $('#is_active').val(data[0].is_active);
                         $('#is_active').prop("checked", (data[0].is_active == 1 ? true : false));
-                        $('#app_id').val(data[0].app_id);
-
+                        label.style.display = 'inline';
 
                         //hide span alert
-                        document.getElementById('app_codeErrorMsg').style.visibility = 'hidden';
-                        document.getElementById('app_nameErrorMsg').style.visibility = 'hidden';
-                        document.getElementById('descriptionErrorMsg').style.visibility = 'hidden';
+                        document.getElementById('nameErrorMsg').style.visibility = 'hidden';
                     })
 
 
-
-
                 });
 
-                //Site Change
-                $('#application').change(function() {
-                    var id = $(this).val();
-                    //empty the dropdown
-                    $('#app_id').val(id);
-                });
 
-                //Menu Change
-                $('#menu').change(function() {
+                $('#role').change(function() {
                     var id = $(this).val();
                     //empty the dropdown
-                    $('#parent_id').val(id);
+                    $('#role_id').val(id);
                 });
 
                 $("#is_active").on('change', function() {
@@ -275,58 +264,30 @@
                     //  $('#checkbox-value').text($('#is_active').val());
                 });
 
+                // Assuming you have an array to store the selected menu items
+                    var selectedMenus = [];
 
-                /*------------------------------------------
-                  --------------------------------------------
-                  delete Click Button
-                  --------------------------------------------
-                  --------------------------------------------*/
-                $('body').on('click', '.delete', function() {
+                    // Assuming a checkbox click event
+                    $('input[name="menu_id"]').on('change', function () {
+                        var menuId = $(this).val();
 
-                    var id = $(this).data('id');
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            //AJAX
-                            $.ajax({
-                                url: "{{ url('admin/menu') }}" + '/' + id,
-                                type: 'DELETE',
-                                data: id,
-                                success: function(response) {
-                                    // Handle success, update the DataTable, close the modal, etc.
-                                    $('#productForm').trigger("reset");
-                                    table.ajax.reload();
-                                    Swal.fire(
-                                        'Deleted!',
-                                        'Your file has been deleted.',
-                                        'success'
-                                    )
-
-                                },
-                                error: function(data) {
-                                    console.log('Error:', data);
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: `This Application is use!`,
-                                    })
-                                    $('#saveBtn').html(
-                                        '<i class="fas fa-save"></i>&nbsp;Save');
-                                }
-                            });
-
-
+                        if ($(this).is(':checked')) {
+                            // If checkbox is checked and not already in the array, add it
+                            if (!selectedMenus.includes(menuId)) {
+                                selectedMenus.push(menuId);
+                            }
+                             // Log the menuId when a checkbox is checked
+                          console.log('Checkbox with menu_id ' + selectedMenus + ' is checked and user_id');
+                        } else {
+                            // If checkbox is unchecked and in the array, remove it
+                            var index = selectedMenus.indexOf(menuId);
+                            if (index !== -1) {
+                                selectedMenus.splice(index, 1);
+                            }
+                            console.log('Checkbox with menu_id ' + selectedMenus + ' is unchecked user_id');
                         }
-                    })
+                    });
 
-
-                });
             });
         </script>
     @endpush
