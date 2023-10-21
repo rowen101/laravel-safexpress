@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Menu;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,13 @@ class AppServiceProvider extends ServiceProvider
 
        //Schema::defaultStringLength(191);
 
+
+    //    $adminmenu = DB::table('usermenus')
+    //    ->join("menu", "menu.id", "=", "usermenus.menu_id")
+    //    ->select("menus.*", "app.app_name")
+    //    ->where('usermenus.user_id', '=', auth()->user()->id)
+    //    ->orderBy('menus.sort_order', 'ASC')->get();
+    //    view()->share('adminmenu', $adminmenu);
 
         $adminmenu = Menu::where('is_active', 1)
         ->where('app_id', 1)

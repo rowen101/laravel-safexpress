@@ -220,7 +220,7 @@
                         dataType: 'json',
                         success: function(response) {
                             console.log(response);
-                            $('#productForm').tdatarigger("reset");
+                            $('#productForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.ajax.reload();
 

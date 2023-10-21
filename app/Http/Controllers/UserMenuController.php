@@ -28,7 +28,7 @@ class UserMenuController extends Controller
         if ($request->ajax()) {
 
             $data = DB::table("users")
-                ->select('id', 'name', 'email', 'created_at','is_active')
+                ->select('id', 'name', 'email', 'created_at', 'is_active')
                 ->where('is_active', '1')
                 ->orderBy('created_at', 'DESC')->get();
 
@@ -71,33 +71,21 @@ class UserMenuController extends Controller
      */
     public function store(Request $request)
     {
-        $latestMenu = Menu::orderBy('id', 'desc')->first();
+        $user_id = $request->input('user_id');
+        $menu_ids = $request->input('menu_id');
+       
 
-        // Determine the next "techno" number
-        if ($latestMenu) {
-            $lastNumber = intval(substr($latestMenu->techno, 3)); // Assuming the current format is TEC####
-            $nextNumber = $lastNumber + 1;
-        } else {
-            $nextNumber = 1; // If no previous record exists, start from 1
+        foreach ($menu_ids as $menu_id) {
+            UserMenu::updateOrInsert(
+                ['user_id' => $user_id, 'menu_id' => $menu_id],
+                ['user_id' => $user_id, 'menu_id' => $menu_id]
+            );
         }
 
-        // Generate the new "techno" value
-        $techno = 'TECH' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT); // Padded to 4 digits
-
-        Usermenu::updateOrCreate(
-            [
-                'id' => $request->id
-            ],
-            [
-                'site_email' => $request->site_email,
-                'site_phone' => $request->site_phone,
-                'site_address' => $request->site_address
-            ]
-        );
-
-
-        return response()->json(['success' => 'Saved Record successfully!']);
+        return response()->json(['message' => 'Data saved successfully']);
     }
+
+
 
     /**
      * Display the specified resource.

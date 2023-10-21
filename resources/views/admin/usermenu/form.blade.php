@@ -12,22 +12,23 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1" class="control-label">UserID</label>
                                     <input type="text" class="form-control" name="id" id="txtid"
-
                                         placeholder="User ID">
                                 </div>
                                 @foreach ($adminmenu as $item)
                                     @if (count($item->submenus) > 0)
                                         <div class="card card-primary card-outline">
+                                            <div class="card-header">
+                                                <h4 class="card-title w-100">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="menu_id[]" value="{{ $item->id }}" id="menu_id_{{ $item->id }}" class="custom-control-input menu-checkbox" />
+                                                        <label class="custom-control-label" name="menu_id" for="menu_id_{{ $item->id }}">  <a class="d-block w-100" data-toggle="collapse"
+                                                        href="#{{ $item->menu_title }}">
+                                                        {{ $item->menu_title }}</a></label>
 
+                                                    </div>
 
-                                                <div class="card-header">
-                                                    <h4 class="card-title w-100">
-                                                        <input type="checkbox" name="menu_id" id="menu_id"
-                                                        value="{{ $item->id }}" />
-                                                        <a class="d-block w-100" data-toggle="collapse"
-                                                        href="#{{ $item->menu_title }}"> {{ $item->menu_title }}</a>
-                                                    </h4>
-                                                </div>
+                                                </h4>
+                                            </div>
 
                                             <div id="{{ $item->menu_title }}" class="collapse show"
                                                 data-parent="#accordion">
@@ -35,9 +36,11 @@
                                                     <ul class="list-group">
                                                         @foreach ($item->submenus as $submenu)
                                                             <li class="list-group-item">
-                                                                <input type="checkbox"
-                                                                name="menu_id" id="menu_id"
-                                                                    value="{{ $submenu->id }}" />&nbsp;{{ $submenu->menu_title }}
+                                                                <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="menu_id[]" value="{{ $submenu->id }}" id="menu_id_{{ $submenu->id }}" class="custom-control-input menu-checkbox" />
+                                                                <label class="custom-control-label" name="menu_id" for="menu_id_{{ $submenu->id }}">{{ $submenu->menu_title }}</label>
+
+                                                                </div>
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -50,8 +53,10 @@
 
                                             <div class="card-header">
                                                 <h4 class="card-title w-100">
-                                                    <input type="checkbox" name="menu_id" id="menu_id"
-                                                        value="{{ $item->id }}" />&nbsp;{{ $item->menu_title }}
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" name="menu_id[]" value="{{ $item->id }}" id="menu_id_{{ $item->id }}" class="custom-control-input menu-checkbox" />
+                                                    <label class="custom-control-label" name="menu_id" for="menu_id_{{ $item->id }}">{{ $item->menu_title }}</label>
+                                                </div>
                                                 </h4>
                                             </div>
                                         </div>

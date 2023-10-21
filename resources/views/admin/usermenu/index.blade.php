@@ -181,25 +181,61 @@
 
 
 
+                $('.menu-checkbox').on('change', function() {
+                    var menuId = $(this).val();
+                    var checkboxValue = $(`#checkbox-value_${menuId}`);
+                    var menuTitle = $(`label[for="menu_id_${menuId}"]`).text();
+
+                    if ($(this).is(':checked')) {
+                        checkboxValue.text(menuTitle);
+                    } else {
+                        checkboxValue.text('');
+                    }
+                });
 
                 /*------------------------------------------
                 --------------------------------------------
-                Create Categorie Code
+                Create  Code
                 --------------------------------------------
                 --------------------------------------------*/
                 $('#saveBtn').click(function(e) {
                     e.preventDefault();
                     $(this).html('Sending..');
-                    var formData = $('#productForm').serialize();
+
+                    // Collect the user ID
+                    var userId = $('#txtid').val();
+
+                    // Collect the selected menu IDs
+                    var menuIds = [];
+
+                    // Iterate through the checkboxes to find the checked ones
+                    $('input[name="menu_id[]"]:checked').each(function() {
+                        // Parse the value to an integer and then push it to the array
+                        var menuId = parseInt($(this).val());
+                        menuIds.push(menuId);
+                    });
+
+                    // Display the user_id and menu_id pairs in an alert
+                    // var alertMessage = 'User ID: ' + userId + '\nMenu IDs: ' + menuIds.join(', ');
+
+                    //  alert(alertMessage); // Show the alert
+
+                    // Create the data object to send in the AJAX request
+                    var data = {
+                        user_id: userId,
+                        menu_id: menuIds, // Use "menu_ids" to pass an array
+                    };
+
+
+
                     $.ajax({
-                        data: $('#productForm').serialize(),
+                        data: data,
                         url: "{{ url('/admin/usermenu') }}",
                         type: "POST",
-                        data: formData,
                         dataType: 'json',
                         success: function(response) {
                             console.log(response);
-                            $('#productForm').tdatarigger("reset");
+                            $('#productForm')[0].reset();
                             $('#ajaxModel').modal('hide');
                             table.ajax.reload();
 
@@ -207,19 +243,17 @@
                                 icon: 'success',
                                 title: 'Save Complete',
                                 text: response.success
-
-                            })
-
+                            });
                         },
                         error: function(response) {
                             console.error('Error:', response);
-
-                            // $('#first_nameErrorMsg').text(response.responseJSON.errors.first_name);
-                            // $('#last_nameErrorMsg').text(response.responseJSON.errors.last_name);
-
                         }
                     });
                 });
+
+
+
+
                 /*------------------------------------------
                       --------------------------------------------
                       Click to Edit Button
@@ -227,7 +261,6 @@
                       --------------------------------------------*/
                 $('body').on('click', '.edit', function() {
                     var id = $(this).data('id');
-
                     $.get("{{ url('admin/user') }}" + '/' + id + '/edit', function(data) {
                         $('#modelHeading').html("{{ $title }} Maintenance");
                         $('#saveBtn').val("edit-categorie");
@@ -248,12 +281,17 @@
                 });
 
 
-                $('#role').change(function() {
-                    var id = $(this).val();
-                    //empty the dropdown
-                    $('#role_id').val(id);
-                });
+                // $("#menu_id").on('change', function() {
+                //     if ($(this).is(':checked')) {
+                //         $('#checkbox-value').text($(this).val());
+                //     } else {
+                //         $('#checkbox-value').text('');
+                //     }
+                // });
 
+
+
+                //is active
                 $("#is_active").on('change', function() {
                     if ($(this).is(':checked')) {
                         $(this).attr('value', 1);
@@ -265,28 +303,28 @@
                 });
 
                 // Assuming you have an array to store the selected menu items
-                    var selectedMenus = [];
+                var selectedMenus = [];
 
-                    // Assuming a checkbox click event
-                    $('input[name="menu_id"]').on('change', function () {
-                        var menuId = $(this).val();
+                // Assuming a checkbox click event
+                $('input[name="menu_id"]').on('change', function() {
+                    var menuId = $(this).val();
 
-                        if ($(this).is(':checked')) {
-                            // If checkbox is checked and not already in the array, add it
-                            if (!selectedMenus.includes(menuId)) {
-                                selectedMenus.push(menuId);
-                            }
-                             // Log the menuId when a checkbox is checked
-                          console.log('Checkbox with menu_id ' + selectedMenus + ' is checked and user_id');
-                        } else {
-                            // If checkbox is unchecked and in the array, remove it
-                            var index = selectedMenus.indexOf(menuId);
-                            if (index !== -1) {
-                                selectedMenus.splice(index, 1);
-                            }
-                            console.log('Checkbox with menu_id ' + selectedMenus + ' is unchecked user_id');
+                    if ($(this).is(':checked')) {
+                        // If checkbox is checked and not already in the array, add it
+                        if (!selectedMenus.includes(menuId)) {
+                            selectedMenus.push(menuId);
                         }
-                    });
+                        // Log the menuId when a checkbox is checked
+                        console.log('Checkbox with menu_id ' + selectedMenus + ' is checked and user_id');
+                    } else {
+                        // If checkbox is unchecked and in the array, remove it
+                        var index = selectedMenus.indexOf(menuId);
+                        if (index !== -1) {
+                            selectedMenus.splice(index, 1);
+                        }
+                        //console.log('Checkbox with menu_id ' + selectedMenus + ' is unchecked user_id');
+                    }
+                });
 
             });
         </script>

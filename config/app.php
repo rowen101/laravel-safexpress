@@ -160,6 +160,7 @@ return [
          * Package Service Providers...
          */
         'Intervention\Image\ImageServiceProvider',
+        
 
         /*
          * Application Service Providers...

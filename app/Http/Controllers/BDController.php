@@ -92,7 +92,10 @@ class BDController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/img', $fileName);
+             // Resize and save the image
+             $image = Image::make($file);
+             $image->resize(600, 600); // Resize the image to 600x600 pixels
+             $image->save(storage_path('app/public/img/' . $fileName));
 
             // Delete the old image if it exists
             if ($bDirector->image) {
