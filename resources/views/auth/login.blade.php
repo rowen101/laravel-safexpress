@@ -50,6 +50,8 @@
 
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
+                    <!-- Equivalent to... -->
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" id="email" placeholder="Email"
                             @error('email') is-invalid @enderror name="email" value="{{ old('email') }}" required
