@@ -38,22 +38,23 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <style>
         .container-iframe {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
-}
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding-top: 56.25%;
+            /* 16:9 Aspect Ratio */
+        }
 
-.responsive-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
+        .responsive-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
     <script src="{{ asset('js/AutoLightbox.js') }}"></script>
     @vite(['resources/css/app.css'])
@@ -68,7 +69,7 @@
     <header id="header" class="header d-flex align-items-center fixed-top sticked">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-            <a href="{{url('/')}}" class="logo d-flex align-items-center">
+            <a href="{{ url('/') }}" class="logo d-flex align-items-center">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
                 <div class="d-flex align-items-center"><img src="{{ asset('img/logo.png') }}" /></div>
@@ -98,6 +99,19 @@
                             </li>
                         @endif
                     @endforeach
+                    <!-- show if login or logout -->
+                    @if (Auth::check())
+                        <!-- Check if the user is logged in -->
+                        <li class="dropdown"> <a href="#">Hi!&nbsp;{{ auth()->user()->name }}</a>
+                            <ul>
+
+                                <li>
+                                    <a href="/admin" target="_blank">Admin Dashboard</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </nav><!-- .navbar -->
 
@@ -117,13 +131,13 @@
             <!-- The slideshow/carousel -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="{{asset('img/bg1.jpeg')}}" alt="Warehouse1" class="d-block" style="width:100%">
+                    <img src="{{ asset('img/bg1.jpeg') }}" alt="Warehouse1" class="d-block" style="width:100%">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{asset('img/bg2.jpeg')}}" alt="Warehouse2" class="d-block" style="width:100%">
+                    <img src="{{ asset('img/bg2.jpeg') }}" alt="Warehouse2" class="d-block" style="width:100%">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{asset('img/bg3.jpeg')}}" alt="Warehouse3" class="d-block" style="width:100%">
+                    <img src="{{ asset('img/bg3.jpeg') }}" alt="Warehouse3" class="d-block" style="width:100%">
                 </div>
             </div>
 
@@ -147,12 +161,17 @@
 
 
                     <div class="container-iframe" data-aos="fade-up" data-aos-delay="100">
-                        <iframe class="responsive-iframe" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F100088724413065%2Fvideos%2F158192447341024%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+                        <iframe class="responsive-iframe"
+                            src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F100088724413065%2Fvideos%2F158192447341024%2F&show_text=false&width=560&t=0"
+                            width="560" height="314" style="border:none;overflow:hidden" scrolling="no"
+                            frameborder="0" allowfullscreen="true"
+                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                            allowFullScreen="true"></iframe>
                     </div>
 
-            </div>
+                </div>
         </section>
-        @include("pages.partial_page.company")
+        @include('pages.partial_page.company')
 
 
         <section class="about">
@@ -161,7 +180,7 @@
                     <h2>Quality Policy</h2>
 
                 </div>
-                <div class="row gy-4" >
+                <div class="row gy-4">
                     <div class="col-lg-5" data-aos="fade-right">
                         <div class="content ps-lg-5">
                             <h4>Safexpress is committed to run its
@@ -175,7 +194,7 @@
                         </div>
                     </div>
                     <div class="col-lg-7">
-                        <div class="content ps-lg-5"  data-aos="fade-left">
+                        <div class="content ps-lg-5" data-aos="fade-left">
 
                             <p>
                                 We will accomplish this by understanding the needs of our customers and
@@ -199,152 +218,203 @@
 
                 </div>
 
-                <div class="row gy-5 mt-2"  data-aos="fade-up">
+                <div class="row gy-5 mt-2" data-aos="fade-up">
 
                     <div class="row text-center text-lg-start col-md-12 border-none">
 
                         <div class="col-lg-3 col-md-4 col-6 ">
-                            <a href="{{asset('img/partners/1617168794_logo-header.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/1617168794_logo-header.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail "
-                                    src="{{asset('img/partners/1617168794_logo-header.png')}}" alt="">
+                                    src="{{ asset('img/partners/1617168794_logo-header.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/1kx1k_LOGO_yellow.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/1kx1k_LOGO_yellow.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/1kx1k_LOGO_yellow.png')}}"  alt="">
+                                    src="{{ asset('img/partners/1kx1k_LOGO_yellow.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/2560px-Logo_DB_Schenker.svg-1536x302.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/2560px-Logo_DB_Schenker.svg-1536x302.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/2560px-Logo_DB_Schenker.svg-1536x302.png')}}"  alt="">
+                                    src="{{ asset('img/partners/2560px-Logo_DB_Schenker.svg-1536x302.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/300964142_453263313486094_72733862803007486_n.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/300964142_453263313486094_72733862803007486_n.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/300964142_453263313486094_72733862803007486_n.png')}}"  alt="">
+                                    src="{{ asset('img/partners/300964142_453263313486094_72733862803007486_n.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/3g-logistics-and-cold-storage-inc.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/3g-logistics-and-cold-storage-inc.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/3g-logistics-and-cold-storage-inc.png')}}"  alt="">
+                                    src="{{ asset('img/partners/3g-logistics-and-cold-storage-inc.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/Alfamart-Logo-1024x576.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/Alfamart-Logo-1024x576.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/Alfamart-Logo-1024x576.png')}}"  alt="">
+                                    src="{{ asset('img/partners/Alfamart-Logo-1024x576.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/aljoy-300x200.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/aljoy-300x200.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/aljoy-300x200.png')}}"  alt="">
+                                    src="{{ asset('img/partners/aljoy-300x200.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/Bounty_Fresh_Chicken_logo.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/Bounty_Fresh_Chicken_logo.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/Bounty_Fresh_Chicken_logo.png')}}"  alt="">
+                                    src="{{ asset('img/partners/Bounty_Fresh_Chicken_logo.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/Coca-Cola-Logo-1934-768x461.png')}}"  data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/Coca-Cola-Logo-1934-768x461.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/Coca-Cola-Logo-1934-768x461.png')}}"  alt="">
+                                    src="{{ asset('img/partners/Coca-Cola-Logo-1934-768x461.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/cropped-Potato-Corner-Logo@2x-600x200.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/cropped-Potato-Corner-Logo@2x-600x200.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/cropped-Potato-Corner-Logo@2x-600x200.png')}}"  alt="">
+                                    src="{{ asset('img/partners/cropped-Potato-Corner-Logo@2x-600x200.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/Del_Monte_logo.svg-1024x795.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/Del_Monte_logo.svg-1024x795.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/Del_Monte_logo.svg-1024x795.png')}}"  alt="">
+                                    src="{{ asset('img/partners/Del_Monte_logo.svg-1024x795.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/KFC-logo-2006-2048x1152.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/KFC-logo-2006-2048x1152.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/KFC-logo-2006-2048x1152.png')}}"  alt="">
+                                    src="{{ asset('img/partners/KFC-logo-2006-2048x1152.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/mekeni-up.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/mekeni-up.png')}}"  alt="">
+                            <a href="{{ asset('img/partners/mekeni-up.png') }}" data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
+                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/mekeni-up.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/download-1.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/download-1.png')}}"  alt="">
+                            <a href="{{ asset('img/partners/download-1.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
+                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/download-1.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/download-1_1-300x200.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/download-1_1-300x200.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/download-1_1-300x200.png')}}"  alt="">
+                                    src="{{ asset('img/partners/download-1_1-300x200.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/Popeyes-Logo.wine_-2048x1365.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/Popeyes-Logo.wine_-2048x1365.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/Popeyes-Logo.wine_-2048x1365.png')}}"  alt="">
+                                    src="{{ asset('img/partners/Popeyes-Logo.wine_-2048x1365.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/mother-daughter.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/mother-daughter.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/mother-daughter.png')}}"  alt="">
+                                    src="{{ asset('img/partners/mother-daughter.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/Mondelez-Logo-1536x960.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/Mondelez-Logo-1536x960.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/Mondelez-Logo-1536x960.png')}}"  alt="">
+                                    src="{{ asset('img/partners/Mondelez-Logo-1536x960.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/images.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/images.png')}}"  alt="">
+                            <a href="{{ asset('img/partners/images.png') }}" data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
+                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/images.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/download.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/download.png')}}"  alt="">
+                            <a href="{{ asset('img/partners/download.png') }}" data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
+                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/download.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/Popeyes-Logo.wine_-2048x1365.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/Popeyes-Logo.wine_-2048x1365.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/Popeyes-Logo.wine_-2048x1365.png')}}"  alt="">
+                                    src="{{ asset('img/partners/Popeyes-Logo.wine_-2048x1365.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/golden-essential-foods.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/golden-essential-foods.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/golden-essential-foods.png')}}"  alt="">
+                                    src="{{ asset('img/partners/golden-essential-foods.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/igloo_logo.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/igloo_logo.png')}}"  alt="">
+                            <a href="{{ asset('img/partners/igloo_logo.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
+                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/igloo_logo.png') }}"
+                                    alt="">
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{asset('img/partners/prose--2048x468.png')}}" data-gallery="portfolio-gallery-logo" class="d-block mb-4 h-100 glightbox preview-link">
+                            <a href="{{ asset('img/partners/prose--2048x468.png') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
                                 <img class="img-fluid img-thumbnail"
-                                src="{{asset('img/partners/prose--2048x468.png')}}"  alt="">
+                                    src="{{ asset('img/partners/prose--2048x468.png') }}" alt="">
                             </a>
                         </div>
                     </div>
@@ -364,39 +434,44 @@
 
                 <div class="row gy-4">
 
-                    @foreach ($directors as $item )
-                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="team-member">
-                            <div class="member-img">
-                                <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid img-fluid border border-0 " alt="{{$item->name}}">
-                                @if ($item->is_social != '')
-                                <div class="social">
+                    @foreach ($directors as $item)
+                        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="{{ asset('/storage/img/' . $item->image) }}"
+                                        class="img-fluid img-fluid border border-0 " alt="{{ $item->name }}">
+                                    @if ($item->is_social != '')
+                                        <div class="social">
 
-                                    @if ($item->fb == '')
-                                    <a href="{{$item->fb_url}}" target="_blank"> <i class="bi bi-facebook"></i></a>
+                                            @if ($item->fb == '')
+                                                <a href="{{ $item->fb_url }}" target="_blank"> <i
+                                                        class="bi bi-facebook"></i></a>
+                                            @endif
+
+                                            @if ($item->instagram == '')
+                                                <a href="{{ $item->instagram_url }}" target="_blank"> <i
+                                                        class="bi bi-instagram"></i></a>
+                                            @endif
+
+                                            @if ($item->tw == '')
+                                                <a href="{{ $item->tw_url }}" target="_blank"> <i
+                                                        class="bi bi-twitter"></i></a>
+                                            @endif
+
+                                            @if ($item->linkin == '')
+                                                <a href="{{ $item->linkin_url }}" target="_blank"> <i
+                                                        class="bi bi-linkedin"></i></a>
+                                            @endif
+
+                                        </div>
                                     @endif
-
-                                    @if ($item->instagram == '')
-                                    <a href="{{$item->instagram_url}}" target="_blank"> <i class="bi bi-instagram"></i></a>
-                                    @endif
-
-                                    @if ($item->tw == '')
-                                    <a href="{{$item->tw_url}}" target="_blank"> <i class="bi bi-twitter"></i></a>
-                                    @endif
-
-                                    @if ($item->linkin == '')
-                                    <a href="{{$item->linkin_url}}" target="_blank"> <i class="bi bi-linkedin"></i></a>
-                                    @endif
-
                                 </div>
-                                @endif
+                                <div class="member-info">
+                                    <h4>{{ $item->name }}</h4>
+                                    <span>{{ $item->position }}</span>
+                                </div>
                             </div>
-                            <div class="member-info">
-                                <h4>{{ $item->name}}</h4>
-                                <span>{{ $item->position}}</span>
-                            </div>
-                        </div>
-                    </div><!-- End Team Member -->
+                        </div><!-- End Team Member -->
                     @endforeach
                 </div>
 
@@ -414,40 +489,45 @@
 
                 <div class="row gy-4">
 
-                    @foreach ($mancom as $item )
-                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="team-member">
-                            <div class="member-img">
-                                <img src="{{ asset('/storage/img/' . $item->image) }}" class="img-fluid border border-0 " alt="{{$item->name}}">
-                                @if ($item->is_social != '')
-                                <div class="social">
+                    @foreach ($mancom as $item)
+                        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="{{ asset('/storage/img/' . $item->image) }}"
+                                        class="img-fluid border border-0 " alt="{{ $item->name }}">
+                                    @if ($item->is_social != '')
+                                        <div class="social">
 
-                                        @if ($item->fb == '')
-                                        <a href="{{$item->fb_url}}" target="_blank"> <i class="bi bi-facebook"></i></a>
-                                        @endif
+                                            @if ($item->fb == '')
+                                                <a href="{{ $item->fb_url }}" target="_blank"> <i
+                                                        class="bi bi-facebook"></i></a>
+                                            @endif
 
-                                        @if ($item->instagram == '')
-                                        <a href="{{$item->instagram_url}}" target="_blank"> <i class="bi bi-instagram"></i></a>
-                                        @endif
+                                            @if ($item->instagram == '')
+                                                <a href="{{ $item->instagram_url }}" target="_blank"> <i
+                                                        class="bi bi-instagram"></i></a>
+                                            @endif
 
-                                        @if ($item->tw == '')
-                                        <a href="{{$item->tw_url}}" target="_blank"> <i class="bi bi-twitter"></i></a>
-                                        @endif
+                                            @if ($item->tw == '')
+                                                <a href="{{ $item->tw_url }}" target="_blank"> <i
+                                                        class="bi bi-twitter"></i></a>
+                                            @endif
 
-                                        @if ($item->linkin == '')
-                                        <a href="{{$item->linkin_url}}" target="_blank"> <i class="bi bi-linkedin"></i></a>
-                                        @endif
+                                            @if ($item->linkin == '')
+                                                <a href="{{ $item->linkin_url }}" target="_blank"> <i
+                                                        class="bi bi-linkedin"></i></a>
+                                            @endif
 
-                                    </div>
+                                        </div>
                                     @endif
 
+                                </div>
+                                <div class="member-info">
+                                    <h4>{{ $item->name }}</h4>
+                                    <span>{{ $item->position }}</span>
+                                </div>
                             </div>
-                            <div class="member-info">
-                                <h4>{{ $item->name}}</h4>
-                                <span>{{ $item->position}}</span>
-                            </div>
-                        </div>
-                    </div><!-- End Team Member -->
+                        </div><!-- End Team Member -->
                     @endforeach
                 </div>
 
@@ -465,22 +545,25 @@
                         <a href="index.html" class="logo d-flex align-items-center">
                             <span>Safexpress</span>
                         </a>
-                        <p>{{ $setting->site_address}}</p>
+                        <p>{{ $setting->site_address }}</p>
                         <div class="social-links d-flex  mt-3">
                             {{-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
           <a href="#" class="instagram"><i class="bi bi-instagram"></i></a> --}}
-          <a href="https://www.facebook.com/SafexpressLogisticsInc/" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="https://www.linkedin.com/company/safexpress-logistics-inc/" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          <a href="https://www.youtube.com/@safexpressphilippines" target="_blank" class="youtube"><i class="bi bi-youtube"></i></a>
+                            <a href="https://www.facebook.com/SafexpressLogisticsInc/" target="_blank"
+                                class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.linkedin.com/company/safexpress-logistics-inc/" target="_blank"
+                                class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            <a href="https://www.youtube.com/@safexpressphilippines" target="_blank"
+                                class="youtube"><i class="bi bi-youtube"></i></a>
                         </div>
                     </div>
 
                     <div class="col-lg-2 col-6 footer-links">
                         <h4>Useful Links</h4>
                         <ul>
-                            <li><i class="bi bi-dash"></i> <a href="{{url('/')}}">Home</a></li>
-                            <li><i class="bi bi-dash"></i> <a href="{{url('/about')}}">About us</a></li>
-                            <li><i class="bi bi-dash"></i> <a href="{{url('/services')}}">Services</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{ url('/') }}">Home</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{ url('/about') }}">About us</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{ url('/services') }}">Services</a></li>
 
                         </ul>
                     </div>
@@ -488,18 +571,21 @@
                     <div class="col-lg-2 col-6 footer-links">
                         <h4>Our Services</h4>
                         <ul>
-                            <li><i class="bi bi-dash"></i> <a href="{{url('/warehouse-management')}}">Warehouse Management</a></li>
-                            <li><i class="bi bi-dash"></i> <a href="{{url('/transport-services')}}">Tranport Services</a></li>
-                            <li><i class="bi bi-dash"></i> <a href="{{url('/other-services')}}">Other Service</a></li>
-                          </ul>
+                            <li><i class="bi bi-dash"></i> <a href="{{ url('/warehouse-management') }}">Warehouse
+                                    Management</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{ url('/transport-services') }}">Tranport
+                                    Services</a></li>
+                            <li><i class="bi bi-dash"></i> <a href="{{ url('/other-services') }}">Other Service</a>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
                         <h4>Contact Us</h4>
                         <p>
 
-                            <strong>Phone:</strong>&nbsp;{{ $setting->site_phone}}<br>
-                            <strong>Email:</strong>&nbsp;{{ $setting->site_email}}<br>
+                            <strong>Phone:</strong>&nbsp;{{ $setting->site_phone }}<br>
+                            <strong>Email:</strong>&nbsp;{{ $setting->site_email }}<br>
                         </p>
 
                     </div>
@@ -511,7 +597,7 @@
         <div class="footer-legal">
             <div class="container">
                 <div class="copyright">
-                    Copyright &copy; {{ now()->year }}  <strong><span>Safexpress</span></strong>. All Rights Reserved
+                    Copyright &copy; {{ now()->year }} <strong><span>Safexpress</span></strong>. All Rights Reserved
                 </div>
 
             </div>

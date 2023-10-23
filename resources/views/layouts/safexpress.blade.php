@@ -15,7 +15,7 @@
 
     <!-- Lightbox -->
     <link href="{{ asset('css/lightbox.min.css') }}" rel="stylesheet">
-    
+
     <!-- Favicons -->
 
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -82,7 +82,23 @@
                                     class="{{ request()->is($item->menu_route) ? 'active' : '' }}">{{ $item->menu_title }}</a>
                             </li>
                         @endif
-                    @endforeach
+
+                            @endforeach
+                                <!-- show if login or logout -->
+                            @if(Auth::check()) <!-- Check if the user is logged in -->
+                            <li class="dropdown"> <a href="#">Hi!&nbsp;{{ auth()->user()->name }}</a>
+                                <ul>
+
+                                        <li>
+                                            <a href="/admin" target="_blank"
+                                                >Admin Dashboard</a>
+                                        </li>
+
+                                </ul>
+                             </li>
+
+
+                            @endif
                 </ul>
             </nav><!-- .navbar -->
 

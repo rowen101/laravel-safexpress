@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Intervention\Image\Facades\Image;
+use App\Models\Menu;
 use App\Models\Branch;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
-use Image;
+use Yajra\DataTables\Facades\DataTables;
 
 class BranchController extends Controller
 {
@@ -22,8 +23,36 @@ class BranchController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     private function getAdminMenu()
+     {
+        $userId = auth()->user()->id;
+
+        $menu = Menu::select('menus.*')
+            ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+            ->where('menus.is_active', 1)
+            ->where('menus.app_id', 1)
+            ->where('menus.parent_id', 0)
+            ->where('usermenus.user_id', $userId)
+            ->orderBy('menus.sort_order', 'ASC')
+            ->get();
+
+        // For each top-level menu item, fetch and attach its submenus based on user access
+        $menu->each(function ($menuItem) use ($userId) {
+            $menuItem->submenus = Menu::select('menus.*')
+                ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+                ->where('menus.is_active', 1)
+                ->where('menus.parent_id', $menuItem->id)
+                ->where('usermenus.user_id', $userId)
+                ->orderBy('menus.sort_order', 'ASC')
+                ->get();
+        });
+
+        return $menu;
+     }
     public function index(Request $request)
     {
+        $adminmenu = $this->getAdminMenu();
         $title = "Branch Setup";
         if ($request->ajax()) {
 
@@ -33,7 +62,6 @@ class BranchController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm edit"><i class="fas fa-edit"></i></a>';
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Addimage" class="btn btn-success btn-sm addimage"><i class="fas fa-file-image"></i></a>';
                     $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete"><i class="fas fa-trash"></i></a>';
                     return $btn;
                 })
@@ -46,7 +74,7 @@ class BranchController extends Controller
                 ->rawColumns(['action', 'is_active', 'created_at'])
                 ->make(true);
         }
-        return view('admin.branch.index', compact('title'));
+        return view('admin.branch.index', compact('title','adminmenu'));
     }
     /**
      * Store a newly created resource in storage.
@@ -65,39 +93,43 @@ class BranchController extends Controller
                 //'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
-            // Find the branch by ID or create a new instance if ID doesn't exist
-            $branch = Branch::findOrNew($request->id);
+
+            $sitebranch = Branch::find($request->id);
+
+            if (!$sitebranch) {
+                $sitebranch = new Branch(); // Create a new instance if it doesn't exist
+            }
+
+            // Check if an image file was provided in the request
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('public/img', $fileName);
+                // Resize and save the image
+                $image = Image::make($file);
+                $image->resize(600, 700); // Resize the image pixels
+                $image->save(storage_path('app/public/img/' . $fileName));
 
-                // Update the branch with the new image
-                $branch->fill([
-                    'region' => $request->region,
-                    'site' => $request->site,
-                    'sitehead' => $request->sitehead,
-                    'location' => $request->location,
-                    'image' => $fileName,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'is_active' => $request->is_active,
-                    'created_by' => auth()->user()->id,
-                ]);
-            } else {
+                // Delete the old image if it exists
+                if ($sitebranch->image) {
+                    Storage::delete('public/img/' . $sitebranch->image);
+                }
 
-                $branch->fill([
-                    'region' => $request->region,
-                    'site' => $request->site,
-                    'sitehead' => $request->sitehead,
-                    'location' => $request->location,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'is_active' => $request->is_active,
-                    'created_by' => auth()->user()->id,
-                ]);
+                // Update the director with the new image
+                $sitebranch->image = $fileName; // Save the image filename in the database
             }
-            $branch->save();
+
+            // Update or create the rest of the fields
+            $sitebranch->region = $request->region;
+            $sitebranch->site = $request->site;
+            $sitebranch->sitehead = $request->sitehead;
+            $sitebranch->location = $request->location;
+            $sitebranch->email = $request->email;
+            $sitebranch->phone = $request->phone;
+            $sitebranch->is_active = $request->is_active;
+            $sitebranch->created_by = auth()->user()->id;
+
+            // Save the branch instance
+            $sitebranch->save();
 
             return response()->json(['success' => 'Success!']);
         } catch (\Exception $e) {

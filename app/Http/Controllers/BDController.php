@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\File;
+
+use App\Models\Menu;
 use App\Models\BDirector;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -22,8 +24,36 @@ class BDController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    private function getAdminMenu()
+    {
+        $userId = auth()->user()->id;
+
+        $menu = Menu::select('menus.*')
+            ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+            ->where('menus.is_active', 1)
+            ->where('menus.app_id', 1)
+            ->where('menus.parent_id', 0)
+            ->where('usermenus.user_id', $userId)
+            ->orderBy('menus.sort_order', 'ASC')
+            ->get();
+
+        // For each top-level menu item, fetch and attach its submenus based on user access
+        $menu->each(function ($menuItem) use ($userId) {
+            $menuItem->submenus = Menu::select('menus.*')
+                ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+                ->where('menus.is_active', 1)
+                ->where('menus.parent_id', $menuItem->id)
+                ->where('usermenus.user_id', $userId)
+                ->orderBy('menus.sort_order', 'ASC')
+                ->get();
+        });
+
+        return $menu;
+    }
     public function index(Request $request)
     {
+        $adminmenu = $this->getAdminMenu();
         $title = 'Board of Director';
         if ($request->ajax()) {
 
@@ -60,7 +90,7 @@ class BDController extends Controller
                 ->rawColumns(['action', 'fb', 'tw', 'linkin', 'instagram', 'is_active', 'created_at'])
                 ->make(true);
         }
-        return view('admin.bdirector.index', compact('title'));
+        return view('admin.bdirector.index', compact('title', 'adminmenu'));
     }
 
     /**
@@ -75,62 +105,62 @@ class BDController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    try {
-        $request->validate([
-            'name' => 'required',
-            'position' => 'required',
-        ]);
+    {
+        try {
+            $request->validate([
+                'name' => 'required',
+                'position' => 'required',
+            ]);
 
-        $bDirector = BDirector::find($request->id);
+            $bDirector = BDirector::find($request->id);
 
-        if (!$bDirector) {
-            $bDirector = new BDirector(); // Create a new instance if it doesn't exist
-        }
-
-        // Check if an image file was provided in the request
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-             // Resize and save the image
-             $image = Image::make($file);
-             $image->resize(600, 600); // Resize the image to 600x600 pixels
-             $image->save(storage_path('app/public/img/' . $fileName));
-
-            // Delete the old image if it exists
-            if ($bDirector->image) {
-                Storage::delete('public/img/' . $bDirector->image);
+            if (!$bDirector) {
+                $bDirector = new BDirector(); // Create a new instance if it doesn't exist
             }
 
-            // Update the director with the new image
-            $bDirector->image = $fileName; // Save the image filename in the database
+            // Check if an image file was provided in the request
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                // Resize and save the image
+                $image = Image::make($file);
+                $image->resize(600, 600); // Resize the image to 600x600 pixels
+                $image->save(storage_path('app/public/img/' . $fileName));
+
+                // Delete the old image if it exists
+                if ($bDirector->image) {
+                    Storage::delete('public/img/' . $bDirector->image);
+                }
+
+                // Update the director with the new image
+                $bDirector->image = $fileName; // Save the image filename in the database
+            }
+
+            // Update or create the rest of the fields
+            $bDirector->name = $request->name;
+            $bDirector->position = $request->position;
+            $bDirector->about = $request->about;
+            $bDirector->org_type = $request->org_type;
+            $bDirector->is_social = $request->is_social;
+            $bDirector->fb_url = $request->fb_url;
+            $bDirector->tw_url = $request->tw_url;
+            $bDirector->linkin_url = $request->linkin_url;
+            $bDirector->instagram_url = $request->instagram_url;
+            $bDirector->fb = $request->fb;
+            $bDirector->tw = $request->tw;
+            $bDirector->linkin = $request->linkin;
+            $bDirector->instagram = $request->instagram;
+            $bDirector->is_active = $request->is_active;
+            $bDirector->created_by = auth()->user()->id;
+
+            // Save the branch instance
+            $bDirector->save();
+
+            return response()->json(['success' => 'Success!']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
-
-        // Update or create the rest of the fields
-        $bDirector->name = $request->name;
-        $bDirector->position = $request->position;
-        $bDirector->about = $request->about;
-        $bDirector->org_type = $request->org_type;
-        $bDirector->is_social = $request->is_social;
-        $bDirector->fb_url = $request->fb_url;
-        $bDirector->tw_url = $request->tw_url;
-        $bDirector->linkin_url = $request->linkin_url;
-        $bDirector->instagram_url = $request->instagram_url;
-        $bDirector->fb = $request->fb;
-        $bDirector->tw = $request->tw;
-        $bDirector->linkin = $request->linkin;
-        $bDirector->instagram = $request->instagram;
-        $bDirector->is_active = $request->is_active;
-        $bDirector->created_by = auth()->user()->id;
-
-        // Save the branch instance
-        $bDirector->save();
-
-        return response()->json(['success' => 'Success!']);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()]);
     }
-}
 
 
 

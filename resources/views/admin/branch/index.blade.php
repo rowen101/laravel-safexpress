@@ -152,6 +152,8 @@
                     $('#productForm').trigger("reset");
                     $('#modelHeading').html("Create New {{ $title }}");
                     $('#ajaxModel').modal('show');
+                    $('#imgwarehouse').attr('src', '');
+                    $('#image').val('');
                 });
 
 
@@ -183,7 +185,9 @@
 
                                     })
 
-
+                            // Clear the file input
+                            $('#image').val('');
+                           $('#imgwarehouse').attr('src', '');
                             $('#productForm').trigger("reset");
                             $('#ajaxModel').modal('hide');
                             table.ajax.reload();

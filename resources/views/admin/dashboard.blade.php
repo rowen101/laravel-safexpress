@@ -36,14 +36,14 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>{{ $post}}</h3>
+              <h3>{{ $mancom}}</h3>
 
-              <p>Post</p>
+              <p>Mancom</p>
             </div>
             <div class="icon">
-              <i class="fa fa-pencil-square"></i>
+              <i class="fa fa-user"></i>
             </div>
-            <a href="{{route('post.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{route('bdirector.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

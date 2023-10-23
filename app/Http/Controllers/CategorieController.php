@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+
 class CategorieController extends Controller
 {
     /**
@@ -19,9 +21,36 @@ class CategorieController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     private function getAdminMenu()
+     {
+        $userId = auth()->user()->id;
+
+        $menu = Menu::select('menus.*')
+            ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+            ->where('menus.is_active', 1)
+            ->where('menus.app_id', 1)
+            ->where('menus.parent_id', 0)
+            ->where('usermenus.user_id', $userId)
+            ->orderBy('menus.sort_order', 'ASC')
+            ->get();
+
+        // For each top-level menu item, fetch and attach its submenus based on user access
+        $menu->each(function ($menuItem) use ($userId) {
+            $menuItem->submenus = Menu::select('menus.*')
+                ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+                ->where('menus.is_active', 1)
+                ->where('menus.parent_id', $menuItem->id)
+                ->where('usermenus.user_id', $userId)
+                ->orderBy('menus.sort_order', 'ASC')
+                ->get();
+        });
+
+        return $menu;
+     }
     public function index(Request $request)
     {
-
+        $adminmenu = $this->getAdminMenu();
         $title ="Posts Categorie";
 
        if ($request->ajax()) {
@@ -42,7 +71,7 @@ class CategorieController extends Controller
                     ->make(true);
         }
 
-        return view('admin.categorie.index')->with(['title' => $title,]);
+        return view('admin.categorie.index')->with(['title' => $title, 'adminmenu' => $adminmenu]);
     }
 
     /**

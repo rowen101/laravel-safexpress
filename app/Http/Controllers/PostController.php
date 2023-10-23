@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Posts;
 use App\Models\Comment;
 use App\Models\Category;
@@ -23,15 +24,45 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     private function getAdminMenu()
+     {
+
+        $userId = auth()->user()->id;
+
+         $menu = Menu::select('menus.*')
+             ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+             ->where('menus.is_active', 1)
+             ->where('menus.app_id', 1)
+             ->where('menus.parent_id', 0)
+             ->where('usermenus.user_id', $userId)
+             ->orderBy('menus.sort_order', 'ASC')
+             ->get();
+
+         // For each top-level menu item, fetch and attach its submenus based on user access
+         $menu->each(function ($menuItem) use ($userId) {
+             $menuItem->submenus = Menu::select('menus.*')
+                 ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+                 ->where('menus.is_active', 1)
+                 ->where('menus.parent_id', $menuItem->id)
+                 ->where('usermenus.user_id', $userId)
+                 ->orderBy('menus.sort_order', 'ASC')
+                 ->get();
+         });
+
+         return $menu;
+     }
     public function index()
     {
+        $adminmenu = $this->getAdminMenu();
         $title = "Post";
         $count = Posts::count();
         $ccount = Comment::count();
         $countpublish = Posts::where('is_publish','1')->count();
         $posts = Posts::all();
         return view('admin.post.index')->with([
-            'title' => $title, 'posts' => $posts, 'count' => $count, 'ccount' => $ccount,'countpublish'=> $countpublish
+            'title' => $title, 'posts' => $posts, 'count' => $count, 'ccount' => $ccount,'countpublish'=> $countpublish,
+            'adminmenu' => $adminmenu,
         ]);
     }
 

@@ -22,8 +22,37 @@ class UserMenuController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     private function getAdminMenu()
+     {
+        $userId = auth()->user()->id;
+
+        $menu = Menu::select('menus.*')
+            ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+            ->where('menus.is_active', 1)
+            ->where('menus.app_id', 1)
+            ->where('menus.parent_id', 0)
+            ->where('usermenus.user_id', $userId)
+            ->orderBy('menus.sort_order', 'ASC')
+            ->get();
+
+        // For each top-level menu item, fetch and attach its submenus based on user access
+        $menu->each(function ($menuItem) use ($userId) {
+            $menuItem->submenus = Menu::select('menus.*')
+                ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+                ->where('menus.is_active', 1)
+                ->where('menus.parent_id', $menuItem->id)
+                ->where('usermenus.user_id', $userId)
+                ->orderBy('menus.sort_order', 'ASC')
+                ->get();
+        });
+
+        return $menu;
+     }
     public function index(Request $request)
     {
+        $adminmenu = $this->getAdminMenu();
+
         $title = "User Menu";
         if ($request->ajax()) {
 
@@ -53,8 +82,7 @@ class UserMenuController extends Controller
         return view('admin.usermenu.index', [
 
             'title' => $title,
-
-
+            'adminmenu' => $adminmenu
         ]);
     }
 
@@ -73,7 +101,7 @@ class UserMenuController extends Controller
     {
         $user_id = $request->input('user_id');
         $menu_ids = $request->input('menu_id');
-       
+
 
         foreach ($menu_ids as $menu_id) {
             UserMenu::updateOrInsert(

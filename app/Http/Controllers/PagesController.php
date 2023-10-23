@@ -15,27 +15,22 @@ use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
-
-    public function menu(){
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
-
-        return $menuItem;
+    private function getGuestMenu()
+    {
+        return Menu::select('menus.*')
+            ->where('is_active', 1)
+            ->where('app_id', 2)
+            ->where('parent_id', 0)
+            ->orderBy('sort_order', 'ASC')
+            ->get();
     }
+
+
     public function index()
     {
 
         $title = "Home";
-
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
-
+        $menuItem = $this->getGuestMenu();
         $setting = Setting::first();
 
         $directors = BDirector::where('is_active',1)
@@ -54,11 +49,7 @@ class PagesController extends Controller
         //$title = "About";
         $title = Menu::where('menu_code','about')->pluck('menu_title')->first();
 
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();
 
@@ -72,11 +63,7 @@ class PagesController extends Controller
     public function services()
     {
         $title = Menu::where('menu_code','ser')->pluck('menu_title')->first();
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();
         return view('pages.services', compact('menuItem','setting'))->with('title', $title);
@@ -84,21 +71,13 @@ class PagesController extends Controller
     public function contact()
     {
         $title = Menu::where('menu_code','ct')->pluck('menu_title')->first();
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
         $setting = Setting::first();
         return view('pages.contact',compact('menuItem','setting'))->with('title', $title);
     }
     public function teams()
     {
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
 
         $gallery = DB::table('galleries')
             ->select( 'id','foldername')
@@ -119,11 +98,7 @@ class PagesController extends Controller
     public function branch(Request $request)
     {
         $title = Menu::where('menu_code','brancl')->pluck('menu_title')->first();
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
 
         $regions = Branch::distinct()->pluck('region');
 
@@ -151,11 +126,7 @@ class PagesController extends Controller
     public function blog()
     {
         $title = Menu::where('menu_code','bl')->pluck('menu_title')->first();
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
 
         $postid = DB::table('posts')
         ->select('id')->get();
@@ -176,11 +147,7 @@ class PagesController extends Controller
         if($posts && $posts->is_publish){
             $post = Posts::withCount('comments')->find($id);
             $commentCount = $post->comments_count;
-            $menuItem = Menu::where('is_active', 1)
-            ->where('app_id', 2)
-            ->where('parent_id', 0)
-            ->orderBy('sort_order', 'ASC')
-            ->get();
+            $menuItem = $this->getGuestMenu();
             $setting = Setting::first();
             $user = Posts::with(['user'])->find($id);
             return view('pages.blog-details',compact('posts','menuItem','commentCount','user','setting'));
@@ -193,11 +160,7 @@ class PagesController extends Controller
     public function warehouse()
     {
         $title = Menu::where('menu_code','ws')->pluck('menu_title')->first();
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();
         return view('pages.warehouse-management',compact('title', 'menuItem','setting'));
@@ -205,11 +168,7 @@ class PagesController extends Controller
     public function transport()
     {
         $title = Menu::where('menu_code','ts')->pluck('menu_title')->first();
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();
         return view('pages.transport-services',compact('menuItem','title','setting'));
@@ -217,11 +176,7 @@ class PagesController extends Controller
     public function other()
     {
         $title = Menu::where('menu_code','os')->pluck('menu_title')->first();
-        $menuItem = Menu::where('is_active', 1)
-        ->where('app_id', 2)
-        ->where('parent_id', 0)
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();
         return view('pages.other-services',compact('menuItem','title','setting'));

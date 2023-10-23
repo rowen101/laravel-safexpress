@@ -21,5 +21,10 @@ class Menu extends Model
         return static::where('parent_id', null)->with('submenus')->get();
     }
 
+    public function userMenus()
+    {
+        return $this->hasMany(UserMenu::class, 'menu_id', 'id');
+    }
+
 
 }

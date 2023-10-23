@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Gallery;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Str;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Yajra\DataTables\Facades\DataTables;
+
 class GalleryController extends Controller
 {
     /**
@@ -23,9 +25,35 @@ class GalleryController extends Controller
     /**
      * Display a listing of the resource.
      */
+    private function getAdminMenu()
+    {
+        $userId = auth()->user()->id;
+
+        $menu = Menu::select('menus.*')
+            ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+            ->where('menus.is_active', 1)
+            ->where('menus.app_id', 1)
+            ->where('menus.parent_id', 0)
+            ->where('usermenus.user_id', $userId)
+            ->orderBy('menus.sort_order', 'ASC')
+            ->get();
+
+        // For each top-level menu item, fetch and attach its submenus based on user access
+        $menu->each(function ($menuItem) use ($userId) {
+            $menuItem->submenus = Menu::select('menus.*')
+                ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
+                ->where('menus.is_active', 1)
+                ->where('menus.parent_id', $menuItem->id)
+                ->where('usermenus.user_id', $userId)
+                ->orderBy('menus.sort_order', 'ASC')
+                ->get();
+        });
+
+        return $menu;
+    }
     public function index(Request $request)
     {
-
+        $adminmenu = $this->getAdminMenu();
         $title = "Gallery";
         $datagallery = DB::table('galleries')
         ->get();
@@ -59,7 +87,7 @@ class GalleryController extends Controller
                 ->rawColumns(['action', 'is_active', 'created_at'])
                 ->make(true);
         }
-        return view('admin.gallery.index')->with(['title' => $title,'datagallery'=> $datagallery]);
+        return view('admin.gallery.index')->with(['title' => $title,'datagallery'=> $datagallery,'adminmenu' => $adminmenu]);
     }
 
     /**

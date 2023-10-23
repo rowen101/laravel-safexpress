@@ -86,7 +86,7 @@
                                                     <img src="" id="profile" alt="" alt="Profile Image" class="img-fluid"/>
                                                     <input type="file" name="image" id="image"
                                                         class="form-control" accept="image/*">
-                                                        <p>Note: image must be 600x600 px</p>
+                                                        
                                                 </div>
                                                 <div class="mt-2" id="avatar"></div>
                                             </div>
