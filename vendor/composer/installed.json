@@ -1417,6 +1417,61 @@
             "install-path": "../intervention/image"
         },
         {
+            "name": "iqbalhasandev/sqlite-cache",
+            "version": "V2.0",
+            "version_normalized": "2.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iqbalhasandev/laravel-sqlite-cache.git",
+                "reference": "a0091f8a9f549962208796bcf4c5f6fada353041"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iqbalhasandev/laravel-sqlite-cache/zipball/a0091f8a9f549962208796bcf4c5f6fada353041",
+                "reference": "a0091f8a9f549962208796bcf4c5f6fada353041",
+                "shasum": ""
+            },
+            "time": "2020-12-13T14:11:00+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Iqbal\\SqliteCache\\SqliteCacheProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Iqbal\\SqliteCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "IQBAL HASAN",
+                    "email": "iqbalhasan.dev@gmail.com"
+                }
+            ],
+            "description": "The Missing Sqlite Cache Driver Package.You can easily use Sqlite Database as Cache Driver through this package",
+            "keywords": [
+                "Sqlite Cache Driver",
+                "cache driver",
+                "library",
+                "package",
+                "plugin"
+            ],
+            "support": {
+                "issues": "https://github.com/iqbalhasandev/laravel-sqlite-cache/issues",
+                "source": "https://github.com/iqbalhasandev/laravel-sqlite-cache/tree/list"
+            },
+            "install-path": "../iqbalhasandev/sqlite-cache"
+        },
+        {
             "name": "laravel/framework",
             "version": "v10.25.1",
             "version_normalized": "10.25.1.0",

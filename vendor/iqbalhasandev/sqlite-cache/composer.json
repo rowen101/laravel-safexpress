@@ -1,0 +1,34 @@
+{
+    "name": "iqbalhasandev/sqlite-cache",
+    "description": "The Missing Sqlite Cache Driver Package.You can easily use Sqlite Database as Cache Driver through this package",
+    "type": "library",
+    "keywords": [
+        "package",
+        "library",
+        "Plugin",
+        "Cache Driver",
+        "Sqlite Cache Driver"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "IQBAL HASAN",
+            "email": "iqbalhasan.dev@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Iqbal\\SqliteCache\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Iqbal\\SqliteCache\\SqliteCacheProvider"
+            ],
+            "aliases": {}
+        }
+    }
+}

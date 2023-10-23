@@ -138,6 +138,7 @@ class ComposerStaticInit7edc224e3381a54bff37dd48d6abb4a8
         ),
         'I' => 
         array (
+            'Iqbal\\SqliteCache\\' => 18,
             'Intervention\\Image\\' => 19,
             'Illuminate\\Support\\' => 19,
             'Illuminate\\Foundation\\Auth\\' => 27,
@@ -449,6 +450,10 @@ class ComposerStaticInit7edc224e3381a54bff37dd48d6abb4a8
         array (
             0 => __DIR__ . '/..' . '/laravel/prompts/src',
         ),
+        'Iqbal\\SqliteCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/iqbalhasandev/sqlite-cache/src',
+        ),
         'Intervention\\Image\\' => 
         array (
             0 => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image',
@@ -581,6 +586,7 @@ class ComposerStaticInit7edc224e3381a54bff37dd48d6abb4a8
         'App\\Http\\Controllers\\ResizeController' => __DIR__ . '/../..' . '/app/Http/Controllers/ResizeController.php',
         'App\\Http\\Controllers\\SettingController' => __DIR__ . '/../..' . '/app/Http/Controllers/SettingController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\UserMenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserMenuController.php',
         'App\\Http\\Controllers\\WebUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebUserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -602,10 +608,12 @@ class ComposerStaticInit7edc224e3381a54bff37dd48d6abb4a8
         'App\\Models\\Permission' => __DIR__ . '/../..' . '/app/Models/Permission.php',
         'App\\Models\\Posts' => __DIR__ . '/../..' . '/app/Models/Posts.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
+        'App\\Models\\Setting' => __DIR__ . '/../..' . '/app/Models/Setting.php',
         'App\\Models\\Site' => __DIR__ . '/../..' . '/app/Models/Site.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\blog' => __DIR__ . '/../..' . '/app/Models/blog.php',
         'App\\Models\\techrecomm' => __DIR__ . '/../..' . '/app/Models/techrecomm.php',
+        'App\\Models\\usermenu' => __DIR__ . '/../..' . '/app/Models/usermenu.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -2969,6 +2977,10 @@ class ComposerStaticInit7edc224e3381a54bff37dd48d6abb4a8
         'Intervention\\Image\\Point' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Point.php',
         'Intervention\\Image\\Response' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Response.php',
         'Intervention\\Image\\Size' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Size.php',
+        'Iqbal\\SqliteCache\\SqliteCacheProvider' => __DIR__ . '/..' . '/iqbalhasandev/sqlite-cache/src/SqliteCacheProvider.php',
+        'Iqbal\\SqliteCache\\commands\\SqliteCacheInstall' => __DIR__ . '/..' . '/iqbalhasandev/sqlite-cache/src/commands/SqliteCacheInstall.php',
+        'Iqbal\\SqliteCache\\commands\\SqliteCacheTable' => __DIR__ . '/..' . '/iqbalhasandev/sqlite-cache/src/commands/SqliteCacheTable.php',
+        'Iqbal\\SqliteCache\\driver\\SqliteStore' => __DIR__ . '/..' . '/iqbalhasandev/sqlite-cache/src/driver/SqliteStore.php',
         'Laravel\\Prompts\\Concerns\\Colors' => __DIR__ . '/..' . '/laravel/prompts/src/Concerns/Colors.php',
         'Laravel\\Prompts\\Concerns\\Cursor' => __DIR__ . '/..' . '/laravel/prompts/src/Concerns/Cursor.php',
         'Laravel\\Prompts\\Concerns\\Erase' => __DIR__ . '/..' . '/laravel/prompts/src/Concerns/Erase.php',

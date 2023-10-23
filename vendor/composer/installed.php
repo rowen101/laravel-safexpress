@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '759fc61b6f10deb000d50af2de8bb1e093c612b4',
+        'reference' => '4f534c55f280f9cea10cc34439273787eb4df628',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -382,6 +382,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'iqbalhasandev/sqlite-cache' => array(
+            'pretty_version' => 'V2.0',
+            'version' => '2.0.0.0',
+            'reference' => 'a0091f8a9f549962208796bcf4c5f6fada353041',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../iqbalhasandev/sqlite-cache',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -400,7 +409,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '759fc61b6f10deb000d50af2de8bb1e093c612b4',
+            'reference' => '4f534c55f280f9cea10cc34439273787eb4df628',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
