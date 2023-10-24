@@ -85,9 +85,13 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         @if ($branch->image)
-                                                        <a href="{{ asset('/storage/img') }}/{{ $branch->image }}" class="example-image-link" data-lightbox="{{ $branch->id}}" data-title="{{ $branch->site }}">
-                                                            <img src="{{ asset('/storage/img/' . $branch->image) }}"
-                                                                alt="{{ $branch->name }}" width="250" height="100" class="img-fluid"></a>
+                                                            <a href="{{ asset('/storage/img') }}/{{ $branch->image }}"
+                                                                class="example-image-link"
+                                                                data-lightbox="{{ $branch->id }}"
+                                                                data-title="{{ $branch->site }}">
+                                                                <img src="{{ asset('/storage/img/' . $branch->image) }}"
+                                                                    alt="{{ $branch->name }}" width="250" height="100"
+                                                                    class="img-fluid"></a>
                                                         @else
                                                             <!-- Display a temporary image when no image is available -->
                                                             <img src="{{ asset('/img/warehouse-logo.png') }}"
@@ -97,6 +101,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <button class="toggle-map-btn btn btn-primary btn-sm mt-2" id="toggle-map" data-target="geo-map{{$branch->id}}">Map&nbsp;<i class="fa fa-eye"></i></button>
+                                    <div id="geo-map{{$branch->id}}" style="display: none" class="mt-2">
+                                        <!-- Add your map content here -->
+                                        <div class="container-iframe">
+                                        {!!$branch->geomap!!}
                                         </div>
                                     </div>
 
@@ -135,6 +146,30 @@
                     });
                 }
             });
+
+
+        $(document).ready(function() {
+            $('.toggle-map-btn').click(function() {
+                var target = $(this).data('target');
+                $('#' + target).slideToggle(); // Toggle the visibility of the specified map section
+                var mapSection = $('#' + target);
+
+
+            });
         });
+
+        // Function to toggle the map and update the button text
+        function toggleMap(button, target) {
+            var mapSection = $('#' + target);
+            mapSection.slideToggle(function() {
+                if (mapSection.is(':visible')) {
+                    button.text('Hide Map');
+                } else {
+                    button.text('Show Map');
+                }
+            });
+        }
+
+    });
     </script>
 @endsection

@@ -97,7 +97,7 @@ class PagesController extends Controller
 
     public function branch(Request $request)
     {
-        $title = Menu::where('menu_code','brancl')->pluck('menu_title')->first();
+        $title = Menu::where('menu_code','branch')->pluck('menu_title')->first();
         $menuItem = $this->getGuestMenu();
 
         $regions = Branch::distinct()->pluck('region');

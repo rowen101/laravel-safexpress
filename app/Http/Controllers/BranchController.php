@@ -89,6 +89,7 @@ class BranchController extends Controller
                 'sitehead' => 'required',
                 'location' => 'required',
                 'phone' => 'required',
+                'geomap' => 'required',
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 //'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
@@ -125,6 +126,7 @@ class BranchController extends Controller
             $sitebranch->location = $request->location;
             $sitebranch->email = $request->email;
             $sitebranch->phone = $request->phone;
+            $sitebranch->geomap = $request->geomap;
             $sitebranch->is_active = $request->is_active;
             $sitebranch->created_by = auth()->user()->id;
 

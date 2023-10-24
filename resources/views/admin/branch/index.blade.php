@@ -223,6 +223,7 @@
                         $('#sitehead').val(data.sitehead);
                         $('#location').val(data.location);
                         $('#phone').val(data.phone);
+                         $('#geomap').val(data.geomap);
                         $('#email').val(data.email);
                         $('#region').val(data.region);
                         $('#imgwarehouse').attr('src',"{{ asset('storage/img') }}" + '/' + data.image);

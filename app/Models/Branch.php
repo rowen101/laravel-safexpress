@@ -17,6 +17,7 @@ class Branch extends Model
         'location',
         'email',
         'phone',
+        'geomap',
         'image',
         'is_active',
         'created_by',

@@ -123,6 +123,7 @@ return new class extends Migration
             $table->text('image')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->text('geomap')->nullable();
             $table->boolean('is_active')->default(true)->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->nullable();

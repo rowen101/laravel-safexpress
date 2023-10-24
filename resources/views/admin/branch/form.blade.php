@@ -36,9 +36,9 @@
                                             <label for="exampleInputEmail1" class="control-label">Region</label>
                                             <select class="custom-select rounded-0" name="region" id="region">
                                                 <option value="0" disabled>--Select Region--</option>
-                                                <option value="Luzon">Luzon</option>
-                                                <option value="Visayas">Visayas</option>
-                                                <option value="Mindanao">Mindanao</option>
+                                                <option value="Luzon Operation">Luzon Operation</option>
+                                                <option value="Visayas Operation">Visayas Operation</option>
+                                                <option value="Mindanao Operation">Mindanao Operation</option>
                                             </select>
                                         </div>
                                         <div class="form-group required">
@@ -56,9 +56,13 @@
                                             <input type="number" class="form-control" name="phone" id="phone"
                                                 placeholder="Phone">
                                         </div>
-
                                     </div>
                                     <div class="col-md-6">
+
+                                        <div class="form-group required">
+                                            <label for="exampleInputPassword1" class="control-label">Geo map.</label>
+                                            <textarea class="form-control" id="geomap" name="geomap" rows="3" placeholder="Enter ..."></textarea>
+                                        </div>
 
                                         <div class="form-group required">
                                             <label for="exampleInputPassword1" class="control-label">Location</label>
