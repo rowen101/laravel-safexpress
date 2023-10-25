@@ -80,64 +80,72 @@ class BranchController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //dd($request->all());
-        try {
-            $request->validate([
-                'region' => 'required',
-                'site' => 'required',
-                'sitehead' => 'required',
-                'location' => 'required',
-                'phone' => 'required',
-                'geomap' => 'required',
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                //'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
+{
+    try {
+        $request->validate([
+            'region' => 'required',
+            'site' => 'required',
+            'sitehead' => 'required',
+            'location' => 'required',
+            'phone' => 'required',
+            'geomap' => 'required',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        ]);
 
+        $sitebranch = Branch::find($request->id);
 
-            $sitebranch = Branch::find($request->id);
-
-            if (!$sitebranch) {
-                $sitebranch = new Branch(); // Create a new instance if it doesn't exist
-            }
-
-            // Check if an image file was provided in the request
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                // Resize and save the image
-                $image = Image::make($file);
-                $image->resize(600, 700); // Resize the image pixels
-                $image->save(storage_path('app/public/img/' . $fileName));
-
-                // Delete the old image if it exists
-                if ($sitebranch->image) {
-                    Storage::delete('public/img/' . $sitebranch->image);
-                }
-
-                // Update the director with the new image
-                $sitebranch->image = $fileName; // Save the image filename in the database
-            }
-
-            // Update or create the rest of the fields
-            $sitebranch->region = $request->region;
-            $sitebranch->site = $request->site;
-            $sitebranch->sitehead = $request->sitehead;
-            $sitebranch->location = $request->location;
-            $sitebranch->email = $request->email;
-            $sitebranch->phone = $request->phone;
-            $sitebranch->geomap = $request->geomap;
-            $sitebranch->is_active = $request->is_active;
-            $sitebranch->created_by = auth()->user()->id;
-
-            // Save the branch instance
-            $sitebranch->save();
-
-            return response()->json(['success' => 'Success!']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+        if (!$sitebranch) {
+            $sitebranch = new Branch(); // Create a new instance if it doesn't exist
         }
+
+        // Check if an image file was provided in the request
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+
+            // Resize and save the image
+            $image = Image::make($file);
+            $image->resize(1920, 1080); // Resize the image pixels
+            $image->save(storage_path('app/public/img/Branch/' . $fileName));
+
+            // Create a thumbnail version
+            $thumbnail = Image::make($file);
+            $thumbnail->resize(200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $thumbnailFileName = 'thumbnail_' . $fileName;
+            $thumbnail->save(storage_path('app/public/img/Branch/thumbnail/' . $thumbnailFileName));
+
+            // Delete the old images if they exist
+            if ($sitebranch->image) {
+                Storage::delete('public/img/Branch/' . $sitebranch->image);
+                Storage::delete('public/img/Branch/thumbnail/thumbnail_' . $sitebranch->image);
+            }
+
+            // Update the branch with the new image and thumbnail
+            $sitebranch->image = $fileName; // Save the image filename in the database
+            //$sitebranch->thumbnail = $thumbnailFileName; // Save the thumbnail filename in the database
+        }
+
+        // Update or create the rest of the fields
+        $sitebranch->region = $request->region;
+        $sitebranch->site = $request->site;
+        $sitebranch->sitehead = $request->sitehead;
+        $sitebranch->location = $request->location;
+        $sitebranch->email = $request->email;
+        $sitebranch->phone = $request->phone;
+        $sitebranch->geomap = $request->geomap;
+        $sitebranch->is_active = $request->is_active;
+        $sitebranch->created_by = auth()->user()->id;
+
+        // Save the branch instance
+        $sitebranch->save();
+
+        return response()->json(['success' => 'Success!']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()]);
     }
+}
 
 
 
@@ -173,7 +181,7 @@ class BranchController extends Controller
     {
 
         $data = Branch::find($id);
-        if (Storage::delete('public/img/' . $data->image)) {
+        if (Storage::delete('public/img/Branch' . $data->image || Storage::delete('public/img/Branch/thumbnail/thumbnail_' . $data->image))) {
             Branch::destroy($id);
         }
         return response()->json(['success' => 'Successfully deleted!']);

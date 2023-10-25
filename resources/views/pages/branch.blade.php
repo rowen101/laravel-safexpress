@@ -51,12 +51,12 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         @if ($branch->image)
-                                                            <a href="{{ asset('/storage/img') }}/{{ $branch->image }}"
+                                                            <a href="{{ asset('/storage/img/Branch/') }}/{{ $branch->image }}"
                                                                 class="example-image-link"
                                                                 data-lightbox="{{ $branch->id }}"
                                                                 data-title="{{ $branch->site }}">
-                                                                <img src="{{ asset('/storage/img/' . $branch->image) }}"
-                                                                    alt="{{ $branch->name }}" width="250" height="100"
+                                                                <img src="{{ asset('/storage/img/Branch/thumbnail/thumbnail_' . $branch->image) }}"
+                                                                    alt="{{ $branch->name }}"
                                                                     class="img-fluid"></a>
                                                         @else
                                                             <!-- Display a temporary image when no image is available -->

@@ -226,7 +226,7 @@
                          $('#geomap').val(data.geomap);
                         $('#email').val(data.email);
                         $('#region').val(data.region);
-                        $('#imgwarehouse').attr('src',"{{ asset('storage/img') }}" + '/' + data.image);
+                        $('#imgwarehouse').attr('src',"{{ asset('storage/img/Branch/thumbnail') }}" + '/thumbnail_' + data.image);
                         $('#is_active').prop("checked", (data.is_active == 1 ? true : false));
                         //hide span alert
                         document.getElementById('app_codeErrorMsg').style.visibility = 'hidden';
