@@ -18,7 +18,7 @@
     <section id="contact" class="contact">
         <div class="container position-relative" data-aos="fade-up">
 
-            <div class="row gy-4 d-flex justify-content-end">
+            <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="300">
                 <div class="col-lg-12" data-aos="fade-up" data-aos-delay="250">
 
                     <div class="form-group">
@@ -31,9 +31,12 @@
                         </select>
                     </div>
 
-                    <div id="filtered-branches">
+                </div>
+
                         @foreach ($branches as $branch)
-                            <div class="branch card mt-2" data-region="{{ $branch->region }}">
+                        <div class="col-lg-6">
+                            <div class="branch card" data-region="{{ $branch->region }}">
+
 
                                 <div class="card-body">
                                     <div class="container-fluid">
@@ -76,12 +79,20 @@
                                             {!!$branch->geomap!!}
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
+                        </div>
                         @endforeach
-                    </div>
+
+                        <div class="pagination">
+                            {{ $branches->links() }}
+                        </div>
+
                 </div>
+
             </div>
+
         </div>
     </section>
 

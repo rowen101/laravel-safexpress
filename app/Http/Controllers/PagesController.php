@@ -97,20 +97,17 @@ class PagesController extends Controller
 
     public function branch(Request $request)
     {
-        $title = Menu::where('menu_code','branch')->pluck('menu_title')->first();
+        $title = "Branch";
         $menuItem = $this->getGuestMenu();
-
         $regions = Branch::distinct()->pluck('region');
-
         $selectedRegion = $request->input('region');
-
         $setting = Setting::first();
-
+        $perPage = 10; // Adjust the number of items per page as needed
         $branches = Branch::when($selectedRegion, function ($query) use ($selectedRegion) {
              $query->where('region', $selectedRegion);
         })
         ->where('is_active', 1)
-        ->get();
+        ->paginate($perPage); // Paginate the results
 
         return view('pages.branch', compact('setting','title','menuItem','regions', 'selectedRegion', 'branches'));
     }

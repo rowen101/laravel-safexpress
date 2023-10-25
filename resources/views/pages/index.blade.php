@@ -223,6 +223,15 @@
                     <div class="row text-center text-lg-start col-md-12 border-none">
 
                         <div class="col-lg-3 col-md-4 col-6 ">
+                            <a href="{{ asset('img/partners/JS-UNIVERSITY.jpg') }}"
+                                data-gallery="portfolio-gallery-logo"
+                                class="d-block mb-4 h-100 glightbox preview-link">
+                                <img class="img-fluid img-thumbnail "
+                                    src="{{ asset('img/partners/JS-UNIVERSITY.jpg') }}" alt="">
+                            </a>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-6 ">
                             <a href="{{ asset('img/partners/1617168794_logo-header.png') }}"
                                 data-gallery="portfolio-gallery-logo"
                                 class="d-block mb-4 h-100 glightbox preview-link">

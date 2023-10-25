@@ -89,7 +89,7 @@ class BranchController extends Controller
             'location' => 'required',
             'phone' => 'required',
             'geomap' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255'],
         ]);
 
         $sitebranch = Branch::find($request->id);
@@ -105,7 +105,7 @@ class BranchController extends Controller
 
             // Resize and save the image
             $image = Image::make($file);
-            $image->resize(1920, 1080); // Resize the image pixels
+            $image->resize(1024, 768); // Resize the image pixels
             $image->save(storage_path('app/public/img/Branch/' . $fileName));
 
             // Create a thumbnail version
