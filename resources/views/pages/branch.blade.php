@@ -14,46 +14,12 @@
         </div>
     </div><!-- End Breadcrumbs -->
 
-    <!-- ======= brach Section ======= -->
+    <!-- ======= Branch Section ======= -->
     <section id="contact" class="contact">
         <div class="container position-relative" data-aos="fade-up">
 
             <div class="row gy-4 d-flex justify-content-end">
                 <div class="col-lg-12" data-aos="fade-up" data-aos-delay="250">
-                    {{-- <div>
-                <label for="region-filter">Filter by Region:</label>
-                <select id="region-filter">
-                    <option value="">All</option>
-                    @foreach ($regions as $region)
-                        <option value="{{ $region }}">{{ $region }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <table id="branch-table" class="table table-sm table-responsive">
-                <thead>
-                    <tr>
-                        <th>Region</th>
-                        <th>Site</th>
-                        <th>SHead</th>
-                        <th>Phone</th>
-                        <th>Location</th>
-                        <th>Warehouse</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($branches as $branch)
-                        <tr>
-                            <td>{{ $branch->region }}</td>
-                            <td>{{ $branch->site }}</td>
-                            <td>{{ $branch->sitehead }}</td>
-                            <td>{{ $branch->phone }}</td>
-                            <td>{{ $branch->location }}</td>
-                            <td> <img src="{{ asset('/storage/img/' . $branch->image) }}" class="img-fluid" alt="{{$branch->name}}" width="250" height="100"></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table> --}}
 
                     <div class="form-group">
                         <label for="region">Select Region:</label>
@@ -67,7 +33,8 @@
 
                     <div id="filtered-branches">
                         @foreach ($branches as $branch)
-                            <div class="branch card mt-2">
+                            <div class="branch card mt-2" data-region="{{ $branch->region }}">
+
                                 <div class="card-body">
                                     <div class="container-fluid">
                                         <div class="row">
@@ -80,8 +47,7 @@
                                                         <p>Site: {{ $branch->site }}</p>
                                                         <p>Site Head: {{ $branch->sitehead }}</p>
                                                         <p>Location: {{ $branch->location }}</p>
-                                                        <p>Email: {{ $branch->email }}</p>
-
+                                                        <p>Email: <a href="mailto:{{ $branch->email }}">{{ $branch->email }}</a></p>
                                                     </div>
                                                     <div class="col-md-6">
                                                         @if ($branch->image)
@@ -107,10 +73,9 @@
                                     <div id="geo-map{{$branch->id}}" style="display: none" class="mt-2">
                                         <!-- Add your map content here -->
                                         <div class="container-iframe">
-                                        {!!$branch->geomap!!}
+                                            {!!$branch->geomap!!}
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         @endforeach
@@ -118,58 +83,51 @@
                 </div>
             </div>
         </div>
-    </section><!-- End Contact Section -->
+    </section>
 
+    <!-- End Contact Section -->
 
     <script>
         $(document).ready(function() {
-            $('#region').change(function() {
+            // Listen for changes in the region selection
+            $('#region').on('change', function() {
                 var selectedRegion = $(this).val();
 
-                if (selectedRegion === "") {
-                    // If "All" is selected, reset the display to show all branches.
-                    $('#filtered-branches').html(`@include('pages.filtered', ['branches' => $branches])`);
-                } else {
-                    // Filter branches based on the selected region.
-                    $.ajax({
-                        url: '/filter-branches',
-                        method: 'POST',
-                        data: {
-                            region: selectedRegion,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        // Add the following line to fix serialization issue:
-                        traditional: true,
-                        success: function(data) {
-                            $('#filtered-branches').html(data);
-                        }
-                    });
+                // Hide all branches
+                $('.branch').hide();
+
+                if (selectedRegion === 'Luzon Operation') {
+
+                    $('.branch[data-region="Luzon Operation"]').show();
                 }
-            });
+                else if (selectedRegion === 'Visayas Operation') {
 
+                    $('.branch[data-region="Visayas Operation"]').show();
+                }
+                else if (selectedRegion === 'Mindanao Operation') {
 
-        $(document).ready(function() {
-            $('.toggle-map-btn').click(function() {
-                var target = $(this).data('target');
-                $('#' + target).slideToggle(); // Toggle the visibility of the specified map section
-                var mapSection = $('#' + target);
+                    $('.branch[data-region="Mindanao Operation"]').show();
+                }
+                 else {
 
-
+                    $('.branch').show();
+                }
             });
         });
 
-        // Function to toggle the map and update the button text
-        function toggleMap(button, target) {
-            var mapSection = $('#' + target);
-            mapSection.slideToggle(function() {
-                if (mapSection.is(':visible')) {
-                    button.text('Hide Map');
-                } else {
-                    button.text('Show Map');
-                }
-            });
-        }
+        $('.toggle-map-btn').click(function() {
+        var target = $(this).data('target');
+        var mapSection = $('#' + target);
+        mapSection.slideToggle(); // Toggle the visibility of the specified map section
 
+        // Toggle the button text
+        var button = $(this);
+                var icon = button.find('i');
+                if (icon.hasClass('fa-eye')) {
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
     });
     </script>
 @endsection
