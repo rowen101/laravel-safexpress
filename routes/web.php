@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\BDController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
@@ -78,5 +79,6 @@ Route::get('dropzone/delete', [App\Http\Controllers\GalleryController::class,'de
 Route::get('/admin/menuapp',[App\Http\Controllers\MenuController::class,'menuapp']);
 Route::resource('/admin/bdirector',BDController::class);
 Route::resource('/admin/usermenu',UserMenuController::class);
+Route::resource('/admin/client',ClientController::class);
 
 });
