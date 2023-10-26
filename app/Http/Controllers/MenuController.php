@@ -105,52 +105,47 @@ class MenuController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //dd($request->all());
+{
+    // Validate the request data as needed
+    $this->validate($request, [
+        'app_id' => 'required',
+        'menu_title' => 'required',
+        'menu_route' => 'required',
+        'sort_order' => 'required',
+        'parent_id' => 'required'
+    ]);
 
+    // Fetch the existing menu_code if the record exists
+    $existingMenu = Menu::find($request->id);
+    $menucode = $existingMenu ? $existingMenu->menu_code : '';
 
-        $this->validate($request, [
-            'app_id' => 'required',
-            'menu_title' => 'required',
-            'menu_route' => 'required',
-            'sort_order'=>'required',
-            'parent_id'=>'required'
-        ]);
-
+    // If no existing record, generate a new "techno" value
+    if (!$menucode) {
         $latestMenu = Menu::orderBy('id', 'desc')->first();
-
-        // Determine the next "techno" number
-        if ($latestMenu) {
-            $lastNumber = intval(substr($latestMenu->menu_code, 3)); // Assuming the current format is TEC####
-            $nextNumber = $lastNumber + 1;
-        } else {
-            $nextNumber = 1; // If no previous record exists, start from 1
-        }
-
-        // Generate the new "techno" value
-        $menucode = 'MENU' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT); // Padded to 4 digits
-        Menu::updateOrCreate(
-            [
-                'id' => $request->id
-            ],
-            [
-                'app_id' => $request->app_id,
-                'menu_code' => $menucode,
-                'menu_title' => $request->menu_title,
-                'description' => $request->description,
-                'parent_id' => $request->parent_id,
-                'menu_icon' => $request->menu_icon,
-                'menu_route' => $request->menu_route,
-                'sort_order' => $request->sort_order,
-                'is_active' => $request->is_active,
-                'created_by' => auth()->user()->id,
-            ]
-        );
-
-
-        return response()->json(['success' => 'Record saved successfully!']);
-
+        $nextNumber = $latestMenu ? (intval(substr($latestMenu->menu_code, 4)) + 1) : 1;
+        $menucode = 'MENU' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
     }
+
+    // Create or update the menu item
+    Menu::updateOrCreate(
+        ['id' => $request->id],
+        [
+            'app_id' => $request->app_id,
+            'menu_code' => $menucode, // Use the fetched or generated menu_code
+            'menu_title' => $request->menu_title,
+            'description' => $request->description,
+            'parent_id' => $request->parent_id,
+            'menu_icon' => $request->menu_icon,
+            'menu_route' => $request->menu_route,
+            'sort_order' => $request->sort_order,
+            'is_active' => $request->is_active,
+            'created_by' => auth()->user()->id,
+        ]
+    );
+
+    return response()->json(['success' => 'Record saved successfully!']);
+}
+
 
     /**
      * Display the specified resource.

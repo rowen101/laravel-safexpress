@@ -8,12 +8,12 @@
                     <div class="row">
                         <div class="col-md-6">
 
-                            <div class="form-group required">
+                            {{-- <div class="form-group required">
                                 <label for="exampleInputPassword1" class="control-label">Menu Code</label>
                                 <input type="text"  class="form-control" name="menu_code" id="menu_code"
                                     placeholder="Menu Code">
 
-                            </div>
+                            </div> --}}
                             <div class="form-group required">
                                 <label for="exampleInputEmail1" class="control-label">Application</label>
                                 <select class="custom-select rounded-0" name="app_id" id="application">
@@ -34,8 +34,6 @@
                                 <input type="text" class="form-control" name="description" id="description"
                                     placeholder="Menu Code">
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group required">
                                 <label for="exampleInputPassword1" class="control-label">Parent Menu</label>
                                 <select class="custom-select rounded-0" name="parent_id" id="menu">
@@ -47,6 +45,9 @@
                                 </select>
                                 {{-- <input type="hidden" id="parent_id" value="parent_id" name="parent_id"/> --}}
                             </div>
+                        </div>
+                        <div class="col-md-6">
+
 
                             <div class="form-group">
                                 <label for="exampleInputPassword1" class="control-label">Menu Icon</label>

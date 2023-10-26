@@ -37,7 +37,7 @@
                                         <th>No</th>
                                         <th></th>
                                         <th>App Name</th>
-                                        <th>Menu Code</th>
+                                     
                                         <th>Menu Name</th>
                                         <th>Active</th>
                                         <th>Created Date</th>
@@ -134,10 +134,7 @@
                             data: 'app_name',
                             name: 'app_name'
                         },
-                        {
-                            data: 'menu_code',
-                            name: 'menu_code'
-                        },
+
                         {
                             data: 'menu_title',
                             name: 'menu_title'
@@ -229,7 +226,6 @@
                         $('#ajaxModel').modal('show');
                         $('#txtid').val(data[0].id);
                         $('#menu_code').val(data[0].menu_code);
-                        $('#menu_code').prop('readonly', true);
                         $('#menu_title').val(data[0].menu_title);
                         $('#description').val(data[0].description);
                         $('#menu_icon').val(data[0].menu_icon);

@@ -25,27 +25,11 @@ class UserMenuController extends Controller
 
      private function getAdminMenu()
      {
-        $userId = auth()->user()->id;
-
-        $menu = Menu::select('menus.*')
-            ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
-            ->where('menus.is_active', 1)
-            ->where('menus.app_id', 1)
-            ->where('menus.parent_id', 0)
-            ->where('usermenus.user_id', $userId)
-            ->orderBy('menus.sort_order', 'ASC')
+        $menu = Menu::where('is_active', 1)
+            ->where('app_id', 1)
+            ->where('parent_id', 0)
+            ->orderBy('sort_order', 'ASC')
             ->get();
-
-        // For each top-level menu item, fetch and attach its submenus based on user access
-        $menu->each(function ($menuItem) use ($userId) {
-            $menuItem->submenus = Menu::select('menus.*')
-                ->join('usermenus', 'menus.id', '=', 'usermenus.menu_id')
-                ->where('menus.is_active', 1)
-                ->where('menus.parent_id', $menuItem->id)
-                ->where('usermenus.user_id', $userId)
-                ->orderBy('menus.sort_order', 'ASC')
-                ->get();
-        });
 
         return $menu;
      }

@@ -71,9 +71,10 @@ class PagesController extends Controller
     public function contact()
     {
         $title = Menu::where('menu_code','ct')->pluck('menu_title')->first();
+        $setting = Setting::first();
         $menuItem = $this->getGuestMenu();
         $setting = Setting::first();
-        return view('pages.contact',compact('menuItem','setting'))->with('title', $title);
+        return view('pages.contact',compact('menuItem','setting','title','setting'));
     }
     public function teams()
     {
@@ -111,15 +112,7 @@ class PagesController extends Controller
 
         return view('pages.branch', compact('setting','title','menuItem','regions', 'selectedRegion', 'branches'));
     }
-    public function filterBranches(Request $request)
-    {
-        $selectedRegion = $request->input('region');
-        $branches = Branch::where('region', $selectedRegion)
-        ->where('is_active', 1)
-        ->get();
-        $setting = Setting::first();
-        return view('pages.filtered', compact('branches','setting'));
-    }
+
     public function blog()
     {
         $title = Menu::where('menu_code','bl')->pluck('menu_title')->first();

@@ -26,7 +26,7 @@
             <i class="bi bi-geo-alt flex-shrink-0"></i>
             <div>
               <h4>Location:</h4>
-              <p>Unit E, Vag Bldg, Brgy. Patubig, Marilao, Bulacan</p>
+              <p>{{$setting->site_address}}</p>
             </div>
           </div><!-- End Info Item -->
 
@@ -34,7 +34,7 @@
             <i class="bi bi-envelope flex-shrink-0"></i>
             <div>
               <h4>Email:</h4>
-              <p></p>
+              <p>{{$setting->site_email}}</p>
             </div>
           </div><!-- End Info Item -->
 
@@ -42,7 +42,7 @@
             <i class="bi bi-phone flex-shrink-0"></i>
             <div>
               <h4>Call:</h4>
-              <p></p>
+              <p>{{$setting->site_phone}}</p>
             </div>
           </div><!-- End Info Item -->
 

@@ -358,39 +358,39 @@
                         $('#dropzoneForm').trigger("reset");
                     })
 
-                    //refresh
-                    $(document).on('click', '#fethimage', function() {
-                        $.ajax({
-                                    url: "{{ url('dropzone/fetch') }}" + '/' + id +
-                                        '/image',
-                                    success: function(data) {
-                                        $('#uploaded_image').html(data);
-                                    }
-                                })
-                    });
-                    //image delete
-                    $(document).on('click', '.remove_image', function() {
-                        var name = $(this).attr('id');
-                        $.ajax({
-                            url: "{{ route('dropzone.delete') }}",
-                            data: {
-                                name: name
-                            },
-                            success: function(data) {
-                                $.ajax({
-                                    url: "{{ url('dropzone/fetch') }}" + '/' + id +
-                                        '/image',
-                                    success: function(data) {
-                                        $('#uploaded_image').html(data);
-                                    }
-                                })
-                            }
-                        })
-                    });
+
 
 
                 });
-
+                //refresh
+                $(document).on('click', '#fethimage', function() {
+                    $.ajax({
+                        url: "{{ url('dropzone/fetch') }}" + '/' + id +
+                            '/image',
+                        success: function(data) {
+                            $('#uploaded_image').html(data);
+                        }
+                    })
+                });
+                //image delete
+                $(document).on('click', '.remove_image', function() {
+                    var name = $(this).attr('id');
+                    $.ajax({
+                        url: "{{ route('dropzone.delete') }}",
+                        data: {
+                            name: name
+                        },
+                        success: function(data) {
+                            $.ajax({
+                                url: "{{ url('dropzone/fetch') }}" + '/' + id +
+                                    '/image',
+                                success: function(data) {
+                                    $('#uploaded_image').html(data);
+                                }
+                            })
+                        }
+                    })
+                });
 
                 // Add keydown event listener to the textbox
                 textbox.addEventListener('keydown', function(event) {
@@ -430,6 +430,5 @@
 
             });
         </script>
-        <script type="text/javascript"></script>
     @endpush
 @endsection

@@ -124,3 +124,9 @@ Breadcrumbs::for('board', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Bord of Director', url('admin/bderictor'));
 });
+///////////////////////////////
+// Home > Client
+Breadcrumbs::for('client', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Client', url('admin/client'));
+});
