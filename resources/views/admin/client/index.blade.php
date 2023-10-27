@@ -98,8 +98,8 @@
                         <div class="modal-footer justify-content-between">
 
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="saveBtn" value="create-categorie"><i
-                                    class="fas fa-save"></i>&nbsp;Save</button>
+                            {{-- <button type="button" class="btn btn-primary" id="saveBtn" value="create-categorie"><i
+                                    class="fas fa-save"></i>&nbsp;Save</button> --}}
                         </div>
                     </div>
 
@@ -138,7 +138,6 @@
             </div>
         </div>
     </div>
-
     <div class="fab-container">
         <div class="button iconbutton">
             <a href="javascript:void(0)" id="createNew"><i class="fas fa-plus"></i></a>

@@ -42,8 +42,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group required">
-                                            <label for="exampleInputPassword1" class="control-label">Site</label>
-                                            <input type="text" class="form-control" name="site" id="site"
+                                            <label for="exampleInputPassword1" class="control-label ">Site</label>
+                                            <input type="text" class="form-control text-uppercase" name="site" id="site"
                                                 placeholder="Site">
                                         </div>
                                         <div class="form-group required">
