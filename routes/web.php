@@ -80,7 +80,6 @@ Route::get('/admin/menuapp',[App\Http\Controllers\MenuController::class,'menuapp
 Route::resource('/admin/bdirector',BDController::class);
 Route::resource('/admin/usermenu',UserMenuController::class);
 Route::resource('/admin/client',ClientController::class);
-Route::get('/admin/client/fetch',[App\Http\Controllers\ClientController::class,'fetch'])->name('client.fetch');
-Route::delete('/admin/client/delete',[App\Http\Controllers\ClientController::class,'delete'])->name('client.delete');
-
+Route::get('admin/client/fetch',[App\Http\Controllers\ClientController::class,'fetch'])->name('client.fetch');
+Route::post('/admin/client/filename',[App\Http\Controllers\ClientController::class,'clientfilename'])->name('client.filename');
 });

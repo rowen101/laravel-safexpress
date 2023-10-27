@@ -221,17 +221,26 @@
                 <div class="row gy-5 mt-2" data-aos="fade-up">
 
                     <div class="row text-center text-lg-start col-md-12 border-none">
+                        @if (count($clientlogo) > 0)
+                            @foreach ($clientlogo as $item)
 
-                        <div class="col-lg-3 col-md-4 col-6 ">
-                            <a href="{{ asset('img/partners/JS-UNIVERSITY.jpg') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail "
-                                    src="{{ asset('img/partners/JS-UNIVERSITY.jpg') }}" alt="">
-                            </a>
-                        </div>
+                                    <div class="col-lg-3 col-md-4 col-6 ">
+                                        <a href="{{ asset('clients/' . $item->image) }}"
+                                            data-gallery="portfolio-gallery-logo"
+                                            class="d-block mb-4 h-100 glightbox preview-link">
+                                            <img class="img-fluid img-thumbnail "
+                                                src="{{ asset('clients/' . $item->image) }}" alt="">
+                                        </a>
+                                    </div>
 
-                        <div class="col-lg-3 col-md-4 col-6 ">
+                               
+                            @endforeach
+                        @else
+                            <p class="text-center">No client logo..</p>
+                        @endif
+
+
+                        {{-- <div class="col-lg-3 col-md-4 col-6 ">
                             <a href="{{ asset('img/partners/1617168794_logo-header.png') }}"
                                 data-gallery="portfolio-gallery-logo"
                                 class="d-block mb-4 h-100 glightbox preview-link">
@@ -425,7 +434,7 @@
                                 <img class="img-fluid img-thumbnail"
                                     src="{{ asset('img/partners/prose--2048x468.png') }}" alt="">
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>

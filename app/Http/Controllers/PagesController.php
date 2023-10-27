@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\Gallery;
 use App\Models\Category;
 use App\Models\BDirector;
+use App\Models\Client;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,11 +38,13 @@ class PagesController extends Controller
         ->where('org_type','board')
         ->get();
 
+        $clientlogo = Client::where('is_active',1)->get();
+
         $mancom = BDirector::where('is_active',1)
         ->where('org_type','mancom')
         ->get();
 
-        return view('pages.index',compact('menuItem','directors','setting','mancom'))->with(['title' => $title]);
+        return view('pages.index',compact('menuItem','directors','setting','mancom','clientlogo'))->with(['title' => $title]);
     }
 
     public function about()

@@ -16,10 +16,10 @@ class ClientController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
 
     private function getAdminMenu()
@@ -54,23 +54,37 @@ class ClientController extends Controller
     public function index()
     {
         $images = Client::where('is_active', 1)
-        ->get();
+            ->get();
 
         $adminmenu = $this->getAdminMenu();
         $title = "Client";
 
 
-        return view('admin.client.index', compact('title', 'adminmenu','images'));
+        return view('admin.client.index', compact('title', 'adminmenu', 'images'));
     }
     public function fetch()
     {
 
-        $images = Client::where('is_active', 1)
-        ->get();
-
-        // Use dd to inspect the data
+        $images = Client::where('is_active', 1)->get();
+        dd($images);
 
         return response()->json(['images' => $images]);
+        // if ($images->count() > 0) {
+        //     // Map the images if necessary
+        //     $data = $images->map(function ($image) {
+        //         return [
+        //             'id' => $image->id,
+        //             'filename' => $image->filename,
+        //             'image_url' => asset('clients/' . $image->image),
+        //             'thumbnail_url' => asset('clients/thumbnail/' . $image->image),
+        //         ];
+        //     });
+
+        //     return response()->json(['images' => $data]);
+        // } else {
+        //     // If no images are found, return an empty JSON array
+        //     return response()->json(['images' => []]);
+        // }
     }
     /**
      * Show the form for creating a new resource.
@@ -88,32 +102,50 @@ class ClientController extends Controller
         try {
             // Handle File Upload
             $image = $request->file('file');
-            $input['file'] = time() . '.' . $image->getClientOriginalExtension();
+            $input['file'] = time() . '.jpg'; // Change the extension to JPG
 
             $destinationPath = public_path('clients/thumbnail');
             $imgFile = Image::make($image->getRealPath());
-            $imgFile->resize(400, 300)
-                ->save($destinationPath . '/' . $input['file']);
+
+            // Resize the image
+            $imgFile->resize(400, 300);
+
+            // Save the resized image as JPG
+            $imgFile->save($destinationPath . '/' . $input['file'], 80); // The "80" is the image quality (adjust as needed)
+
             $destinationPath = public_path('clients');
             $image->move($destinationPath, $input['file']);
 
-            //create post
+            // Create post
             $post = new Client;
             $post->filename = $request->input('filename');
-            // $post->sort = $request->input('sort');
             $post->created_at = auth()->user()->id;
             $post->image = $input['file'];
-            // $post->is_active = $request->input('is_active');
             $post->save();
-
 
             return response()->json([
                 'success' => $input['file'],
-                'message' => 'Images Saved Successfully..'
+                'message' => 'Image Saved Successfully..'
             ]);
         } catch (\Exception $e) {
-            return response()->json(['error', $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
+    }
+
+    public function clientfilename(Request $request)
+    {
+        Client::updateOrCreate(
+            [
+                'id' => $request->id
+            ],
+            [
+                'filename' => $request->filename,
+
+            ]
+        );
+
+
+        return response()->json(['success' => 'Saved Record successfully!']);
     }
 
     /**
@@ -143,17 +175,36 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(Request $request)
+    public function destroy(string $id)
     {
-        if ($request->get('name')) {
-            $name = $request->name;
-            $image_thumbnail_path = public_path('client/thumbnail/' . $name);
-            $image_upload_path = public_path('client/' . $name);
-            if (file_exists($image_thumbnail_path) || file_exists($image_upload_path)) {
-                unlink($image_thumbnail_path);
-                unlink($image_upload_path);
+        // Find the client data
+        $client = Client::find($id);
+
+        // Check if the client data exists
+        if ($client) {
+            // Get the image name from the client data
+            $imageName = $client->image;
+
+            // Delete the client data
+            $client->delete();
+
+            // Delete the image files if they exist
+            $imageThumbnailPath = public_path('clients/thumbnail/' . $imageName);
+            $imageUploadPath = public_path('clients/' . $imageName);
+
+            if (file_exists($imageThumbnailPath)) {
+                unlink($imageThumbnailPath);
             }
-            Client::where('image', $name)->firstorfail()->delete();
+
+            if (file_exists($imageUploadPath)) {
+                unlink($imageUploadPath);
+            }
+
+            // Return a JSON response indicating success
+            return response()->json(['success' => 'Image and data deleted successfully']);
+        } else {
+            // Return a JSON response for not finding the client data
+            return response()->json(['error' => 'Client data not found'], 404);
         }
     }
 }
