@@ -126,7 +126,7 @@
         </div>
     </header><!-- End Header -->
 
-    <section>
+    <section style=" margin-top: 0;">
         <div id="carousell" class="carousel slide" data-bs-ride="carousel">
 
             <!-- Indicators/dots -->
@@ -140,9 +140,14 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="{{ asset('img/bg1.jpeg') }}" alt="Warehouse1" class="d-block" style="width:100%">
+
                 </div>
                 <div class="carousel-item">
                     <img src="{{ asset('img/bg2.jpeg') }}" alt="Warehouse2" class="d-block" style="width:100%">
+                    <div class="carousel-caption">
+                        <h3>Why did the snowman get a divorce?</h3>
+                        <p>His wife was a total flake...</p>
+                      </div>
                 </div>
                 <div class="carousel-item">
                     <img src="{{ asset('img/bg3.jpeg') }}" alt="Warehouse3" class="d-block" style="width:100%">
