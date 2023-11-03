@@ -55,6 +55,14 @@
             height: 100%;
             border: none;
         }
+                /* CSS to remove space between header and section */
+        header#header {
+            margin-bottom: 0; /* Set the margin-bottom to 0 */
+        }
+
+        section {
+            margin-top: 0; /* Set the margin-top to 0 */
+        }
     </style>
     <script src="{{ asset('js/AutoLightbox.js') }}"></script>
     @vite(['resources/css/app.css'])
@@ -118,14 +126,14 @@
         </div>
     </header><!-- End Header -->
 
-    <section id="why-us" class="why-us">
-        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+    <section>
+        <div id="carousell" class="carousel slide" data-bs-ride="carousel">
 
             <!-- Indicators/dots -->
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carousell" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carousell" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carousell" data-bs-slide-to="2"></button>
             </div>
 
             <!-- The slideshow/carousel -->
@@ -142,10 +150,10 @@
             </div>
 
             <!-- Left and right controls/icons -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousell" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carousell" data-bs-slide="next">
                 <span class="carousel-control-next-icon"></span>
             </button>
         </div>
@@ -233,7 +241,7 @@
                                         </a>
                                     </div>
 
-                               
+
                             @endforeach
                         @else
                             <p class="text-center">No client logo..</p>
