@@ -127,38 +127,41 @@
     </header><!-- End Header -->
 
     <section style=" margin-top: 0;">
-        <div id="carousell" class="carousel slide" data-bs-ride="carousel">
+        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
 
             <!-- Indicators/dots -->
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carousell" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#carousell" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#carousell" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
+                @foreach ($carousel as $index => $item)
+
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="{{$index + 1 }}"></button>
+
+                @endforeach
             </div>
 
             <!-- The slideshow/carousel -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="{{ asset('img/bg1.jpeg') }}" alt="Warehouse1" class="d-block" style="width:100%">
-
                 </div>
+                @foreach ($carousel as $item)
+
                 <div class="carousel-item">
-                    <img src="{{ asset('img/bg2.jpeg') }}" alt="Warehouse2" class="d-block" style="width:100%">
+                    <img src="{{ asset('/carousel/' . $item->image) }}" alt="{{$item->caption}}" class="d-block" style="width:100%">
                     <div class="carousel-caption">
-                        <h3>Why did the snowman get a divorce?</h3>
-                        <p>His wife was a total flake...</p>
+                        <h3>{{$item->caption}}</h3>
+                        <p>{{$item->detail}}</p>
                       </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('img/bg3.jpeg') }}" alt="Warehouse3" class="d-block" style="width:100%">
-                </div>
+
+                @endforeach
             </div>
 
             <!-- Left and right controls/icons -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousell" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousell" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon"></span>
             </button>
         </div>
@@ -253,201 +256,7 @@
                         @endif
 
 
-                        {{-- <div class="col-lg-3 col-md-4 col-6 ">
-                            <a href="{{ asset('img/partners/1617168794_logo-header.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail "
-                                    src="{{ asset('img/partners/1617168794_logo-header.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/1kx1k_LOGO_yellow.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/1kx1k_LOGO_yellow.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/2560px-Logo_DB_Schenker.svg-1536x302.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/2560px-Logo_DB_Schenker.svg-1536x302.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/300964142_453263313486094_72733862803007486_n.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/300964142_453263313486094_72733862803007486_n.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/3g-logistics-and-cold-storage-inc.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/3g-logistics-and-cold-storage-inc.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/Alfamart-Logo-1024x576.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/Alfamart-Logo-1024x576.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/aljoy-300x200.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/aljoy-300x200.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/Bounty_Fresh_Chicken_logo.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/Bounty_Fresh_Chicken_logo.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/Coca-Cola-Logo-1934-768x461.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/Coca-Cola-Logo-1934-768x461.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/cropped-Potato-Corner-Logo@2x-600x200.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/cropped-Potato-Corner-Logo@2x-600x200.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/Del_Monte_logo.svg-1024x795.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/Del_Monte_logo.svg-1024x795.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/KFC-logo-2006-2048x1152.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/KFC-logo-2006-2048x1152.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/mekeni-up.png') }}" data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/mekeni-up.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/download-1.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/download-1.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/download-1_1-300x200.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/download-1_1-300x200.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/Popeyes-Logo.wine_-2048x1365.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/Popeyes-Logo.wine_-2048x1365.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/mother-daughter.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/mother-daughter.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/Mondelez-Logo-1536x960.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/Mondelez-Logo-1536x960.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/images.png') }}" data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/images.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/download.png') }}" data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/download.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/Popeyes-Logo.wine_-2048x1365.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/Popeyes-Logo.wine_-2048x1365.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/golden-essential-foods.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/golden-essential-foods.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/igloo_logo.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail" src="{{ asset('img/partners/igloo_logo.png') }}"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <a href="{{ asset('img/partners/prose--2048x468.png') }}"
-                                data-gallery="portfolio-gallery-logo"
-                                class="d-block mb-4 h-100 glightbox preview-link">
-                                <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('img/partners/prose--2048x468.png') }}" alt="">
-                            </a>
-                        </div> --}}
+
                     </div>
 
                 </div>

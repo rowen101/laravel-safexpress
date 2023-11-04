@@ -130,3 +130,9 @@ Breadcrumbs::for('client', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Client', url('admin/client'));
 });
+///////////////////////////////
+// Home > Carousel
+Breadcrumbs::for('carousel', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Carousel', url('admin/carousel'));
+});

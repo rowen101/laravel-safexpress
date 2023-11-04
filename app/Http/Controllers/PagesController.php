@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\BDirector;
 use App\Models\Client;
 use App\Models\Setting;
+use App\Models\Carousel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,6 +34,8 @@ class PagesController extends Controller
         $title = "Home";
         $menuItem = $this->getGuestMenu();
         $setting = Setting::first();
+        $carousel = Carousel::where('is_active', 1)
+        ->get();
 
         $directors = BDirector::where('is_active',1)
         ->where('org_type','board')
@@ -44,7 +47,7 @@ class PagesController extends Controller
         ->where('org_type','mancom')
         ->get();
 
-        return view('pages.index',compact('menuItem','directors','setting','mancom','clientlogo'))->with(['title' => $title]);
+        return view('pages.index',compact('menuItem','directors','setting','mancom','clientlogo','carousel'))->with(['title' => $title]);
     }
 
     public function about()
