@@ -46,11 +46,11 @@
                                         <button id="edit-client" class="btn btn-sm btn-primary pencil-button"
                                             style="background: transparent; border: none;"><i
                                                 class="fas fa-pencil-alt pencil-icon" data-id="{{ $item->id }}"
-                                                data-filename="{{ $item->filename }}"></i></button>
+                                                data-caption="{{ $item->caption }}"></i></button>
                                     </div>
 
                                     <a href="{{ asset('carousel/' . $item->image) }}" data-toggle="lightbox"
-                                        data-title="{{ $item->filename }}" data-gallery="gallery">
+                                        data-title="{{ $item->caption }}" data-gallery="gallery">
                                         <img src="{{ asset('carousel/thumbnail/' . $item->image) }}" class="img-fluid mb-2"
                                             alt="client" />
                                     </a>
@@ -126,8 +126,8 @@
                         <form id="clientForm">
                             @csrf
                             <input type="hidden" class="form-control" id="filename-id" name="id" value="" />
-                            <input type="text" id="caption" name="caption" class="form-control"
-                                placeholder="Edit the filename" />
+                            <input type="text" id="caption" name="caption" class="form-control" value=""
+                                placeholder="Edit the caption" />
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -291,11 +291,11 @@
                     button.addEventListener('click', function() {
                         var data = this.querySelector('.pencil-icon');
                         var id = data.getAttribute('data-id');
-                        var filename = data.getAttribute('data-filename');
+                        var caption = data.getAttribute('data-caption');
 
                         $('#editFilenameModal').modal('show');
                         $('#filename-id').val(id);
-                        $('#filename').val(filename);
+                        $('#caption').val(caption);
                         // You can use the 'id' variable to perform actions with the ID data.
                     });
                 });
