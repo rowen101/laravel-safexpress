@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\BDController;
+use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ClientController;
@@ -82,4 +83,6 @@ Route::resource('/admin/usermenu',UserMenuController::class);
 Route::resource('/admin/client',ClientController::class);
 Route::get('admin/client/fetch',[App\Http\Controllers\ClientController::class,'fetch'])->name('client.fetch');
 Route::post('/admin/client/filename',[App\Http\Controllers\ClientController::class,'clientfilename'])->name('client.filename');
+Route::resource('admin/carousel', CarouselController::class);
+Route::post('/admin/carousel/filename',[App\Http\Controllers\CarouselController::class,'carouselfilename'])->name('carousel.filename');
 });

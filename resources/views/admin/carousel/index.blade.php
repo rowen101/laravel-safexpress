@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
 
-                        {{ Breadcrumbs::render('client') }}
+                        {{ Breadcrumbs::render('carousel') }}
 
                     </ol>
                 </div>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                         @foreach ($images as $item)
+                         @foreach ($carousel as $item)
                             <div class="col-sm-2">
 
                                 <div class="image-container">
@@ -46,12 +46,12 @@
                                         <button id="edit-client" class="btn btn-sm btn-primary pencil-button"
                                             style="background: transparent; border: none;"><i
                                                 class="fas fa-pencil-alt pencil-icon" data-id="{{ $item->id }}"
-                                                data-filename="{{ $item->filename }}"></i></button>
+                                                data-caption="{{ $item->caption }}"></i></button>
                                     </div>
 
-                                    <a href="{{ asset('clients/' . $item->image) }}" data-toggle="lightbox"
-                                        data-title="{{ $item->filename }}" data-gallery="gallery">
-                                        <img src="{{ asset('clients/thumbnail/' . $item->image) }}" class="img-fluid mb-2"
+                                    <a href="{{ asset('carousel/' . $item->image) }}" data-toggle="lightbox"
+                                        data-title="{{ $item->caption }}" data-gallery="gallery">
+                                        <img src="{{ asset('carousel/thumbnail/' . $item->image) }}" class="img-fluid mb-2"
                                             alt="client" />
                                     </a>
                                     <!-- Add X icon -->
@@ -89,7 +89,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="dropzoneForm" class="dropzone" action="{{ route('client.store') }}"
+                        <form id="dropzoneForm" class="dropzone" action="{{ route('carousel.store') }}"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="panel panel-default bg-primary">
@@ -126,8 +126,8 @@
                         <form id="clientForm">
                             @csrf
                             <input type="hidden" class="form-control" id="filename-id" name="id" value="" />
-                            <input type="text" id="filename" name="filename" class="form-control"
-                                placeholder="Edit the filename" />
+                            <input type="text" id="caption" name="caption" class="form-control" value=""
+                                placeholder="Edit the caption" />
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -257,7 +257,7 @@
                             if (result.isConfirmed) {
                                 //AJAX
                                 $.ajax({
-                                    url: "{{ url('admin/client') }}" + '/' +
+                                    url: "{{ url('admin/carousel') }}" + '/' +
                                     id, // Ensure this URL is correctly configured in your routes
                                     type: 'DELETE',
                                     success: function(response) {
@@ -291,11 +291,11 @@
                     button.addEventListener('click', function() {
                         var data = this.querySelector('.pencil-icon');
                         var id = data.getAttribute('data-id');
-                        var filename = data.getAttribute('data-filename');
+                        var caption = data.getAttribute('data-caption');
 
                         $('#editFilenameModal').modal('show');
                         $('#filename-id').val(id);
-                        $('#filename').val(filename);
+                        $('#caption').val(caption);
                         // You can use the 'id' variable to perform actions with the ID data.
                     });
                 });
@@ -304,7 +304,7 @@
                 $('#saveClient').click(function() {
                     var formData = $('#clientForm').serialize();
                     $.ajax({
-                        url: '{{ route('client.filename') }}',
+                        url: '{{ route('carousel.filename') }}',
                         type: 'POST',
                         data: formData,
                         success: function(response) {
@@ -317,6 +317,16 @@
                             // Handle errors here
                             alert('An error occurred. Please try again.');
                         }
+                    });
+                });
+
+                /*
+                Reload
+                */
+                $(document).ready(function() {
+                    // Add a click event handler to the .fa-refresh element
+                    $('.fa-refresh').click(function() {
+                        location.reload();
                     });
                 });
                 /*------------------------------------------
@@ -335,12 +345,12 @@
 
 
 
-                $(document).ready(function() {
-                    // Add a click event handler to the .fa-refresh element
-                    $('.fa-refresh').click(function() {
-                        location.reload();
-                    });
-                });
+                /*------------------------------------------
+                    --------------------------------------------
+                    Create Categorie Code
+                    --------------------------------------------
+                    --------------------------------------------*/
+
 
                 $("#is_active").on('change', function() {
                     if ($(this).is(':checked')) {
@@ -402,38 +412,5 @@
 
 
         </script>
-          <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Get the CSRF token from the meta tag
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-                // Use Axios to fetch images from your Laravel controller
-                axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken; // Set the CSRF token in the headers
-                axios.get('/admin/client/fetch') // Update the URL as needed
-                    .then(response => {
-                        const data = response.data;
-                        const imageList = document.getElementById('image-list');
-                        console.log(this.data);
-                        // if (data.images && Array.isArray(data.images)) {
-                        //     // Loop through the images and create image elements
-                        //     data.images.forEach(image => {
-                        //         const listItem = document.createElement('li');
-                        //         const imageElement = document.createElement('img');
-                        //         imageElement.src = image.image_url; // Assuming this is the image URL
-                        //         imageElement.alt = image.filename; // Assuming this is the image filename
-                        //         listItem.appendChild(imageElement);
-                        //         imageList.appendChild(listItem);
-                        //     });
-                        // } else {
-                        //     console.error('No images found in the data.');
-                        // }
-                    })
-                    .catch(error => {
-                        console.error('Error: ' + error);
-                    });
-            });
-        </script>
-
-
     @endpush
 @endsection
