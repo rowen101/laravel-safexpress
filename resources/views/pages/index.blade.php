@@ -230,7 +230,7 @@
             <div class="container aos-init aos-animate" data-aos="fade-up">
 
                 <div class="section-header">
-                    <h2>Our Partners</h2>
+                    <h2>Our Clients</h2>
 
                 </div>
 
