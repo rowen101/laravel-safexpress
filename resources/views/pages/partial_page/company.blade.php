@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-lg-7">
                       <div class="content ps-lg-5">
-                      <center> <h3 class="mb-3">Our Vission</h3></center>
+                      <center> <h3 class="mb-3">Our Vision</h3></center>
                         <p>To be a Recognized Leader in the industry. and to be the Preferred Supply Chain Enabler that
                           differentiates our solutions based on in-depth customer understanding and a strong focus on the
                           ever-shifting market needs. All of this is to ensure that Safexpress Logistics propels into an
