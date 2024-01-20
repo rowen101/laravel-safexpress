@@ -75,61 +75,41 @@
         function resetInactivityTimeout() {
             clearTimeout(inactivityTimeout);
             const navigation = document.querySelector('.navigation');
+            const info = document.querySelector('.info');
             navigation.style.opacity = 1;
+            info.style.opacity = 1;
 
             inactivityTimeout = setTimeout(() => {
                 navigation.style.opacity = 0;
+                info.style.opacity = 0;
             }, 3000); // Adjust the time in milliseconds for inactivity timeout
         }
 
         // Initial display
         showSlides(slideIndex);
 
-        // Touch event handling for image holding and sliding
-        const slider = document.getElementById('slider');
-
-        slider.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            isDragging = true;
-            resetInactivityTimeout();
-        });
-
-        slider.addEventListener('touchmove', (e) => {
-            if (isDragging) {
-                touchMoveX = e.changedTouches[0].screenX;
-                const swipeDistance = touchMoveX - touchStartX;
-                slider.querySelector('.slides').style.transform = `translateX(${swipeDistance}px)`;
-            }
-        });
-
-        slider.addEventListener('touchend', () => {
-            if (isDragging) {
-                const swipeDistance = touchMoveX - touchStartX;
-                isDragging = false;
-
-                if (swipeDistance > 50) {
-                    changeSlide(-1); // Swipe right
-                } else if (swipeDistance < -50) {
-                    changeSlide(1); // Swipe left
-                } else {
-                    // Reset if the swipe distance is not significant
-                    slider.querySelector('.slides').style.transform = 'translateX(0)';
-                }
-            }
-        });
 
         // Mouse event handling for inactivity timeout and button visibility
         document.addEventListener('mousemove', (e) => {
             resetInactivityTimeout();
             const navigation = document.querySelector('.navigation');
+            const info = document.querySelector('.info');
             navigation.style.opacity = 1;
+            info.style.opacity = 1;
+
         });
 
         // Hide buttons when mouse leaves the slider area
         slider.addEventListener('mouseleave', () => {
             const navigation = document.querySelector('.navigation');
+            const info = document.querySelector('.info');
             navigation.style.opacity = 0;
+            info.style.opacity = 0;
+
+
         });
+
+
     </script>
     @endpush
   </section>
