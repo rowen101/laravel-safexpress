@@ -60,6 +60,70 @@
             height: 100%;
             border: none;
         }
+
+        #slider {
+            overflow: hidden;
+            max-width: 100%;
+            position: relative;
+            touch-action: pan-y;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            user-drag: none;
+            user-select: none;
+        }
+
+        .navigation {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            box-sizing: border-box;
+            animation: fadeInOut 1s ease-in-out;
+        }
+
+        .prev, .next {
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .info {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
     </style>
     <script src="{{ asset('js/AutoLightbox.js') }}"></script>
     @vite(['resources/css/app.css'])
@@ -133,7 +197,7 @@
 
 
     @include('inc.footer')
-
+    @stack('buttom')
 </body>
 
 </html>

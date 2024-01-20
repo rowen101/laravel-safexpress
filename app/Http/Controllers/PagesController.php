@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Posts;
 use App\Models\Branch;
+use App\Models\Client;
 use App\Models\Comment;
 use App\Models\Gallery;
-use App\Models\Category;
-use App\Models\BDirector;
-use App\Models\Client;
 use App\Models\Setting;
 use App\Models\Carousel;
+use App\Models\Category;
+use App\Models\BDirector;
 use Illuminate\Http\Request;
+use App\Models\comimgprofile;
 use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
@@ -53,7 +54,7 @@ class PagesController extends Controller
     public function about()
     {
         //$title = "About";
-        $title = Menu::where('menu_code','about')->pluck('menu_title')->first();
+        $title = Menu::where('menu_code','MENU0006')->pluck('menu_title')->first();
 
         $menuItem = $this->getGuestMenu();
 
@@ -63,12 +64,14 @@ class PagesController extends Controller
         ->where('org_type','board')
         ->get();
 
-        return view('pages.about',compact('menuItem','directors','setting'))->with(['title'=> $title]);
+        $companyprofile = comimgprofile::where('is_active',1)->get();
+
+        return view('pages.about',compact('menuItem','directors','setting','companyprofile'))->with(['title'=> $title]);
     }
 
     public function services()
     {
-        $title = Menu::where('menu_code','ser')->pluck('menu_title')->first();
+        $title = Menu::where('menu_code','MENU0007')->pluck('menu_title')->first();
         $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();
@@ -76,7 +79,7 @@ class PagesController extends Controller
     }
     public function contact()
     {
-        $title = Menu::where('menu_code','ct')->pluck('menu_title')->first();
+        $title = Menu::where('menu_code','MENU0015')->pluck('menu_title')->first();
         $setting = Setting::first();
         $menuItem = $this->getGuestMenu();
         $setting = Setting::first();
@@ -121,7 +124,7 @@ class PagesController extends Controller
 
     public function blog()
     {
-        $title = Menu::where('menu_code','bl')->pluck('menu_title')->first();
+        $title = Menu::where('menu_code','MENU0016')->pluck('menu_title')->first();
         $menuItem = $this->getGuestMenu();
 
         $postid = DB::table('posts')
@@ -155,7 +158,7 @@ class PagesController extends Controller
 
     public function warehouse()
     {
-        $title = Menu::where('menu_code','ws')->pluck('menu_title')->first();
+        $title = Menu::where('menu_code','MENU0023')->pluck('menu_title')->first();
         $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();
@@ -163,7 +166,7 @@ class PagesController extends Controller
     }
     public function transport()
     {
-        $title = Menu::where('menu_code','ts')->pluck('menu_title')->first();
+        $title = Menu::where('menu_code','MENU0024')->pluck('menu_title')->first();
         $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();
@@ -171,7 +174,7 @@ class PagesController extends Controller
     }
     public function other()
     {
-        $title = Menu::where('menu_code','os')->pluck('menu_title')->first();
+        $title = Menu::where('menu_code','MENU0025')->pluck('menu_title')->first();
         $menuItem = $this->getGuestMenu();
 
         $setting = Setting::first();

@@ -15,7 +15,7 @@
     </div><!-- End Breadcrumbs -->
 
     <!-- ======= About Section ======= -->
-    <section id="about" class="about">
+    {{-- <section id="about" class="about">
         <div class="container aos-init aos-animate" data-aos="fade-up">
 
           <div class="row gy-4 aos-init aos-animate" data-aos="fade-up">
@@ -41,7 +41,9 @@
           </div>
 
         </div>
-      </section>
+      </section> --}}
+
+      @include("pages.partial_page.companyprofile")
 
       @include("pages.partial_page.company")
 
@@ -107,7 +109,7 @@
     </section>
 
     <!-- ======= Team Section ======= -->
-    <section id="team" class="team">
+    {{-- <section id="team" class="team">
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
@@ -149,12 +151,12 @@
                         <span>{{ $item->position}}</span>
                     </div>
                 </div>
-            </div><!-- End Team Member -->
+            </div>
             @endforeach
 
 
         </div>
 
       </div>
-    </section><!-- End Team Section -->
+    </section> --}}
 @endsection
