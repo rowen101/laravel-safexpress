@@ -80,13 +80,69 @@
 
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modelHeadingImage"></h4>
+                        <h4 class="modal-title" id="modelHeadingTitle"></h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        @include('admin.gallery.form-gallery')
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <!-- left column -->
+                                    <div class="col-md-12">
+                                        <!-- general form elements -->
+                                        <div class="container-fluid">
+                                            <br />
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <form id="dropzoneForm" class="dropzone" action="{{ route('dropzone.upload') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="parent_id" value="{{$data->id}}"/>
+                                                        <input type="hidden" name="foldername" value="{{$data->foldername}}"/>
+                                                    </form>
+                                                    <div align="center">
+                                                        <button type="button" class="btn btn-success" id="submit-all">Upload</button>
+                                                    </div>
+                                                    {{-- <form id=""  action="">
+                                                        @csrf
+                                                       <input type="hidden" name="parent_id"  id="parent_id"/>
+                                                        <input type="hidden" name="foldername" id="foldername"/>
+                                                    </form> --}}
+                                                    {{-- <div align="center">
+                                                        <button type="button" class="btn btn-success" id="submit-all">Upload</button>
+                                                    </div> --}}
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">Uploaded Image&nbsp;<button id="fethimage" class="float-right btn btn-sm btn-success"><i  class="fa fa-refresh "></i></button>
+                                                    </div></h3>
+                                                <div class="panel-body" id="uploaded_image">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/.col (left) -->
+                                    <!-- right column -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (right) -->
+                        </section>
+
+
+
+
+                        <div class="modal-footer justify-content-between">
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="saveBtnImage" value="create-categorie"><i
+                                    class="fas fa-save"></i>&nbsp;Save</button>
+                        </div>
+
                     </div>
 
                 </div>
@@ -107,11 +163,66 @@
 
     @push('head')
         <link rel='stylesheet' href='{{ asset('css/sweetalert2.min.css') }}'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css">
     @endpush
 
     @push('buttom')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
         <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+        <script type="text/javascript">
 
+            Dropzone.options.dropzoneForm = {
+                autoProcessQueue : false,
+                acceptedFiles : ".png,.jpg,.gif,.bmp,.jpeg",
+
+                init:function(){
+                    var submitButton = document.querySelector("#submit-all");
+                    myDropzone = this;
+
+                    submitButton.addEventListener('click', function(){
+                        myDropzone.processQueue();
+                    });
+
+                    this.on("complete", function(){
+                        if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0)
+                        {
+                            var _this = this;
+                            _this.removeAllFiles();
+                        }
+                        load_images();
+                    });
+
+                }
+
+            };
+
+            load_images();
+
+            function load_images(parent_id) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('dropzone.fetch', ['id' => ':id']) }}".replace(':id', parent_id),
+                    success: function (data) {
+                        $('#uploaded_image').html(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            $(document).on('click', '.remove_image', function(){
+                var name = $(this).attr('id');
+                $.ajax({
+                    url:"{{ route('dropzone.delete') }}",
+                    data:{name : name},
+                    success:function(data){
+                        load_images();
+                    }
+                })
+            });
+
+        </script>
         <script type="text/javascript">
             $(function() {
 
@@ -341,7 +452,7 @@
                     }
                     var title = $(this).data('foldername');
                     $.get("{{ url('/admin/gallery') }}" + '/' + id + '/edit', function(data) {
-                        $('#modelHeadingImage').html(data.foldername);
+                        $('#modelHeadingTitle').html(data.foldername);
                         $('#saveBtnImage').val("edit");
                         $('#saveBtnImage').html('<i class="fas fa-save"></i>&nbsp;Add Image');
                         $('#ajaxModelAddimage').modal('show');

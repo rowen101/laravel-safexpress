@@ -69,7 +69,7 @@ Route::resource('/admin/categorie', CategorieController::class);
 //Route::get('/admin/gallery/{id}/image', [App\Http\Controllers\GalleryController::class, 'viewimage'])->name('admin.gallery.image');
 Route::post('/admin/gallery/image/{id}', [App\Http\Controllers\GalleryController::class, 'addimage']);
 Route::resource('/admin/branch', BranchController::class);
-Route::get('/file-resize', [App\Http\Controllers\ResizeController::class, 'index']);
+Route::get('/file-resize'   , [App\Http\Controllers\ResizeController::class, 'index']);
 Route::post('/resize-file', [App\Http\Controllers\ResizeController::class, 'resizeImage'])->name('resizeImage');
 
 Route::post('dropzone/upload', [App\Http\Controllers\GalleryController::class,'upload'])->name('dropzone.upload');
