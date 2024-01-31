@@ -98,20 +98,13 @@
                                                 <div class="panel-body">
                                                     <form id="dropzoneForm" class="dropzone" action="{{ route('dropzone.upload') }}">
                                                         @csrf
-                                                        <input type="hidden" name="parent_id" value="{{$data->id}}"/>
-                                                        <input type="hidden" name="foldername" value="{{$data->foldername}}"/>
+                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                                        <input type="text" name="parent_id" id="parent_id" value=""/>
+
                                                     </form>
                                                     <div align="center">
                                                         <button type="button" class="btn btn-success" id="submit-all">Upload</button>
                                                     </div>
-                                                    {{-- <form id=""  action="">
-                                                        @csrf
-                                                       <input type="hidden" name="parent_id"  id="parent_id"/>
-                                                        <input type="hidden" name="foldername" id="foldername"/>
-                                                    </form> --}}
-                                                    {{-- <div align="center">
-                                                        <button type="button" class="btn btn-success" id="submit-all">Upload</button>
-                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <br />
@@ -132,12 +125,7 @@
                             </div>
                             <!--/.col (right) -->
                         </section>
-
-
-
-
                         <div class="modal-footer justify-content-between">
-
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary" id="saveBtnImage" value="create-categorie"><i
                                     class="fas fa-save"></i>&nbsp;Save</button>
@@ -167,68 +155,16 @@
     @endpush
 
     @push('buttom')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
         <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
-        <script type="text/javascript">
 
-            Dropzone.options.dropzoneForm = {
-                autoProcessQueue : false,
-                acceptedFiles : ".png,.jpg,.gif,.bmp,.jpeg",
-
-                init:function(){
-                    var submitButton = document.querySelector("#submit-all");
-                    myDropzone = this;
-
-                    submitButton.addEventListener('click', function(){
-                        myDropzone.processQueue();
-                    });
-
-                    this.on("complete", function(){
-                        if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0)
-                        {
-                            var _this = this;
-                            _this.removeAllFiles();
-                        }
-                        load_images();
-                    });
-
-                }
-
-            };
-
-            load_images();
-
-            function load_images(parent_id) {
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ route('dropzone.fetch', ['id' => ':id']) }}".replace(':id', parent_id),
-                    success: function (data) {
-                        $('#uploaded_image').html(data);
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-            }
-
-            $(document).on('click', '.remove_image', function(){
-                var name = $(this).attr('id');
-                $.ajax({
-                    url:"{{ route('dropzone.delete') }}",
-                    data:{name : name},
-                    success:function(data){
-                        load_images();
-                    }
-                })
-            });
-
-        </script>
         <script type="text/javascript">
             $(function() {
 
 
                 const textbox = document.getElementById('foldername');
                 const form = document.getElementById('productForm');
+
                 /*------------------------------------------
                  --------------------------------------------
                  Pass Header Token
@@ -362,14 +298,8 @@
 
                         //hide span alert
                         document.getElementById('foldernameErrorMsg').style.visibility = 'hidden';
-
                     })
-
                 });
-
-
-
-
                 $("#is_active").on('change', function() {
                     if ($(this).is(':checked')) {
                         $(this).attr('value', 1);
@@ -426,83 +356,9 @@
                                         '<i class="fas fa-save"></i>&nbsp;Save');
                                 }
                             });
-
-
-                        }
-                    })
-
-
-                });
-
-                /*------------------------------------------
-                  --------------------------------------------
-                  delete Click Button
-                  --------------------------------------------
-                  --------------------------------------------*/
-                $('body').on('click', '.addimage', function() {
-                    var id = $(this).data('id');
-
-                    function loadimage() {
-                        $.ajax({
-                            url: "{{ url('dropzone/fetch') }}" + '/' + id + '/image',
-                            success: function(data) {
-                                $('#uploaded_image').html(data);
-                            }
-                        })
-                    }
-                    var title = $(this).data('foldername');
-                    $.get("{{ url('/admin/gallery') }}" + '/' + id + '/edit', function(data) {
-                        $('#modelHeadingTitle').html(data.foldername);
-                        $('#saveBtnImage').val("edit");
-                        $('#saveBtnImage').html('<i class="fas fa-save"></i>&nbsp;Add Image');
-                        $('#ajaxModelAddimage').modal('show');
-                        $('#parent_id').val(data.id);
-                        $('#foldername').val(data.foldername);
-
-                        $('#is_active').val(data.is_active);
-                        $('#is_active').prop("checked", (data.is_active == 1 ? true : false));
-
-                        //hide span alert
-                        document.getElementById('foldernameErrorMsg').style.visibility = 'hidden';
-
-                        loadimage()
-                        $('#dropzoneForm').trigger("reset");
-                    })
-
-
-
-
-                });
-                //refresh
-                $(document).on('click', '#fethimage', function() {
-                    $.ajax({
-                        url: "{{ url('dropzone/fetch') }}" + '/' + id +
-                            '/image',
-                        success: function(data) {
-                            $('#uploaded_image').html(data);
                         }
                     })
                 });
-                //image delete
-                $(document).on('click', '.remove_image', function() {
-                    var name = $(this).attr('id');
-                    $.ajax({
-                        url: "{{ route('dropzone.delete') }}",
-                        data: {
-                            name: name
-                        },
-                        success: function(data) {
-                            $.ajax({
-                                url: "{{ url('dropzone/fetch') }}" + '/' + id +
-                                    '/image',
-                                success: function(data) {
-                                    $('#uploaded_image').html(data);
-                                }
-                            })
-                        }
-                    })
-                });
-
                 // Add keydown event listener to the textbox
                 textbox.addEventListener('keydown', function(event) {
                     if (event.key === 'Enter') {
@@ -511,33 +367,90 @@
                         handleSaveButtonClick();
                     }
                 });
-
-                //drop image
-                Dropzone.options.dropzoneForm = {
+                /*------------------------------------------
+                  --------------------------------------------
+                  add image
+                  --------------------------------------------
+                  --------------------------------------------*/
+                  Dropzone.options.dropzoneForm = {
                     autoProcessQueue: false,
                     acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
 
-                    init: function() {
+                    init: function () {
                         var submitButton = document.querySelector("#submit-all");
-                        myDropzone = this;
+                        var myDropzone = this;
 
-                        submitButton.addEventListener('click', function() {
+                        var id = $(this).data('id');
+                        $('#parent_id').val("Default Value");
+                        submitButton.addEventListener('click', function () {
+                            // $('#gparent_id').val(id);
                             myDropzone.processQueue();
                         });
 
-                        this.on("complete", function() {
-                            if (this.getQueuedFiles().length == 0 && this.getUploadingFiles().length ==
-                                0) {
-                                var _this = this;
-                                _this.removeAllFiles();
+                        this.on("complete", function () {
+                            if (this.getQueuedFiles().length === 0 && this.getUploadingFiles().length === 0) {
+                                myDropzone.removeAllFiles();
                             }
-                            load_images();
+                            loadImages(id);
                         });
-
                     }
-
                 };
 
+                function loadImages(parent_id) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('dropzone.fetch', ['id' => ':id']) }}".replace(':id', parent_id),
+                        success: function (data) {
+                            $('#uploaded_image').html(data);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+
+                $(document).on('click', '.remove_image', function () {
+                    var name = $(this).attr('id');
+                    $.ajax({
+                        url: "{{ route('dropzone.delete') }}",
+                        data: { name: name },
+                        success: function (data) {
+                            loadImages();
+                        }
+                    });
+                });
+
+                $('body').on('click', '.addimage', function () {
+                    var id = $(this).data('id');
+
+                    function loadImages() {
+                        $.ajax({
+                            url: "{{ url('dropzone/fetch') }}" + '/' + id + '/image',
+                            success: function (data) {
+                                $('#uploaded_image').html(data);
+                            }
+                        });
+                    }
+
+                    var title = $(this).data('foldername');
+                    $.get("{{ url('/admin/gallery') }}" + '/' + id + '/edit', function (data) {
+                        $('#modelHeadingTitle').html(data.foldername);
+                        $('#saveBtnImage').val("edit");
+                        $('#saveBtnImage').html('<i class="fas fa-save"></i>&nbsp;Add Image');
+                        $('#ajaxModelAddimage').modal('show');
+                        $('#parent_id').val(data.id);
+                        // console.log('Parent ID:', data.id);
+                        $('#foldername').val(data.foldername);
+                        $('#is_active').val(data.is_active);
+                        $('#is_active').prop("checked", (data.is_active === 1));
+
+                        // Hide span alert
+                        $('#foldernameErrorMsg').hide();
+
+                        loadImages(); // Call the function to load images
+                        $('#dropzoneForm').trigger("reset");
+                    });
+                });
 
             });
         </script>

@@ -12,7 +12,13 @@
 <div class="container-fluid">
 
     <br />
-    <h3 align="center" style="color: #4dc0b5">{{ $data->foldername }}</h3>
+    <h3 align="center" style="color: #4dc0b5">
+        @if($data->isNotEmpty())
+                {{ $data->first()->foldername }}
+            @else
+                No data available
+            @endif
+    </h3>
     <br />
     <a href="{{ url('admin/gallery') }}">
         <button class="btn btn-primary"><i class="fas fa-arrow-left"></i>&nbsp;back</button>
@@ -20,10 +26,10 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-            <form id="dropzoneForm" class="dropzone" action="{{ route('dropzone.upload') }}">
+            <form id="dropzoneForm" class="dropzone" action="{{ route('dropzones.upload') }}">
                 @csrf
-                <input type="hidden" name="parent_id" value="{{$data->id}}"/>
-                <input type="hidden" name="foldername" value="{{$data->foldername}}"/>
+                <input type="hidden" name="parent_id" value="{{ $data->isNotEmpty() ? $data->first()->id : '' }}"/>
+                <input type="hidden" name="foldername" value="{{ $data->isNotEmpty() ? $data->first()->foldername : '' }}"/>
             </form>
             <div align="center">
                 <button type="button" class="btn btn-success" id="submit-all">Upload</button>
@@ -75,7 +81,7 @@
     function load_images()
     {
         $.ajax({
-            url:"{{ route('dropzone.fetch') }}",
+            url:"{{ route('dropzones.fetch') }}",
             success:function(data)
             {
                 $('#uploaded_image').html(data);
@@ -86,7 +92,7 @@
     $(document).on('click', '.remove_image', function(){
         var name = $(this).attr('id');
         $.ajax({
-            url:"{{ route('dropzone.delete') }}",
+            url:"{{ route('dropzones.delete') }}",
             data:{name : name},
             success:function(data){
                 load_images();

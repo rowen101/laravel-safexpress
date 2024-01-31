@@ -13,7 +13,9 @@ class DropzoneController extends Controller
 
     public function index()
     {
-        return view('dropzone');
+        $data = Gallery::all();
+
+        return view('dropzone',compact('data'));
     }
     function upload(Request $request)
     {

@@ -85,4 +85,9 @@ Route::get('admin/client/fetch',[App\Http\Controllers\ClientController::class,'f
 Route::post('/admin/client/filename',[App\Http\Controllers\ClientController::class,'clientfilename'])->name('client.filename');
 Route::resource('admin/carousel', CarouselController::class);
 Route::post('/admin/carousel/filename',[App\Http\Controllers\CarouselController::class,'carouselfilename'])->name('carousel.filename');
+
+Route::get('/dropzone',[App\Http\Controllers\DropzoneController::class,'index']);
+Route::get('dropzone/fetch/image', [App\Http\Controllers\DropzoneController::class,'fetch'])->name('dropzones.fetch');
+Route::post('dropzones/upload', [App\Http\Controllers\DropzoneController::class,'upload'])->name('dropzones.upload');
+
 });
